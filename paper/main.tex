@@ -26,7 +26,48 @@
 \section*{Proposal}
 \label{sec:prop}
 
-We shall rely on the following references (\todo{add proper refs with bib})
+Telepathy, the ability of transmitting information from one person's
+mind to another's, would certainly come in handy in many situations,
+right? Unfortunately (or not), (to the best of our knowledge)
+telepathy is not a thing. At least, not according to classical
+physics. Certain aspects of the quantum realm, however, provide a way
+of communication that for a layman looks as magical as ``true''
+telepathy. This phenomenon is called quantum
+\emph{pseudo-telepathy}~\cite{brassard:2005}.
+
+Quantum pseudo-telepathy is observed in many contexts, usually
+described in the format of a game: the ``impossible colouring games'',
+based on the Kochen-Specker theorem~\cite{brassard:2005, xxx}; the
+parity games, in which \(n \geq 3\) players are given bit-strings and,
+without communicating to each other, they output one of their bits,
+winning if their outputs combined obey certain parity
+conditions~\cite{brassard:2005, xxx}; the Deutsch-Jozsa games, where
+Alice and Bob are given bit strings \(x\) and \(y\), and must output
+bit strings \(a\) and \(b\) such that \(a = b\) if and only if
+\(x = y\)~\cite{brassard:2005, xxx}; and, the Magic Square game, the
+topic of this research\cite{brassard:2005, xxx}. None of these games
+admit a classical winning strategy (i.e.\ is not possible to always
+win), yet they can be won systematically, without any communication,
+provided that the players share prior
+entanglement\cite{brassard:2005}.
+
+A \emph{Magic Square} is a \(3 \times 3\) matrix whose entries are
+\{-1, 1\} (or sometimes \{0,~1\}), with the property that the sum of
+each row is \(1\) and the sum of each column is \(1\). The Magic
+Square game is defined as follows: a referee Charlie asks Alice to
+fill the entries of a row \(x \in \{0, 1, 2\}\), which he chooses
+uniformly at random. Charlie, then, asks Bob to fill the entries of a
+column \(y \in \{0, 1, 2\}\), also chosen at random. Alice and Bob win
+if the product of the row given by Alice is \(1\), the product of the
+column given by Bob is \(-1\) and the intersection of the given row
+and column agrees. A successful implementation of a quantum winning
+strategy for any pseudo-telepathy game must convince an observer that
+something classicaly impossible is
+happening\cite{brassard:2005}. Fortunately, as we shall see, proving
+the classical impossibility of the Magic Square game is extremely easy.
+
+We shall rely on the following references (\todo{add proper refs with
+  bib})
 \begin{itemize}
 \item Quantum Pseudo-Telepathy (Gilles Brassard, Anne Broadbent and
   Alain Tapp; Magic Square = Sec.\ 5)
