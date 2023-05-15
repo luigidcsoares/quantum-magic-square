@@ -53,20 +53,48 @@ entanglement\cite{brassard:2005}.
 
 A \emph{Magic Square} is a \(3 \times 3\) matrix whose entries are
 \{-1, 1\} (or sometimes \{0,~1\}), with the property that the sum of
-each row is \(1\) and the sum of each column is \(1\). The Magic
+each row is \(1\) and the sum of each column is \(-1\). The Magic
 Square game is defined as follows: a referee Charlie asks Alice to
 fill the entries of a row \(x \in \{0, 1, 2\}\), which he chooses
 uniformly at random. Charlie, then, asks Bob to fill the entries of a
 column \(y \in \{0, 1, 2\}\), also chosen at random. Alice and Bob win
 if the product of the row given by Alice is \(1\), the product of the
 column given by Bob is \(-1\) and the intersection of the given row
-and column agrees. A successful implementation of a quantum winning
-strategy for any pseudo-telepathy game must convince an observer that
-something classicaly impossible is
-happening\cite{brassard:2005}. Fortunately, as we shall see, proving
-the classical impossibility of the Magic Square game is extremely easy.
+and column agrees.
 
-We shall rely on the following references (\todo{add proper refs with
+A successful implementation of a quantum winning strategy for any
+pseudo-telepathy game must convince an observer that something
+classicaly impossible is happening\cite{brassard:2005}. Fortunately,
+proving the classical impossibility of the Magic Square game is
+extremely easy. Assuming a deterministic strategy, even if Alice and
+Bob are allowed to talk \emph{before} the game starts, the best that
+they can do is to construct two grids in advance, one for Alice and
+another for Bob, and give the entries according to the matrices
+that they prepared. However, the product of Alice's matrix will always
+be \(1\) and the product of Bob's matrix will always be \(-1\), so
+there must be one cell that does not agree. Probabilistic strategies
+cannot do better than deterministic~\cite[Theorem 2]{brassard:2005}, so
+the Magic Square game cannot be won under classical assumptions.
+
+We will approach this project as follows:
+
+\begin{enumerate}
+\item Describe the quantum Magic Square game in details;
+\item Discuss classical solutions: illustrate with examples and
+  implement them (and make the code available through a jupyter
+  notebook).
+\item Demonstrate that no classical strategy can win with probability
+  1. Show that the best that a classical strategy can achieve is
+  is win 8 out of 9 rounds;
+\item Discuss the quantum solution, using entanglement: illustrate
+  with examples;
+\item Demonstrate that the quantum strategy can win with probability
+  1; and
+\item Implement the quantum solution in Qiskit
+  (and make the code available through a jupyter notebook).
+\end{enumerate}
+
+We will rely on the following references (\todo{add proper refs with
   bib})
 \begin{itemize}
 \item Quantum Pseudo-Telepathy (Gilles Brassard, Anne Broadbent and
