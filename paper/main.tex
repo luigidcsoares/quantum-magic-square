@@ -4,6 +4,9 @@
 %%% Packages
 %%%%%%%%%%%%%%%%%%%
 \usepackage{xcolor}
+\usepackage[backend=biber, style=lncs]{biblatex}
+\addbibresource{ref.bib}
+% !TEX TS-program = pdflatexmk
 
 %%%%%%%%%%%%%%%%%%%
 %%% General Cmds
@@ -17,7 +20,7 @@
 \author{Luigi Soares \and Roberto Rosmaninho}
 \institute{%
   Department of Computer Science, UFMG - Brazil \\
-  \email{\{luigi.domenico, \todo{email roberto}\}@dcc.ufmg.br}}
+  \email{\{luigi.domenico, robertogomes\}@dcc.ufmg.br}}
 
 \maketitle
 % \begin{abstract}
@@ -94,11 +97,5 @@ We will approach this project as follows:
   (and make the code available through a jupyter notebook).
 \end{enumerate}
 
-We will rely on the following references (\todo{add proper refs with
-  bib})
-\begin{itemize}
-\item Quantum Pseudo-Telepathy (Gilles Brassard, Anne Broadbent and
-  Alain Tapp; Magic Square = Sec.\ 5)
-\end{itemize}
-
+\printbibliography{}
 \end{document}
