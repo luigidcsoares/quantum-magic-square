@@ -23,6 +23,15 @@
 \usepackage{hhline}
 \usepackage{bigdelim}
 
+\usepackage{tikz}
+\usetikzlibrary{quantikz2}
+
+\newcommand{\ketbra}[2]{\ensuremath{| #1 \rangle \langle #2 |}}
+\newcommand{\ci}{\mathrm{i}}
+\DeclarePairedDelimiter{\card}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclareMathOperator{\tr}{tr}
+
 %%%%%%%%%%%%%%%%%%%
 %%% General Cmds
 %%%%%%%%%%%%%%%%%%%
@@ -209,8 +218,85 @@ bounded by the winning probability of the best deterministic
 strategy, which is
 \(\nicefrac{8}{9}\). Theorem~\ref{thm:classical-success} formalizes
 this argument.
+
 \subsection{Quantum Solution}
 \label{sec:quantum-sol}
+The quantum strategy for the Magic Square game consists of Alice and
+Bob carrying entangled qubits with them. For each round, they need a
+pair of qubits each. Then, when Charlie asks Alice (respectively Bob)
+to fill the entries of the \(i\)-th row (respectively \(j\)-th
+column), Alice measures her two qubits three times. The outcome of
+each measurement gives the value for each cell (in practice, they do
+not even need the third measurement, since they can determine the third
+value from the first two). Key to this strategy is that the outcomes
+of all possible measurements are \(\pm 1\). The initial, entangled state
+is (subscripts \(A\) and \(B\) indicate, respectively,
+Alice's and Bob's qubits)
+\begin{equation}
+  \ket{\psi} = \frac{1}{2}\left(
+    \ket{00}_{A} \otimes \ket{00}_{B} + \ket{01}_{A} \otimes \ket{01}_{B} +
+    \ket{10}_{A} \otimes \ket{10}_{B} + \ket{11}_{A} \otimes \ket{11}_{B}
+  \right).
+\end{equation}
+Figure~\ref{fig:circuit-psi} shows the quantum circuit that can be
+used to prepare the initial state \(\ket{\psi}\).
+
+\begin{figure}[htbp]
+  \centering
+  \begin{quantikz}
+    \lstick{\ket{0}} & \gate{H}
+    \slice[label style={xshift=-15mm}]
+    {\(\frac{1}{2}(\ket{00} + \ket{01} + \ket{10} +
+      \ket{11}) \otimes \ket{00}\)}
+    &&&&& \ctrl{2} &&
+    \\
+    \lstick{\ket{0}} & \gate{H} &&&&&& \ctrl{2} & \\
+    \lstick{\ket{0}} & &&&&& \targ{} && \\
+    \lstick{\ket{0}} & &&&&&& \targ{}
+    \slice[label style={xshift=5mm}]
+    {\(\frac{1}{2}(\ket{0000} + \ket{0101} + \ket{1010} +
+      \ket{1111})\)}
+    &
+  \end{quantikz}
+  \caption{\label{fig:circuit-psi}}
+\end{figure}
+
+As seen in Section~\ref{sec:classic-sol}, the \emph{magic} square is
+called this way because, under classical assumptions, there is no such
+a square: it is impossible to construct a \(3 \times 3\) matrix filled
+with \(\pm 1\)'s, with the constraints that the product of every row
+is \(+1\) and the product of every column is \(-1\). We can, however,
+construct a ``quantum magic'' square. Figure~\ref{fig:quantum} shows
+the \(3 \times 3\) grid that Alice and Bob can use to win the Magic
+Square game systematically.  Notice that the eigenvalues of the
+observables at each cell are \(\pm 1\). Furthermore, the product of
+every row is \(+I\) and the product of every column is \(-I\). (The
+original observables did not have the negative \(X\) and \(Z\) in the
+last row, so these two properties are not mandatory~\cite{Mermin1990,
+  aravind:xxx}.  We have adapted the observables merely to be
+``consistent'' with the properties of the classical magic square, but
+what really matters for Alice and Bob are the outcomes of the
+measurements, which they will use to fill the entries asked by
+Charlie.)
+
+
+{\renewcommand{\arraystretch}{2}
+\begin{figure}
+  \centering
+  \[\begin{array}{|*{3}{>{\quad}c<{\quad}|}>{\quad}l<{\quad}}
+      \hhline{---~}
+      +I \otimes Z & +Z \otimes I & +Z \otimes Z & \prod = I \otimes I = I
+      \\ \hhline{---~}
+      +X \otimes I & +I \otimes X & +X \otimes X & \prod = I \otimes I = I
+      \\ \hhline{---~}
+      -X \otimes Z & -Z \otimes X & +Y \otimes Y & \prod = -\ci{}I \otimes \ci{}I = I
+      \\ \hhline{---~}
+      \multicolumn{1}{>{\quad}c<{\quad}}{\prod = -I \otimes I = -I}
+      & \multicolumn{1}{>{\quad}c<{\quad}}{\prod = -I \otimes I = -I}
+      & \multicolumn{1}{>{\quad}c<{\quad}}{\prod = \ci{}I \otimes \ci{}I = -I}
+    \end{array}\]
+  \caption{\label{fig:quantum}}
+\end{figure}}
 
 \section{Quantum Unitaries (? research)}
 \label{sec:quantum-unitaries}
