@@ -23,6 +23,21 @@
 \usepackage{hhline}
 \usepackage{bigdelim}
 
+\usepackage{float}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+\newtcbtheorem{tcbexample}{Example}{
+  colback=gray!15,
+  colbacktitle=gray!15,
+  coltitle=red!75!black,
+  fonttitle=\bfseries,
+  detach title,
+  before upper={\tcbtitle},
+  separator sign none,
+  description delimiters={(}{). }
+}{ex}
+
 \usepackage{tikz}
 \usetikzlibrary{quantikz2}
 
@@ -136,88 +151,100 @@ beforehand, or they may decide to follow a probabilistic strategy.
 
 \subsection{Classical Solution}
 \label{sec:classic-sol}
-
 Assume that Alice and Bob decided to adopt a deterministic strategy.
 For that, they met before the beginning of the game, and prepared
-their answers for each possible row and column. For example, they
-might have agreed that, if given the first column, Bob shall fill it
-with three \(-1\)'s. Then, whatever row Alice is given, she must fill
-it with either \(\{-1, +1, -1\}\) or \(\{-1, -1, +1\}\). Suppose that
-Alice decided that she would fill any row in the same way:
-\(\{-1, -1, +1\}\). Figure~\ref{fig:classical} (a) shows how the
-predefined matrix would look like. Notice that Alice's rows are
-already defined, but Bob still has to decide how to fill the second
-and third columns. He can, and must, fill the second column with three
-\(-1\)'s, so that whatever row Alice is given, the intersection
-agrees. Intuitively, for the same reason, he should then fill the
-third column with three \(+1\)'s. However, this is not a valid
-strategy, since the product of the last column will be \(+1\) and not
-\(-1\), as required. Thus, Bob must fill at least one of the
-entries of the last column with \(-1\).  By doing that, there will be
-one row and column whose intersection does not agree, and thus one row
-and column for which Alice and Bob lose, as illustrated in
-Figure~\ref{fig:classical} (b). It is not difficult to convince yourself that,
-no matter how Alice and Bob decide to fill in their entries, it is impossible
-for them to come up with predefined answers that always win. In fact,
-the best that they can do is to win with probability \(\nicefrac{8}{9}\).
+their answers for each possible row and column. In this scenario,
+what is the best strategy that they can come up with?
 
-{\renewcommand{\arraystretch}{2}
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.475\textwidth}
-    \[\begin{array}{|>{\quad\columncolor{gray!50}}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
-        \hhline{---}
-        -1 & -1 & +1 
-        \\ \hhline{---}
-        -1 & -1 & +1 
-        \\ \hhline{---}
-        -1 & -1 & +1 
-        \\ \hhline{---}
-      \end{array}\]
-    \caption{Initially, Alice and Bob agree that Bob shall fill the
-      first column with \(\{-1, -1, -1\}\). Based on this choice,
-      Alice decides to fill all of her rows with
-      \(\{-1, -1, +1\}\).}
-  \end{subfigure}
-  \hfill{}
-  \begin{subfigure}[t]{0.475\textwidth}
-    \[\begin{array}{|*{3}{>{\quad\columncolor{gray!50}}c<{\quad}|}}
-        \hhline{---}
-        -1 & -1 & \cellcolor{red!80!black!55}\pm 1
-        \\ \hhline{---}
-        -1 & -1 & +1
-        \\ \hhline{---}
-        -1 & -1 & +1
-        \\ \hhline{---}
-      \end{array}\]
-    \caption{Bob has to fill the second column with \(-1\)'s, to match
-      Alice's choice. He should also match Alice's choice for each
-      cell of the third column, but he cannot, for the product of
-      the column must be \(-1\).}
-  \end{subfigure}
-  \caption{One possible classical deterministic strategy for the Magic
-    Square game. Following this predefined strategy, Alice and Bob
-    lose when assigned, respectively, the first row and third column,
-    but win in any other scenario. That is, their probability of
-    winning a round is \(\nicefrac{8}{9}\). Gray cells are entries for
-    which Alice's and Bob's choices agree.\label{fig:classical}}
-\end{figure}}
+\begin{tcbexample}{Classical, Deterministic Solution}{classic-sol}
+  Alice and Bob might have agreed that, if given the first column, Bob shall fill it
+  with three \(-1\)'s. Then, whatever row Alice is given, she must fill
+  it with either \(\{-1, +1, -1\}\) or \(\{-1, -1, +1\}\). Suppose that
+  Alice decided that she would fill any row in the same way:
+  \(\{-1, -1, +1\}\). Figure~\ref{fig:classical} (a) shows how the
+  predefined matrix would look like. Notice that Alice's rows are
+  already defined, but Bob still has to decide how to fill the second
+  and third columns. He can, and must, fill the second column with three
+  \(-1\)'s, so that whatever row Alice is given, the intersection
+  agrees. Intuitively, for the same reason, he should then fill the
+  third column with three \(+1\)'s. However, this is not a valid
+  strategy, since the product of the last column will be \(+1\) and not
+  \(-1\), as required. Thus, Bob must fill at least one of the
+  entries of the last column with \(-1\).  By doing that, there will be
+  one row and column whose intersection does not agree, and thus one row
+  and column for which Alice and Bob lose, as illustrated in
+  Figure~\ref{fig:classical} (b).
 
-What if Alice and Bob decide for a probabilistic strategy? That is,
-Alice and Bob each carry a coin. When assigned a row/column, they flip
-their coins and fill the entries of the row/column based on the
-outcomes of the coins. Can they do better? To randomly assign values
-to one row (equivalently, one column) is essentially the same as
-randomly selecting one of the \(2^{9}\) possible predefined
-\(3 \times 3\) grids (including those matrices that would lead to
-invalid answers). In other words, a probabilistic strategy for the
-Magic Square game is one in which Alice and Bob randomly select a
+  {\renewcommand{\arraystretch}{2}
+    \begin{figure}[H]
+      \centering
+      \begin{subfigure}[t]{0.475\textwidth}
+        \[\begin{array}{|>{\quad\columncolor{gray!50}}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
+            \hhline{---}[
+            -1 & -1 & +1 
+            \\ \hhline{---}
+            -1 & -1 & +1 
+            \\ \hhline{---}
+            -1 & -1 & +1 
+            \\ \hhline{---}
+          \end{array}\]
+        \caption{Initially, Alice and Bob agree that Bob shall fill the
+          first column with \(\{-1, -1, -1\}\). Based on this choice,
+          Alice decides to fill all of her rows with
+          \(\{-1, -1, +1\}\).}
+      \end{subfigure}
+      \hfill{}
+      \begin{subfigure}[t]{0.475\textwidth}
+        \[\begin{array}{|*{3}{>{\quad\columncolor{gray!50}}c<{\quad}|}}
+            \hhline{---}
+            -1 & -1 & \cellcolor{red!80!black!55}\pm 1
+            \\ \hhline{---}
+            -1 & -1 & +1
+            \\ \hhline{---}
+            -1 & -1 & +1
+            \\ \hhline{---}
+          \end{array}\]
+        \caption{Bob has to fill the second column with \(-1\)'s, to match
+          Alice's choice. He should also match Alice's choice for each
+          cell of the third column, but he cannot, for the product of
+          the column must be \(-1\).}
+      \end{subfigure}
+      \caption{One possible classical deterministic strategy for the Magic
+        Square game. Following this predefined strategy, Alice and Bob
+        lose when assigned, respectively, the first row and third column,
+        but win in any other scenario. That is, their probability of
+        winning a round is \(\nicefrac{8}{9}\). Gray cells are entries for
+        which Alice's and Bob's choices agree.\label{fig:classical}}
+    \end{figure}}
+\end{tcbexample}
+
+Example~\ref{ex:classic-sol} illustrates one of the many deterministic
+strategies that Alice and Bob can adopt. It is not difficult to
+convince yourself that, no matter how they decide to fill in
+their entries, it is impossible for them to come up with predefined
+answers that always win. Any deterministic strategy is a pair of
+matrices, one for Alice and another for Bob. The only way that they could
+design a strategy that wins with certainty every round is to prepare two
+identical matrices satisfying the requirements for each row and for each
+column. That is, a single matrix for which the product of every row is
+\(+1\) and the product of every column is \(-1\). Such a matrix cannot
+possibly exist! It turns out that the best that they can do is to win
+with probability \(\nicefrac{8}{9}\).
+
+What if Alice and Bob decide for a probabilistic strategy? That is, Alice and
+Bob each carry a coin. When assigned a row/column, they flip their
+coins and fill the entries of the row/column based on the outcomes of
+the coins. Can they do better? To randomly assign values to one row
+(equivalently, one column) is essentially the same as randomly
+selecting one of the \(2^{9}\) possible predefined \(3 \times 3\)
+grids (including those matrices that would lead to invalid
+answers). In other words, a probabilistic strategy for the Magic
+Square game is one in which Alice and Bob randomly select a
 deterministic strategy. Hence, no matter how lucky Alice and Bob are,
 the probability of success of any strategy that they come up with is
-bounded by the winning probability of the best deterministic
-strategy, which is
-\(\nicefrac{8}{9}\). Theorem~\ref{thm:classical-success} formalizes
-this argument.
+bounded by the winning probability of the best deterministic strategy,
+which is \(\nicefrac{8}{9}\). Theorem~\ref{thm:classical-success}
+formalizes this argument.
 
 \subsection{Quantum Solution}
 \label{sec:quantum-sol}
