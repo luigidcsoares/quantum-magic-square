@@ -28,9 +28,10 @@
 \tcbuselibrary{theorems}
 
 \newtcbtheorem{tcbexample}{Example}{
+  boxrule=0.15mm,
   colback=gray!15,
   colbacktitle=gray!15,
-  coltitle=red!75!black,
+  coltitle=red!50!black,
   fonttitle=\bfseries,
   detach title,
   before upper={\tcbtitle},
@@ -180,7 +181,7 @@ what is the best strategy that they can come up with?
       \centering
       \begin{subfigure}[t]{0.475\textwidth}
         \[\begin{array}{|>{\quad\columncolor{gray!50}}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
-            \hhline{---}[
+            \hhline{---}
             -1 & -1 & +1 
             \\ \hhline{---}
             -1 & -1 & +1 
@@ -324,6 +325,49 @@ Charlie.)
     \end{array}\]
   \caption{\label{fig:quantum}}
 \end{figure}}
+
+\begin{tcbexample}{Quantum Solution}{quantum-sol}
+  Suppose that Charlie assigns the first row to Alice. To decide the
+  value of the first cell, she (based on the \(3 \times 3\) grid she
+  and Bob have prepared) measures the observable \(I \otimes Z\)
+  on her two qubits. The possible outcomes are
+  \begin{equation}
+    \label{eq:outcomes-1r}
+    \operatorname{Out}((I \otimes Z)_{A} \otimes (I \otimes I)_{B}) =
+    \begin{cases}
+      +1, \text{ proj. onto } \{\ket{i0jk} \mid i, j, k \in \{0, 1\}\}
+        \text{ with prob. } \frac{1}{2} \\
+      -1, \text{ proj. onto } \{\ket{i1jk} \mid i, j, k \in \{0, 1\}\}
+        \text{ with prob. } \frac{1}{2}, \\
+    \end{cases}
+  \end{equation}
+  where the subscript \(A1\) denotes the state after Alice's first
+  measurement. Suppose that Alice has observed \(+1\). Notice that
+  only two of the components of the \(+1\)-eigenspace are seen in the
+  initial state \(\ket{\psi}\): \(\ket{0000}\) and
+  \(\ket{1010}\). Therefore, \(\ket{\psi}\) collapses to
+  \begin{equation}
+    \ket{\psi}_{A1} =  \frac{1}{\sqrt{2}}(\ket{0000} + \ket{1010}).
+  \end{equation}
+  For the second cell, Alice measures the observable \(Z \otimes I\),
+  whose possible outcomes are
+    \begin{equation}
+    \label{eq:outcomes-1r}
+    \operatorname{Out}((Z \otimes I)_{A} \otimes (I \otimes I)_{B}) =
+    \begin{cases}
+      +1, \text{ proj. onto } \{\ket{0ijk} \mid i, j, k \in \{0, 1\}\}
+        \text{ with prob. } \frac{1}{2} \\
+      -1, \text{ proj. onto } \{\ket{1ijk} \mid i, j, k \in \{0, 1\}\}
+        \text{ with prob. } \frac{1}{2}. \\
+    \end{cases}
+  \end{equation}
+  Suppose, now, that Alice has observed the outcome \(-1\). Notice that
+  only one component of the \(-1\)-eigenspace is seen in the state
+  \(\ket{\psi}_{A1}\). Hence, the state collapses to
+  \begin{equation}
+    \ket{\psi}_{A2} =  \ket{1010}.
+  \end{equation}
+\end{tcbexample}
 
 \section{Quantum Unitaries (? research)}
 \label{sec:quantum-unitaries}
