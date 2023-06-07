@@ -333,16 +333,14 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
   \begin{equation}
     \operatorname{Out}((I \otimes Z)_{A} \otimes (I \otimes I)_{B}) =
     \begin{cases}
-      +1, \text{ proj. onto } \{\ket{i0jk} \mid i, j, k \in \{0, 1\}\}
-        \text{ with prob. } \frac{1}{2} \\
-      -1, \text{ proj. onto } \{\ket{i1jk} \mid i, j, k \in \{0, 1\}\}
-        \text{ with prob. } \frac{1}{2},
+      +1 \left(I \otimes \ketbra{0}{0} \otimes I \otimes I\right)
+        &\text{with probability } \frac{1}{2} \\
+      -1 \left(I \otimes \ketbra{1}{1} \otimes I \otimes I\right)
+        &\text{with probability } \frac{1}{2},
     \end{cases}
   \end{equation}
-  Suppose that Alice has observed \(+1\). Notice that
-  only two of the components of the \(+1\)-eigenspace are seen in the
-  initial state \(\ket{\psi}\): \(\ket{0000}\) and
-  \(\ket{1010}\). Therefore, \(\ket{\psi}\) collapses to
+  Suppose that Alice has observed \(+1\). In this case, the initial
+  state \(\ket{\psi}\) collapses to
   \begin{equation}
     \ket{\psi}_{A1} =  \frac{1}{\sqrt{2}}(\ket{0000} + \ket{1010}),
   \end{equation}
@@ -352,51 +350,49 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
   \begin{equation}
     \operatorname{Out}((Z \otimes I)_{A} \otimes (I \otimes I)_{B}) =
     \begin{cases}
-      +1, \text{ proj. onto } \{\ket{0ijk} \mid i, j, k \in \{0, 1\}\}
-        \text{ with prob. } \frac{1}{2} \\
-      -1, \text{ proj. onto } \{\ket{1ijk} \mid i, j, k \in \{0, 1\}\}
-        \text{ with prob. } \frac{1}{2}.
+      +1 \left(\ketbra{0}{0} \otimes I \otimes I \otimes I\right)
+        &\text{with probability } \frac{1}{2} \\
+      -1 \left(\ketbra{1}{1} \otimes I \otimes I \otimes I\right)
+        &\text{with probability } \frac{1}{2}.
     \end{cases}
   \end{equation}
-  Suppose, now, that Alice has observed the outcome \(-1\). Notice that
-  only one component of the \(-1\)-eigenspace is seen in the state
-  \(\ket{\psi}_{A1}\). Hence, the state collapses to
+  Suppose, now, that Alice has observed the outcome \(-1\). The state
+  collapses to
   \begin{equation}
     \ket{\psi}_{A2} =  \ket{1010}.
   \end{equation}
   Finally, Alice measures the observable \(Z \otimes Z\), whose
-  only possible outcomes is
+  possible outcomes are
   \begin{equation}
     \operatorname{Out}((Z \otimes Z)_{A} \otimes (I \otimes I)_{B}) =
     \begin{cases}
-      -1, \text{ proj. onto } \{\ket{i\overline{i}jk} \mid i, j, k \in \{0, 1\}\}
-        \text{ with prob. } 1,
+      +1 \left(\left(\ketbra{00}{00} + \ketbra{11}{11}\right) \otimes I \otimes I\right)
+      &\text{with probability } 0 \\
+      -1 \left(\left(\ketbra{01}{01} + \ketbra{10}{10}\right) \otimes I \otimes I\right)
+      &\text{with probability } 1.
     \end{cases}
   \end{equation}
-  where \(\overline{i}\) is the \texttt{not} operator. Notice that,
-  because \(\ket{\psi}_{A2}\) falls exactly into the
-  \(-1\)-eigenspace, the only possible outcome is \(-1\), and the
-  state does not change, i.e. \(\ket{\psi}_{A3} = \ket{\psi}_{A2}\).
-  Alice, then, fills the first row with the values \(\{+1, -1, -1\}\),
-  whose product is, as required, \(+1\). Upon receiving Alice's
-  answer, Charlie goes to meet Bob. Suppose he assigns the second
-  column to Bob. To fill in the value of the first cell (which is the
-  intersection of the first row and second column), Bob measures the
-  observable \(Z \otimes I\). Notice that \(\ket{\psi}_{A3}\) is
-  entirely in the \(-1\)-eigenspace; thus, Bob will for sure observe
-  the outcome \(-1\) ---~which matches Alice's answer~--- and the
-  state will not change: \(\ket{\psi}_{B1} = \ket{\psi}_{A3}\). Moving
-  on to the second cell, Bob measures the observable \(I \otimes X\),
-  whose possible outcomes are (for readability, we are showing only
-  the components of the eigenspaces that are not orthogonal to
-  \(\ket{\psi}_{B1}\))
+  Notice that the only possible outcome that Alice can observe is
+  \(-1\), and the state does not change, i.e.
+  \(\ket{\psi}_{A3} = \ket{\psi}_{A2}\).  Alice, then, fills the first
+  row with the values \(\{+1, -1, -1\}\), whose product is, as
+  required, \(+1\). Upon receiving Alice's answer, Charlie goes to
+  meet Bob. Suppose he assigns the second column to Bob. To fill in
+  the value of the first cell (which is the intersection of the first
+  row and second column), Bob measures the observable \(Z \otimes
+  I\). The only possible outcome, considering the state
+  \(\ket{\psi}_{A3}\), is \(-1\) ---~which matches Alice's answer~---
+  and the state will not change again:
+  \(\ket{\psi}_{B1} = \ket{\psi}_{A3}\). Moving on to the second cell,
+  Bob measures the observable \(I \otimes X\), whose possible outcomes
+  are
   \begin{equation}
     \operatorname{Out}((I \otimes I)_{A} \otimes (I \otimes X)_{B}) =
     \begin{cases}
-      +1, \text{ proj. onto } \frac{1}{\sqrt{2}}(\ket{1010} + \ket{1011})
-        \text{ with prob. } \frac{1}{2} \\
-      -1, \text{ proj. onto } \frac{1}{\sqrt{2}}(\ket{1010} - \ket{1011})
-        \text{ with prob. } \frac{1}{2}.
+      +1 \left(I \otimes I \otimes I \otimes \ketbra{+}{+}\right)
+      &\text{with probability } \frac{1}{2} \\
+      -1 \left(I \otimes I \otimes I \otimes \ketbra{-}{-}\right)
+      &\text{with probability } \frac{1}{2}.
     \end{cases}
   \end{equation}
   Assume that Bob has observed the outcome \(+1\). Then, the state
@@ -405,20 +401,23 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
     \ket{\psi}_{B2} =  \frac{1}{\sqrt{2}}(\ket{1010} + \ket{1011}).
   \end{equation}
   Finally, Bob measures \(-Z \otimes X\) on his two qubits.
-  The only possible outcome is
+  The possible outcomes are
   \begin{equation}
     \operatorname{Out}((I \otimes I)_{A} \otimes (-Z \otimes X)_{B}) =
     \begin{cases}
-      +1, \text{ proj. onto } \frac{1}{\sqrt{2}}(\ket{1010} + \ket{1011})
-      \text{ with prob. } 1,
+      +1 \left(I \otimes I \otimes \left(\ketbra{1+}{1\!+\!} + \ketbra{0-}{0\!-\!}\right)\right)
+      &\text{with prob. } 1 \\
+      -1 \left(I \otimes I \otimes \left(\ketbra{1-}{1\!-\!} + \ketbra{0+}{0\!+\!}\right)\right)
+      &\text{with prob. } 0.
     \end{cases}
   \end{equation}
-  and the state does not change, i.e.
-  \(\ket{\psi}_{B3} = \ket{\psi}_{B2}\). Alice's answer satisfies the
-  property of the rows (that the product of the entries is equal to
-  \(+1\)) and Bob's answer satisfies the property of the columns
-  (product is equal to \(-1\)).  Moreover, Alice and Bob agreed in the
-  intersection of the row and the column.  Hence, they won this round!
+  Bob will for sure observe the outcome \(+1\) and the state does not
+  change, i.e.  \(\ket{\psi}_{B3} = \ket{\psi}_{B2}\). Therefore, Bob
+  answers \(\{-1, +1, +1\}\). Alice's answer satisfies the property of
+  the rows (that the product of the entries is equal to \(+1\)) and
+  Bob's answer satisfies the property of the columns (product is equal
+  to \(-1\)).  Moreover, Alice and Bob agreed in the intersection of
+  the row and the column.  Hence, they won this round!
 \end{tcbexample}
 \section{Quantum Unitaries (? research)}
 \label{sec:quantum-unitaries}
