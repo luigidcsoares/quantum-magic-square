@@ -298,7 +298,13 @@ construct a ``quantum magic'' square. Figure~\ref{fig:quantum} shows
 the \(3 \times 3\) grid that Alice and Bob can use to win the Magic
 Square game systematically.  Notice that the eigenvalues of the
 observables at each cell are \(\pm 1\). Furthermore, the product of
-every row is \(+I\) and the product of every column is \(-I\).
+every row is \(+I\) and the product of every column is \(-I\).  The
+quantum strategy works as follows: Alice measures all the observables
+from the \(i\)-th row of the predefined matrix. She fills each cell
+with the result of each measurement. Similarly, Bob measures all the
+observables in the \(j\)-th column that was assigned to him, and fills
+each cell of his column with the outcomes of each
+measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
 
 
 {\renewcommand{\arraystretch}{2}
