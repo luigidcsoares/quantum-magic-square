@@ -120,9 +120,6 @@ of a quantum winnin strategy~\cite{brassard:2005}.
 \todo{FIX: they talk about contextuality only (both theorems)}
 
 \paragraph{Outline of this paper.}
-\section{Contextuality}
-\label{sec:local-context}
-
 
 \section{The Magic Square Game}
 \label{sec:magic-square}
@@ -316,11 +313,11 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
       \\ \hhline{---~}
       +X \otimes I & +I \otimes X & +X \otimes X & \prod = I \otimes I = I
       \\ \hhline{---~}
-      -X \otimes Z & -Z \otimes X & +Y \otimes Y & \prod = -\ci{}I \otimes \ci{}I = I
+      -X \otimes Z & -Z \otimes X & +Y \otimes Y & \prod = \ci{}I \otimes -\ci{}I = I
       \\ \hhline{---~}
       \multicolumn{1}{>{\quad}c<{\quad}}{\prod = -I \otimes I = -I}
       & \multicolumn{1}{>{\quad}c<{\quad}}{\prod = -I \otimes I = -I}
-      & \multicolumn{1}{>{\quad}c<{\quad}}{\prod = \ci{}I \otimes \ci{}I = -I}
+      & \multicolumn{1}{>{\quad}c<{\quad}}{\prod = -\ci{}I \otimes -\ci{}I = -I}
     \end{array}\]
   \caption{\label{fig:quantum}}
 \end{figure}}
@@ -412,15 +409,81 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
     \end{cases}
   \end{equation}
   Bob will for sure observe the outcome \(+1\) and the state does not
-  change, i.e.  \(\ket{\psi}_{B3} = \ket{\psi}_{B2}\). Therefore, Bob
+ change, i.e.  \(\ket{\psi}_{B3} = \ket{\psi}_{B2}\). Therefore, Bob
   answers \(\{-1, +1, +1\}\). Alice's answer satisfies the property of
   the rows (that the product of the entries is equal to \(+1\)) and
   Bob's answer satisfies the property of the columns (product is equal
   to \(-1\)).  Moreover, Alice and Bob agreed in the intersection of
   the row and the column.  Hence, they won this round!
 \end{tcbexample}
+
+\subsection{Formal Proof}
+To prove that the quantum solution indeed works, we must demonstrate
+two fundamental properties. First, the product of the outcomes of the
+three measurements on each row (equivalently, column) is equal to 1
+(equiv. -1). Second, the outcome of Alice's measurements on the
+intersection is always equal to the outcome of Bob's
+measurement. Lemma~\ref{lem:product} formalizes the product property.
+
+\begin{lemma}[The Product Property of the Quantum Solution]
+  \label{lem:product}
+  Let \(M_{i, j}\) be the observable at the cell \((i, j)\) of the
+  \(3 \times 3\) grid shown in Figure~\ref{fig:quantum}. Then,
+  it follows that
+
+  \begin{align}
+    \textit{for every }i, \prod_{j} \operatorname{Out}(M_{i, j}) &= +1  \textit{, and} \\
+    \textit{for every }j, \prod_{i} \operatorname{Out}(M_{i, j}) &= -1.
+  \end{align}
+\end{lemma}
+
+\begin{proof}
+  \label{proof:product}
+  First, notice that \(X^{2} = Z^{2} = Y^{2} = I\), \(XZ = \ci{}Y\) and
+  \(ZX = -\ci{}Y\) (i.e. \(X\) and \(Z\) anticommute), and, similarly,
+  \(XY = \ci{}Z\) and \(YX = -\ci{}Z\). Using these properties, we can see
+  that the product of every row (equiv. column) is the identity \(I\)
+  (equiv. \(-I\)), regardless of the order of the three observables.
+  That is, the three observables of every row and every column
+  mutually commute (or, in other words, they are compatible).
+  Consequently, for every row and every column, it is possible to find
+  a basis of eigenvectors that are common to the three observables,
+  meaning that they can be simultaneous
+  diagonalized. Figure~\ref{fig:eigenv} shows these common
+  eigenvectors. Let  \(M_{i, j}\) be the observables at each cell.
+  Then, for every row \(i\) (equiv. column \(j\)), we have
+  \begin{align}
+    M_{i, 0} M_{i, 1} M_{i, 2}
+    &= (P_{i} \Lambda_{i, 0} P_{i}^{-1}) (P_{i}\Lambda_{i, 1}P_{i}^{-1}) (P_{i}\Lambda_{i, 2}P_{i}^{-1})
+      \nonumber \\
+    &= P_{i}(\Lambda_{i, 0} \Lambda_{i, 1} \Lambda_{i, 2})P_{i}^{-1} \nonumber \\
+    &= P_{i}\Lambda_{i}P_{i}^{-1},
+  \end{align}
+  where \(P_{i}\) is the matrix whose columns are the common
+  eigenvectors and \(\Lambda_{i}\) is the matrix whose diagonal is
+  formed by the products of the eigenvalues of the observables,
+  associated with the same eigenvector. What this essentially means is
+  that any measurement \(M_{i, j}\) yields one of the eigenvalues
+  \(\lambda\) in the diagonal of \(\Lambda_{i, j}\) and collapses the
+  state to a linear combination of one of the two shared eigenvectors
+  \(\ket{\lambda}_{1}\) and \(\ket{\lambda}_{2}\) in the
+  \(\lambda\)-eigenspace. Then, the second measurement will collapse
+  the state to either \(\ket{\lambda}_{1}\) or \(\ket{\lambda}_{2}\).
+  Consequently, the third measurement will not change the state any
+  further. Therefore, the product of the three outcomes will be the
+  product of the eigenvalues associated with either
+  \(\ket{\lambda}_{1}\) or \(\ket{\lambda}_{2}\), which is one of the
+  entries in the diagonal of \(\Lambda_{i}\). But, notice that
+  \(P_{i}\Lambda_{i}P_{i}^{-1} = I\); thus, \(\Lambda_{i} = I\) and
+  the only possible value for the product is \(1\) (equiv. \(-1\) for
+  columns).
+\end{proof}
+
 \section{Quantum Unitaries (? research)}
 \label{sec:quantum-unitaries}
+
+\section{Contextuality}
+\label{sec:context}
 
 \printbibliography{}
 \end{document}
