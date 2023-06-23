@@ -22,6 +22,7 @@
 \usepackage{nicefrac}
 \usepackage{hhline}
 \usepackage{bigdelim}
+\usepackage{booktabs}
 
 \usepackage{float}
 \usepackage{tcolorbox}
@@ -439,19 +440,19 @@ measurement. Lemma~\ref{lem:product} formalizes the product property.
 
 \begin{proof}
   \label{proof:product}
-  First, notice that \(X^{2} = Z^{2} = Y^{2} = I\), \(XZ = \ci{}Y\) and
-  \(ZX = -\ci{}Y\) (i.e. \(X\) and \(Z\) anticommute), and, similarly,
-  \(XY = \ci{}Z\) and \(YX = -\ci{}Z\). Using these properties, we can see
-  that the product of every row (equiv. column) is the identity \(I\)
-  (equiv. \(-I\)), regardless of the order of the three observables.
-  That is, the three observables of every row and every column
-  mutually commute (or, in other words, they are compatible).
-  Consequently, for every row and every column, it is possible to find
-  a basis of eigenvectors that are common to the three observables,
-  meaning that they can be simultaneous
-  diagonalized. Figure~\ref{fig:eigenv} shows these common
-  eigenvectors. Let  \(M_{i, j}\) be the observables at each cell.
-  Then, for every row \(i\) (equiv. column \(j\)), we have
+  First, notice that \(X^{2} = Z^{2} = Y^{2} = I\), \(XZ = \ci{}Y\)
+  and \(ZX = -\ci{}Y\) (i.e. \(X\) and \(Z\) anticommute), and,
+  similarly, \(XY = \ci{}Z\) and \(YX = -\ci{}Z\). Using these
+  properties, we can see that the product of every row (equiv. column)
+  is the identity \(I\) (equiv. \(-I\)), regardless of the order of
+  the three observables.  That is, the three observables of every row
+  and every column mutually commute (or, in other words, they are
+  compatible).  Consequently, for every row and every column, it is
+  possible to find a basis of eigenvectors that are common to the
+  three observables, meaning that they can be diagonalized
+  simultaneously. Tables~\ref{tab:eigenv-rows} and \ref{tab:eigenv-cols} show
+  these common eigenvectors. Let \(M_{i, j}\) be the observables at
+  each cell.  Then, for every row \(i\) (equiv. column \(j\)), we have
   \begin{align}
     M_{i, 0} M_{i, 1} M_{i, 2}
     &= (P_{i} \Lambda_{i, 0} P_{i}^{-1}) (P_{i}\Lambda_{i, 1}P_{i}^{-1}) (P_{i}\Lambda_{i, 2}P_{i}^{-1})
@@ -464,21 +465,127 @@ measurement. Lemma~\ref{lem:product} formalizes the product property.
   formed by the products of the eigenvalues of the observables,
   associated with the same eigenvector. What this essentially means is
   that any measurement \(M_{i, j}\) yields one of the eigenvalues
-  \(\lambda\) in the diagonal of \(\Lambda_{i, j}\) and collapses the
-  state to a linear combination of one of the two shared eigenvectors
+  \(\lambda\) in the diagonal of \(\Lambda_{i, j}\) and projects the
+  state onto the \(\lambda\)-eigenspace. That is, it collapses the
+  state to a linear combination of the two shared eigenvectors
   \(\ket{\lambda}_{1}\) and \(\ket{\lambda}_{2}\) in the
   \(\lambda\)-eigenspace. Then, the second measurement will collapse
-  the state to either \(\ket{\lambda}_{1}\) or \(\ket{\lambda}_{2}\).
-  Consequently, the third measurement will not change the state any
-  further. Therefore, the product of the three outcomes will be the
-  product of the eigenvalues associated with either
-  \(\ket{\lambda}_{1}\) or \(\ket{\lambda}_{2}\), which is one of the
-  entries in the diagonal of \(\Lambda_{i}\). But, notice that
+  the state to either \(\ket{\lambda}_{1}\) or \(\ket{\lambda}_{2}\),
+  eigenvectors common to the three observables.  Consequently, the
+  third measurement will not change the state any further. Therefore,
+  the product of the three outcomes will be the product of the
+  eigenvalues associated with either \(\ket{\lambda}_{1}\) or
+  \(\ket{\lambda}_{2}\), which is one of the entries in the diagonal
+  of \(\Lambda_{i}\). But, notice that
   \(P_{i}\Lambda_{i}P_{i}^{-1} = I\); thus, \(\Lambda_{i} = I\) and
-  the only possible value for the product is \(1\) (equiv. \(-1\) for
-  columns).
+  the only possible value for the product is \(1\) (equivalently
+  \(-1\) for columns). \qed
 \end{proof}
 
+\begin{table}[htbp]
+  \centering
+  \caption{Eigenvectors shared by the observables at each row of the quantum magic square.
+    The eigenvectors were taken from~\ref{xxx}, adapting to the correct eigenvalues.}
+  \label{tab:eigenv-rows}
+  \begin{tabular}{c*{4}{>{\;\;}c}}
+    \toprule
+    & & Column 1 & Column 2 & Column 3 \\
+    \midrule
+    \multirow{2}{*}{Row 1} & \(+1\)
+      & \ket{00}, \ket{10} & \ket{00}, \ket{01} & \ket{00}, \ket{11} \\
+    & \(-1\)
+      & \ket{01}, \ket{11} & \ket{10}, \ket{11} & \ket{01}, \ket{10} \\
+    \midrule
+    \multirow{4}{*}{Row 2} & \multirow{2}{*}{\(+1\)}
+      & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} + \ket{10} + \ket{11})\),
+                 & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} + \ket{10} + \ket{11})\),
+                            & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} + \ket{10} + \ket{11})\), \\ 
+    & & \((\nicefrac{1}{2}) (\ket{00} - \ket{01} + \ket{10} - \ket{11})\)\phantom{,} 
+                 & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} - \ket{10} - \ket{11})\)\phantom{,} 
+                            & \((\nicefrac{1}{2}) (\ket{00} - \ket{01} - \ket{10} + \ket{11})\)\phantom{,} \\[1.5mm]
+    & \multirow{2}{*}{\(-1\)}
+      & \((\nicefrac{1}{2}) (\ket{00} - \ket{01} - \ket{10} + \ket{11})\),
+                 & \((\nicefrac{1}{2}) (\ket{00} - \ket{01} - \ket{10} + \ket{11})\),
+                            & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} - \ket{10} - \ket{11})\), \\ 
+    & & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} - \ket{10} - \ket{11})\)\phantom{,} 
+                 & \((\nicefrac{1}{2}) (\ket{00} - \ket{01} + \ket{10} - \ket{11})\)\phantom{,} 
+                            & \((\nicefrac{1}{2}) (\ket{00} - \ket{01} + \ket{10} - \ket{11})\)\phantom{,} \\
+    \midrule
+    \multirow{4}{*}{Row 3} & \multirow{2}{*}{\(+1\)}
+      & \((\nicefrac{1}{2}) (\ket{01} - \ket{00} + \ket{10} + \ket{11})\),
+                 & \((\nicefrac{1}{2}) (\ket{01} - \ket{00} + \ket{10} + \ket{11})\),
+                            & \((\nicefrac{1}{2}) (\ket{01} - \ket{00} + \ket{10} + \ket{11})\), \\ 
+    & & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} - \ket{10} + \ket{11})\),
+                 & \((\nicefrac{1}{2}) (\ket{00} - \ket{01} + \ket{10} + \ket{11})\),
+                            & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} + \ket{10} - \ket{11})\), \\[1.5mm]
+    & \multirow{2}{*}{\(-1\)}
+      & \((\nicefrac{1}{2}) (\ket{00} - \ket{01} + \ket{10} + \ket{11})\),
+                 & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} - \ket{10} + \ket{11})\),
+                            & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} - \ket{10} + \ket{11})\), \\
+    & & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} + \ket{10} - \ket{11})\),
+                 & \((\nicefrac{1}{2}) (\ket{00} + \ket{01} + \ket{10} - \ket{11})\),
+                            & \((\nicefrac{1}{2}) (\ket{00} - \ket{01} + \ket{10} + \ket{11})\), \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Eigenvectors shared by the observables at each column of the quantum magic square.
+    The eigenvectors were taken from~\ref{xxx}, adapting to the correct eigenvalues.}
+  \label{tab:eigenv-cols}
+  \begin{tabular}{c*{4}{>{\;\;}c}}
+    \toprule
+    & & Row 1 & Row 2 & Row 3 \\
+    \midrule
+    \multirow{4}{*}{Column 1} & \multirow{2}{*}{\(+1\)}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} + \ket{10})\),
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} + \ket{10})\), 
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{10})\), \\
+    & &  \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{10})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} + \ket{11})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} + \ket{11})\)\phantom{,} \\[1.5mm]
+    & \multirow{2}{*}{\(-1\)}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} + \ket{11})\), 
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{10})\), 
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} + \ket{10})\), \\
+    & & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} - \ket{11})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} - \ket{11})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} - \ket{11})\)\phantom{,} \\
+    \midrule
+    \multirow{4}{*}{Column 2} & \multirow{2}{*}{\(+1\)}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} + \ket{01})\),
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} + \ket{01})\), 
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{01})\), \\
+    & &  \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{01})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{10} + \ket{11})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{10} + \ket{11})\)\phantom{,} \\[1.5mm]
+    & \multirow{2}{*}{\(-1\)}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{10} + \ket{11})\), 
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{01})\), 
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} + \ket{01})\), \\
+    & & \((\nicefrac{1}{\sqrt{2}}) (\ket{10} - \ket{11})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{10} - \ket{11})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{10} - \ket{11})\)\phantom{,} \\
+    \midrule
+        \multirow{4}{*}{Column 3} & \multirow{2}{*}{\(+1\)}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} + \ket{11})\),
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} + \ket{11})\), 
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} + \ket{10})\), \\
+    & &  \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{11})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} + \ket{10})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{11})\)\phantom{,} \\[1.5mm]
+    & \multirow{2}{*}{\(-1\)}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} + \ket{10})\), 
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{11})\), 
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{00} + \ket{11})\), \\
+    & & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} - \ket{10})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} - \ket{10})\)\phantom{,}
+      & \((\nicefrac{1}{\sqrt{2}}) (\ket{01} - \ket{10})\)\phantom{,} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+  
 \section{Quantum Unitaries (? research)}
 \label{sec:quantum-unitaries}
 
