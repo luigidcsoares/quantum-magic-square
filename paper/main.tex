@@ -585,7 +585,82 @@ measurement. Lemma~\ref{lem:product} formalizes the product property.
     \bottomrule
   \end{tabular}
 \end{table}
-  
+
+Lemma~\ref{lem:product} shows that the quantum solution satisfies the
+requirements of the game for every row and column. Now, we move on to
+show that Alice and Bob always agree in the value that they assign
+to the intersection of the row and column.
+
+\begin{lemma}[The Intersection Property of the Quantum Solution]
+  \label{lem:intersection}
+  For any row \(i\) assigned to Alice and column \(j\) assigned to
+  Bob, the value ascribed to the cell \((i, j)\) by Alice and Bob,
+  after they have performed their measurements, is always the same.
+\end{lemma}
+
+\begin{proof}
+  To prove that Alice and Bob agree at the intersection, it suffices
+  to look to the eigenvectors shared by each set of mutually commuting
+  operators, shown in Tables~\ref{tab:eigenv-rows} and
+  \ref{tab:eigenv-cols}.  Notice that, regardless of the row assigned
+  to Alice, the state of her subsystem after her measurements is
+  always one of the eigenvectors in that row. This state is always a
+  linear combination of one of Bob's eigenspaces for the cell in the
+  intersection (the same applies if we consider first Bob than Alice).
+  Take, for instance, the second row and first column. Suppose that
+  Alice's measurements collapsed her qubits to
+  \((\nicefrac{1}{2}) (\ket{00} - \ket{01} - \ket{10} + \ket{11})\).
+  This state can be written as
+  \((\nicefrac{1}{\sqrt{2}}) (\ket{00} - \ket{10}) -
+  (\nicefrac{1}{\sqrt{2}}) (\ket{01} - \ket{11})\), a linear
+  combination of the \(-1\)-eigenspace depicted in
+  Table~\ref{tab:eigenv-cols} (column 1, row 2).  What is left is to
+  show that Bob's state will be exactly the same as Alice's, implying
+  that Bob shall observe the same result. This follows from the fact
+  that the initial state is already symmetric (the first qubit of
+  Alice is equal to the first qubit of Bob; the same is true for their
+  second qubits) and the symmetry is preserved by any measurement
+  performed by Alice and Bob. For the first row, it is easy to see.
+  The others are trickier, but it all boils down to doing the
+  calculations.  Consider, for instance, the second row, and suppose
+  that the outcomes were \(-1\), \(-1\) and \(+1\), so that Alice's
+  state collapsed to
+  \((\nicefrac{1}{2}) (\ket{00} - \ket{01} - \ket{10} +
+  \ket{11})\). The state after the first measurement is
+  \begin{align}
+    &\frac{1}{2\sqrt{2}} \Bigl(
+    (\ket{00} - \ket{10}) \ket{00} +
+    (\ket{01} - \ket{11}) \ket{01} +
+    (\ket{10} - \ket{00}) \ket{10} +
+    (\ket{11} - \ket{01}) \ket{11}
+    \Bigr) \nonumber \\
+    \equiv\;
+    & \frac{1}{2\sqrt{2}} \Bigl(
+      \ket{00} (\ket{00} - \ket{10}) +
+      \ket{01} (\ket{01} - \ket{11}) +
+      \ket{10} (\ket{10} - \ket{00}) +
+      \ket{11} (\ket{11} - \ket{01})
+    \Bigr).
+  \end{align}
+  And, the state after the three measurements is
+  \begin{alignat}{2}
+    &\frac{1}{4} \Bigl(
+      &&(\ket{00} - \ket{01} - \ket{10} + \ket{11}) \ket{00} -
+        (\ket{00} - \ket{01} - \ket{10} + \ket{11}) \ket{01} - \nonumber \\
+    & &&(\ket{00} - \ket{01} - \ket{10} + \ket{11}) \ket{10} +
+      (\ket{00} - \ket{01} - \ket{10} + \ket{11}) \ket{11}
+    \Bigr) \nonumber \\
+    \equiv\;
+    & \frac{1}{4} \Bigl(
+      &&\ket{00} (\ket{00} - \ket{01} - \ket{10} + \ket{11}) -
+        \ket{01} (\ket{00} - \ket{01} - \ket{10} + \ket{11}) - \nonumber \\
+    & &&\ket{10} (\ket{00} - \ket{01} - \ket{10} + \ket{11}) +
+        \ket{11} (\ket{00} - \ket{01} - \ket{10} + \ket{11})
+    \Bigr).
+  \end{alignat}
+  The calculations for the other rows and columns are similar, so we omitted them.
+  \qed
+\end{proof}
 \section{Quantum Unitaries (? research)}
 \label{sec:quantum-unitaries}
 
