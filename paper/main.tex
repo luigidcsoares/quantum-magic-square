@@ -661,6 +661,18 @@ to the intersection of the row and column.
   \end{alignat}
   The calculations for the other rows and columns are similar, so we omitted them.
   \qed
+
+  With Lemmas~\ref{lem:product} and~\ref{lem:intersection}, we can prove
+  Theorem~\ref{theo:quantum-wins}, which states that there is a quantum strategy
+  for the Mermin-Peres magic square game that always win.
+
+  \begin{theorem}[The Mermin-Peres Magic Square Game Is Winnable]
+    \label{theo:quantum-wins}
+    There exists a quantum strategy for the Mermin-Peres magic square
+    game, which consists of allowing Alice and Bob to exchange
+    entangled qubits \emph{before} the game begins, that wins with
+    certainty every round.
+  \end{theorem}
 \end{proof}
 
 \subsection{Implementing with Circuits}
