@@ -48,6 +48,7 @@
 \DeclarePairedDelimiter{\card}{\lvert}{\rvert}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 \DeclareMathOperator{\tr}{tr}
+\newcommand{\cnot}{\mathit{CNOT}}
 
 %%%%%%%%%%%%%%%%%%%
 %%% General Cmds
@@ -284,7 +285,8 @@ used to prepare the initial state \(\ket{\psi}\).
       \ket{1111})\)}
     &
   \end{quantikz}
-  \caption{\label{fig:circuit-psi}}
+  \caption{Quantum circuit for preparing the initial joint state
+    of Alice and Bob.\label{fig:circuit-psi}}
 \end{figure}
 
 As seen in Section~\ref{sec:classic-sol}, the \emph{magic} square is
@@ -301,9 +303,8 @@ quantum strategy works as follows: Alice measures all the observables
 from the \(i\)-th row of the predefined matrix. She fills each cell
 with the result of each measurement. Similarly, Bob measures all the
 observables in the \(j\)-th column that was assigned to him, and fills
-each cell of his column with the outcomes of each
+each cell of his cells with the outcomes of each
 measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
-
 
 {\renewcommand{\arraystretch}{2}
 \begin{figure}
@@ -320,7 +321,7 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
       & \multicolumn{1}{>{\quad}c<{\quad}}{\prod = -I \otimes I = -I}
       & \multicolumn{1}{>{\quad}c<{\quad}}{\prod = -\ci{}I \otimes -\ci{}I = -I}
     \end{array}\]
-  \caption{\label{fig:quantum}}
+  \caption{Observables used by Alice and Bob to win the Magic Square game.\label{fig:quantum}}
 \end{figure}}
 
 \begin{tcbexample}{Quantum Solution}{quantum-sol}
@@ -422,7 +423,7 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
 To prove that the quantum solution indeed works, we must demonstrate
 two fundamental properties. First, the product of the outcomes of the
 three measurements on each row (equivalently, column) is equal to 1
-(equiv. -1). Second, the outcome of Alice's measurements on the
+(equiv. -1). Second, the outcome of Alice's measurement on the
 intersection is always equal to the outcome of Bob's
 measurement. Lemma~\ref{lem:product} formalizes the product property.
 
@@ -642,7 +643,7 @@ to the intersection of the row and column.
       \ket{11} (\ket{11} - \ket{01})
     \Bigr).
   \end{align}
-  And, the state after the three measurements is
+  And, the state after the second measurement is
   \begin{alignat}{2}
     &\frac{1}{4} \Bigl(
       &&(\ket{00} - \ket{01} - \ket{10} + \ket{11}) \ket{00} -
@@ -661,11 +662,148 @@ to the intersection of the row and column.
   The calculations for the other rows and columns are similar, so we omitted them.
   \qed
 \end{proof}
-\section{Quantum Unitaries (? research)}
-\label{sec:quantum-unitaries}
+
+\subsection{Implementing with Circuits}
+In this section, we show the circuits used to implement the quantum
+strategy. We implemented the solution using the \texttt{Qiskit}
+library. \texttt{Qiskit} only allows measurements in the computational
+basis. For any other basis \(B\), we must find an unitary
+transformation \(U\) such that \(B = U^{*} (Z \otimes I) U\) (where
+\(U^{*}\) denotes the Hermitian adjoint of \(U\)). For example,
+\(Z \otimes Z = \cnot{} (I \otimes Z) \cnot{}\) and
+\(X \otimes X = (H \otimes H) (Z \otimes Z) (H \otimes H)\). Figure~\ref{fig:change-basis}
+shows the unitaries for each of the nine observables.
+
+{\renewcommand{\arraystretch}{2}
+\begin{figure}
+  \centering
+  \[\begin{array}{|*{2}{>{\quad}c<{\quad}|}>{\quad}l<{\quad}|}
+      \hhline{---}
+      (I \otimes I) (Z \otimes I) (I \otimes I) & (I \otimes I) (I \otimes Z) (I \otimes I) & \cnot (I \otimes Z) \cnot
+      \\ \hhline{---}
+      (H \otimes I) (Z \otimes I) (H \otimes I) & (I \otimes H) (I \otimes Z) (I \otimes H) & (H \otimes H) (Z \otimes Z) (H \otimes H)
+      \\ \hhline{---}
+      (H \otimes Y) (Z \otimes Z) (H \otimes Y) & (Y \otimes H) (Z \otimes Z) (Y \otimes H) &
+       (S \otimes S) (X \otimes X) (S^{*} \otimes S^{*}) 
+      \\ \hhline{---}
+    \end{array}\]
+  \caption{Unitary transformations required for measuring in the
+    different basis. The actual basis measured is the middle
+    term of each cell, which, after expanding, is either
+    \(Z \otimes I\) or \(I \otimes Z\). For example, in the last
+    cell, \(X \otimes X\) evaluates to
+    \((H \otimes H) (Z \otimes Z) (H \otimes H)\).
+    \(Z \otimes Z\), in turn, becomes \(\cnot (I \otimes Z) \cnot\), meaning that
+    we measure the second qubit in the computational basis.\label{fig:change-basis}}
+\end{figure}}
+
+We now show the quantum circuits for each row and each column:
+
+\begin{description}
+\item[Row 0:] When assigned the first row, Alice performs the measurements
+  \(I \otimes Z, Z \otimes I\) and \(Z \otimes Z\), which the circuit
+  in Figure~\ref{fig:circ-row0} implements.
+
+  \begin{figure}[htbp]
+    \centering
+    \begin{quantikz}
+      \lstick{\(A_{0}\)}
+      & \metercw[label style={inner sep=1pt}]{a_{1}}
+      & \targ{}
+      &
+      & \targ{}
+      &
+      \\
+      \lstick{\(A_{1}\)}
+      & \metercw[label style={inner sep=1pt}]{a_{0}}
+      & \ctrl{-1}
+      & \metercw[label style={inner sep=1pt}]{a_{2}}
+      & \ctrl{-1}
+      &
+    \end{quantikz}
+    \caption{Quantum circuit for measuring the first row.\label{fig:circ-row0}}
+  \end{figure}
+
+  \item[Row 1:] When assigned the second row, Alice performs the measurements
+  \(X \otimes I, I \otimes X\) and \(X \otimes X\), which the circuit
+  in Figure~\ref{fig:circ-row1} implements.
+
+  \begin{figure}[htbp]
+    \centering
+    \begin{quantikz}
+      \lstick{\(A_{0}\)}
+      & \gate{H}
+      & \metercw[label style={inner sep=1pt}]{a_{0}}
+      & \ctrl{1}
+      &
+      & \ctrl{1}
+      & \gate{H}
+      &
+      \\
+      \lstick{\(A_{1}\)}
+      & \gate{H}
+      & \metercw[label style={inner sep=1pt}]{a_{1}}
+      & \targ{}
+      &  \metercw[label style={inner sep=1pt}]{a_{2}}
+      & \targ{}
+      & \gate{H}
+      &
+    \end{quantikz}
+    \caption{Quantum circuit for measuring the second row.\label{fig:circ-row1}}
+  \end{figure}
+
+    \item[Row 2:] When assigned the third row, Alice performs the measurements
+  \(-X \otimes Z, -Z \otimes X\) and \(Y \otimes Y\), which the circuit
+  in Figure~\ref{fig:circ-row2} implements.
+
+  \begin{figure}[htbp]
+    \centering
+    \begin{quantikz}[column sep=0.25cm]
+      \lstick{\(A_{0}\)}
+      & \gate{H}
+      & \ctrl{1}
+      &
+      & \ctrl{1}
+      & \gate{H}
+      & \gate{Y}
+      & \ctrl{1}
+      &
+      & \ctrl{1}
+      & \gate{S}
+      & \gate{H}
+      & \ctrl{1}
+      &
+      & \ctrl{1}
+      & \gate{H}
+      & \gate{S^*}
+      \\
+      \lstick{\(A_{1}\)}
+      & \gate{Y}
+      & \targ{}
+      & \metercw[label style={inner sep=1pt}]{a_{0}}
+      & \targ{}
+      & \gate{Y}
+      & \gate{H}
+      & \targ{}
+      & \metercw[label style={inner sep=1pt}]{a_{1}}
+      & \targ{}
+      & \gate{S}
+      & \gate{H}
+      & \targ{}
+      & \metercw[label style={inner sep=1pt}]{a_{2}}
+      & \targ{}
+      & \gate{H}
+      & \gate{S^*}
+    \end{quantikz}
+    \caption{Quantum circuit for measuring the third row.\label{fig:circ-row2}}
+  \end{figure}
+\end{description}
 
 \section{Contextuality}
 \label{sec:context}
+
+\section{Quantum Unitaries (? research)}
+\label{sec:quantum-unitaries}
 
 \printbibliography{}
 \end{document}
