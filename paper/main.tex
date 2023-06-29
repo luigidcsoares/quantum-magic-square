@@ -656,8 +656,8 @@ to the intersection of the row and column.
       &&\ket{00} (\ket{00} - \ket{01} - \ket{10} + \ket{11}) -
         \ket{01} (\ket{00} - \ket{01} - \ket{10} + \ket{11}) - \nonumber \\
     & &&\ket{10} (\ket{00} - \ket{01} - \ket{10} + \ket{11}) +
-        \ket{11} (\ket{00} - \ket{01} - \ket{10} + \ket{11})
-    \Bigr).
+         \ket{11} (\ket{00} - \ket{01} - \ket{10} + \ket{11})
+         \Bigr).
   \end{alignat}
   The calculations for the other rows and columns are similar, so we omitted them.
   \qed
@@ -675,27 +675,27 @@ transformation \(U\) such that \(B = U^{*} (Z \otimes I) U\) (where
 shows the unitaries for each of the nine observables.
 
 {\renewcommand{\arraystretch}{2}
-\begin{figure}
-  \centering
-  \[\begin{array}{|*{2}{>{\quad}c<{\quad}|}>{\quad}l<{\quad}|}
-      \hhline{---}
-      (I \otimes I) (Z \otimes I) (I \otimes I) & (I \otimes I) (I \otimes Z) (I \otimes I) & \cnot (I \otimes Z) \cnot
-      \\ \hhline{---}
-      (H \otimes I) (Z \otimes I) (H \otimes I) & (I \otimes H) (I \otimes Z) (I \otimes H) & (H \otimes H) (Z \otimes Z) (H \otimes H)
-      \\ \hhline{---}
-      (H \otimes Y) (Z \otimes Z) (H \otimes Y) & (Y \otimes H) (Z \otimes Z) (Y \otimes H) &
-       (S \otimes S) (X \otimes X) (S^{*} \otimes S^{*}) 
-      \\ \hhline{---}
-    \end{array}\]
-  \caption{Unitary transformations required for measuring in the
-    different basis. The actual basis measured is the middle
-    term of each cell, which, after expanding, is either
-    \(Z \otimes I\) or \(I \otimes Z\). For example, in the last
-    cell, \(X \otimes X\) evaluates to
-    \((H \otimes H) (Z \otimes Z) (H \otimes H)\).
-    \(Z \otimes Z\), in turn, becomes \(\cnot (I \otimes Z) \cnot\), meaning that
-    we measure the second qubit in the computational basis.\label{fig:change-basis}}
-\end{figure}}
+  \begin{figure}
+    \centering
+    \[\begin{array}{|*{2}{>{\quad}c<{\quad}|}>{\quad}l<{\quad}|}
+        \hhline{---}
+        (I \otimes I) (I \otimes Z) (I \otimes I) & (I \otimes I) (Z \otimes I) (I \otimes I) & \cnot (I \otimes Z) \cnot
+        \\ \hhline{---}
+        (H \otimes I) (Z \otimes I) (H \otimes I) & (I \otimes H) (I \otimes Z) (I \otimes H) & (H \otimes H) (Z \otimes Z) (H \otimes H)
+        \\ \hhline{---}
+        (H \otimes Y) (Z \otimes Z) (H \otimes Y) & (Y \otimes H) (Z \otimes Z) (Y \otimes H) &
+                                                                                                (S \otimes S) (X \otimes X) (S^{*} \otimes S^{*}) 
+        \\ \hhline{---}
+      \end{array}\]
+    \caption{Unitary transformations required for measuring in the
+      different basis. The actual basis measured is the middle
+      term of each cell, which, after expanding, is either
+      \(Z \otimes I\) or \(I \otimes Z\). For example, in the last
+      cell, \(X \otimes X\) evaluates to
+      \((H \otimes H) (Z \otimes Z) (H \otimes H)\).
+      \(Z \otimes Z\), in turn, becomes \(\cnot (I \otimes Z) \cnot\), meaning that
+      we measure the second qubit in the computational basis.\label{fig:change-basis}}
+  \end{figure}}
 
 We now show the quantum circuits for each row and each column:
 
@@ -724,7 +724,7 @@ We now show the quantum circuits for each row and each column:
     \caption{Quantum circuit for measuring the first row.\label{fig:circ-row0}}
   \end{figure}
 
-  \item[Row 1:] When assigned the second row, Alice performs the measurements
+\item[Row 1:] When assigned the second row, Alice performs the measurements
   \(X \otimes I, I \otimes X\) and \(X \otimes X\), which the circuit
   in Figure~\ref{fig:circ-row1} implements.
 
@@ -752,7 +752,7 @@ We now show the quantum circuits for each row and each column:
     \caption{Quantum circuit for measuring the second row.\label{fig:circ-row1}}
   \end{figure}
 
-    \item[Row 2:] When assigned the third row, Alice performs the measurements
+\item[Row 2:] When assigned the third row, Alice performs the measurements
   \(-X \otimes Z, -Z \otimes X\) and \(Y \otimes Y\), which the circuit
   in Figure~\ref{fig:circ-row2} implements.
 
@@ -796,6 +796,112 @@ We now show the quantum circuits for each row and each column:
       & \gate{S^*}
     \end{quantikz}
     \caption{Quantum circuit for measuring the third row.\label{fig:circ-row2}}
+  \end{figure}
+
+\item[Column 0:] When assigned the first column, Bob performs the measurements
+  \(I \otimes Z, X \otimes I\) and \(-X \otimes Z\), which the circuit
+  in Figure~\ref{fig:circ-col0} implements.
+
+  \begin{figure}[htbp]
+    \centering
+    \begin{quantikz}
+      \lstick{\(B_{0}\)}
+      & \gate{H}
+      & \metercw[label style={inner sep=1pt}]{b_{1}}
+      &
+      & \ctrl{1}
+      &
+      & \ctrl{1}
+      & \gate{H}
+      &
+      \\
+      \lstick{\(B_{1}\)}
+      &
+      & \metercw[label style={inner sep=1pt}]{b_{0}}
+      & \gate{Y}
+      & \targ{}
+      & \metercw[label style={inner sep=1pt}]{b_{1}}
+      & \targ{}
+      & \gate{Y}
+      &
+    \end{quantikz}
+    \caption{Quantum circuit for measuring the first column.\label{fig:circ-col0}}
+  \end{figure}
+
+\item[Column 1:] When assigned the second column, Bob performs the measurements
+  \(Z \otimes I, I \otimes X\) and \(-Z \otimes X\), which the circuit
+  in Figure~\ref{fig:circ-col1} implements.
+
+  \begin{figure}[htbp]
+    \centering
+    \begin{quantikz}
+      \lstick{\(B_{0}\)}
+      & 
+      & \metercw[label style={inner sep=1pt}]{b_{0}}
+      & \gate{Y}
+      & \ctrl{1}
+      &
+      & \ctrl{1}
+      & \gate{Y}
+      &
+      \\
+      \lstick{\(B_{1}\)}
+      & \gate{H}
+      & \metercw[label style={inner sep=1pt}]{b_{1}}
+      & 
+      & \targ{}
+      & \metercw[label style={inner sep=1pt}]{b_{2}}
+      & \targ{}
+      & \gate{H}
+      &
+    \end{quantikz}
+    \caption{Quantum circuit for measuring the second column.\label{fig:circ-col1}}
+  \end{figure}
+
+\item[Column 2:] When assigned the third column, Bob performs the measurements
+  \(Z \otimes Z, X \otimes X\) and \(Y \otimes X\), which the circuit
+  in Figure~\ref{fig:circ-col2} implements.
+
+  \begin{figure}[htbp]
+    \centering
+    \begin{quantikz}[column sep=0.25cm]
+      \lstick{\(B_{0}\)}
+      & \ctrl{1}
+      &
+      & \ctrl{1}
+      & \gate{H}
+      & \ctrl{1}
+      &
+      & \ctrl{1}
+      & \gate{H}
+      & \gate{S}
+      & \gate{H}
+      & \ctrl{1}
+      &
+      & \ctrl{1}
+      & \gate{H}
+      & \gate{S^*}
+      &
+      \\
+      \lstick{\(B_{1}\)}
+      & \targ{}
+      & \metercw[label style={inner sep=1pt}]{b_{0}}
+      & \targ{}
+      & \gate{H}
+      & \targ{}
+      & \metercw[label style={inner sep=1pt}]{b_{1}}
+      & \targ{}
+      & \gate{H}
+      & \gate{S}
+      & \gate{H}
+      & \targ{}
+      & \metercw[label style={inner sep=1pt}]{b_{2}}
+      & \targ{}
+      & \gate{H}
+      & \gate{S^*}
+      &
+    \end{quantikz}
+    \caption{Quantum circuit for measuring the third column.\label{fig:circ-col2}}
   \end{figure}
 \end{description}
 
