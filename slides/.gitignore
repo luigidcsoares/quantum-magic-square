@@ -1,0 +1,15 @@
+# LaTeX (+ Emacs stuff)
+*.el
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.bcf
+*.xml
+*.nav
+*.snm
+*.toc

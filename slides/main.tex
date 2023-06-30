@@ -1,0 +1,227 @@
+\documentclass[t, aspectratio=169, table]{beamer}
+
+%%%%%%%%%%
+%%% Packages
+%%%%%%%%%%
+
+\usepackage{xcolor}
+\usepackage{hhline}
+
+%%%%%%%%%%
+%%% Sections
+%%%%%%%%%%
+
+\newif{\ifsectionPage}
+\newcommand{\sectionPageDefault}{\global\sectionPagetrue}
+\newcommand{\disableNextSectionPage}{\global\sectionPagefalse}
+\sectionPageDefault{}
+\AtBeginSection[]{%
+  \ifsectionPage{}
+    \frame{\sectionpage}
+  \fi
+  \sectionPageDefault{}}
+
+%%%%%%%%%%
+%%% Doc Info
+%%%%%%%%%%
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
+\author[Luigi Soares \& Roberto Rosmaninho]{%
+  Luigi Soares (\email{luigi.domenico@dcc.ufmg.br}) \\
+  Roberto Rosmaninho (\email{TODO})}
+\institute[DCC/UFMG]{}
+\date{03/07/2023}
+\title[Pseudotelepatia Quântica]{Pseudotelepatia Quântica (TODO)}
+
+\usetheme{ufmg}
+
+\begin{document}
+\maketitle
+
+\section{Quadrado Mágico}
+
+\begin{frame}{Introdução ao Jogo}
+  \begin{itemize}[<+->]
+  \item Jogo cooperativo não-local
+  \item Dois jogadores: Alice e Bob
+  \item Um árbitro: Charlie
+  \item Alice e Bob não podem se comunicar após o início
+  \item A cada rodada:
+    \begin{enumerate}[<+->]
+    \item Charlie sorteia uma linha 0, 1 ou 2 de uma matriz \(3 \times 3\) e atribui à Alice
+    \item Alice preenche as três células com \(+1\) ou \(-1\), de forma que o produto seja \(+1\)
+    \item Charlie sorteia uma coluna 0, 1 ou 2 da matriz e atribui ao Bob
+    \item Bob preenche as três células com \(+1\) ou \(-1\), de forma que o produto seja \(-1\)
+    \item Alice e Bob vencem se respeitaram  e concordaram
+      no valor da interseção
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exemplo 1 (Vitória)}
+  \renewcommand{\arraystretch}{2}
+  \vfill{}
+  \begin{minipage}{0.45\textwidth}
+    \begin{center}
+      Alice \(\leftarrow 0\)
+    \end{center}
+    \[\begin{array}{|>{\quad}c<{\quad}|*{2}{>{\quad}c<{\quad}|}c}
+        \hhline{---}
+        +1 & \cellcolor{gray!50} -1 & -1 & \prod = +1
+        \\ \hhline{---}
+           & & &
+        \\ \hhline{---}
+           & & &
+        \\ \hhline{---}
+        \multicolumn{1}{c}{}
+        & \multicolumn{1}{c}{}
+        & \multicolumn{1}{c}{}
+      \end{array}\]
+  \end{minipage}
+  \hfill{}
+  \begin{minipage}{0.45\textwidth}
+    \begin{center}
+      Bob \(\leftarrow 1\)
+    \end{center}
+    \[\begin{array}{|>{\quad}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
+        \hhline{---}
+        \phantom{+1} & \cellcolor{gray!50}-1 & \phantom{-1}
+        \\ \hhline{---}
+           & +1 &
+        \\ \hhline{---}
+           & +1 &
+        \\ \hhline{---}
+        \multicolumn{1}{c}{}
+        & \multicolumn{1}{c}{\prod = -1}
+        & \multicolumn{1}{c}{}
+      \end{array}\]
+  \end{minipage}  
+  \vfill{}
+\end{frame}
+
+\begin{frame}{Exemplo 2 (Derrota, Interseção)}
+  \renewcommand{\arraystretch}{2}
+  \vfill{}
+  \begin{minipage}{0.45\textwidth}
+    \begin{center}
+      Alice \(\leftarrow 1\)
+    \end{center}
+    \[\begin{array}{|>{\quad}c<{\quad}|*{2}{>{\quad}c<{\quad}|}c}
+        \hhline{---}
+           & & &
+        \\ \hhline{---}
+        +1 & \cellcolor{red!80!black!55} -1 & -1 & \prod = +1
+        \\ \hhline{---}
+           & & &
+        \\ \hhline{---}
+        \multicolumn{1}{c}{}
+        & \multicolumn{1}{c}{}
+        & \multicolumn{1}{c}{}
+      \end{array}\]
+  \end{minipage}
+  \hfill{}
+  \begin{minipage}{0.45\textwidth}
+    \begin{center}
+      Bob \(\leftarrow 1\)
+    \end{center}
+    \[\begin{array}{|>{\quad}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
+        \hhline{---}
+        \phantom{+1} & -1 & \phantom{-1}
+        \\ \hhline{---}
+           & \cellcolor{red!80!black!55} +1 &
+        \\ \hhline{---}
+           & +1 &
+        \\ \hhline{---}
+        \multicolumn{1}{c}{}
+        & \multicolumn{1}{c}{\prod = -1}
+        & \multicolumn{1}{c}{}
+      \end{array}\]
+  \end{minipage}  
+  \vfill{}
+\end{frame}
+
+\begin{frame}{Exemplo 3 (Derrota, Produto)}
+  \renewcommand{\arraystretch}{2}
+  \vfill{}
+  \begin{minipage}{0.45\textwidth}
+    \begin{center}
+      Alice \(\leftarrow 1\)
+    \end{center}
+    \[\begin{array}{|>{\quad}c<{\quad}|*{2}{>{\quad}c<{\quad}|}c}
+        \hhline{---}
+           & & &
+        \\ \hhline{---}
+        +1 & \cellcolor{gray!50} +1 & -1 & \cellcolor{red!80!black!55}\prod = -1
+        \\ \hhline{---}
+           & & &
+        \\ \hhline{---}
+        \multicolumn{1}{c}{}
+        & \multicolumn{1}{c}{}
+        & \multicolumn{1}{c}{}
+      \end{array}\]
+  \end{minipage}
+  \hfill{}
+  \begin{minipage}{0.45\textwidth}
+    \begin{center}
+      Bob \(\leftarrow 1\)
+    \end{center}
+    \[\begin{array}{|>{\quad}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
+        \hhline{---}
+        \phantom{+1} & -1 & \phantom{-1}
+        \\ \hhline{---}
+           & \cellcolor{gray!50} +1 &
+        \\ \hhline{---}
+           & +1 &
+        \\ \hhline{---}
+        \multicolumn{1}{c}{}
+        & \multicolumn{1}{c}{\prod = -1}
+        & \multicolumn{1}{c}{}
+      \end{array}\]
+  \end{minipage}  
+  \vfill{}
+\end{frame}
+
+\begin{frame}{Estratégia Clássica (Determinística)}
+  \begin{itemize}[<+->]
+  \item Alice e Bob não podem se comunicar \emph{durante} o jogo, mas
+    podem \emph{antes}
+  \item Uma estratégia determinística consiste em 
+    preparem matrizes pré-definidas
+  \end{itemize}
+
+  \only<+->{
+    \renewcommand{\arraystretch}{2}
+    \vfill{}
+    \begin{minipage}{0.45\textwidth}
+      \begin{center}
+        Alice
+        \[\begin{array}{|>{\quad\columncolor{gray!50}}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
+            \hhline{---}
+            -1 & \onslide<+->{\only<.(1)->{\cellcolor{gray!50}}-1} & \onslide<.->{\only<.(2)->{\cellcolor{red!80!black!55}}+1}
+            \\ \hhline{---}
+            -1 & \onslide<.->{\only<.(1)->{\cellcolor{gray!50}}-1} & \onslide<.->{\only<.(2)->{\cellcolor{gray!50}}+1}
+            \\ \hhline{---}
+            -1 & \onslide<.->{\only<.(1)->{\cellcolor{gray!50}}-1} & \onslide<.->{\only<.(2)->{\cellcolor{gray!50}}+1}
+            \\ \hhline{---}
+          \end{array}\]
+      \end{center}
+    \end{minipage}
+    \hfill{}
+    \begin{minipage}{0.45\textwidth}
+      \begin{center}
+        Bob
+        \[\begin{array}{|>{\quad\columncolor{gray!50}}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
+            \hhline{---}
+            -1 & \onslide<+->{\only<.->{\cellcolor{gray!50}}-1} & \onslide<.(1)->{\only<.(1)->{\cellcolor{red!80!black!55}}-1}
+            \\ \hhline{---}
+            -1 & \only<.->{\cellcolor{gray!50}-1} & \only<.(1)->{\cellcolor{gray!50}+1}
+            \\ \hhline{---}
+            -1 & \only<.->{\cellcolor{gray!50}-1} & \only<.(1)->{\cellcolor{gray!50}+1}
+            \\ \hhline{---}
+          \end{array}\]
+      \end{center}
+    \end{minipage}  
+    \vfill{}
+  }
+\end{frame}
+\end{document}
