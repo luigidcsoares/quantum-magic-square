@@ -469,14 +469,14 @@ measurement. Lemma~\ref{lem:product} formalizes the product property.
   \(\lambda\) in the diagonal of \(\Lambda_{i, j}\) and projects the
   state onto the \(\lambda\)-eigenspace. That is, it collapses the
   state to a linear combination of the two shared eigenvectors
-  \(\ket{\lambda}_{1}\) and \(\ket{\lambda}_{2}\) in the
+  \(\ket{\lambda}_{0}\) and \(\ket{\lambda}_{1}\) in the
   \(\lambda\)-eigenspace. Then, the second measurement will collapse
-  the state to either \(\ket{\lambda}_{1}\) or \(\ket{\lambda}_{2}\),
+  the state to either \(\ket{\lambda}_{0}\) or \(\ket{\lambda}_{1}\),
   eigenvectors common to the three observables.  Consequently, the
   third measurement will not change the state any further. Therefore,
   the product of the three outcomes will be the product of the
-  eigenvalues associated with either \(\ket{\lambda}_{1}\) or
-  \(\ket{\lambda}_{2}\), which is one of the entries in the diagonal
+  eigenvalues associated with either \(\ket{\lambda}_{0}\) or
+  \(\ket{\lambda}_{1}\), which is one of the entries in the diagonal
   of \(\Lambda_{i}\). But, notice that
   \(P_{i}\Lambda_{i}P_{i}^{-1} = I\); thus, \(\Lambda_{i} = I\) and
   the only possible value for the product is \(1\) (equivalently
@@ -721,16 +721,16 @@ We now show the quantum circuits for each row and each column:
     \begin{quantikz}
       \lstick{\(A_{0}\)}
       & \metercw[label style={inner sep=1pt}]{a_{1}}
-      & \targ{}
+      & \ctrl{1}
       &
-      & \targ{}
+      & \ctrl{1}
       &
       \\
       \lstick{\(A_{1}\)}
       & \metercw[label style={inner sep=1pt}]{a_{0}}
-      & \ctrl{-1}
+      & \targ{}
       & \metercw[label style={inner sep=1pt}]{a_{2}}
-      & \ctrl{-1}
+      & \targ{}
       &
     \end{quantikz}
     \caption{Quantum circuit for measuring the first row.\label{fig:circ-row0}}
