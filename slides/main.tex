@@ -6,6 +6,32 @@
 
 \usepackage{xcolor}
 \usepackage{hhline}
+\usepackage{booktabs}
+\usepackage{nicefrac}
+\usepackage{tikz}
+\usetikzlibrary{quantikz2}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+\newtcbtheorem{tcblemma}{Lema}{
+  boxrule=0.15mm,
+  colback=gray!15,
+  % colbacktitle=gray!15,
+  % coltitle=red!50!black,
+  % fonttitle=\bfseries,
+  coltext=red!40!black,
+  detach title,
+  % before upper={\tcbtitle},
+  % separator sign none,
+  % description delimiters={(}{). }
+}{lem}
+
+\newcommand{\ketbra}[2]{\ensuremath{| #1 \rangle \langle #2 |}}
+\newcommand{\ci}{\mathrm{i}}
+\DeclarePairedDelimiter{\card}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\cnot}{\mathit{CNOT}}
 
 %%%%%%%%%%
 %%% Sections
@@ -185,11 +211,16 @@
   \begin{itemize}[<+->]
   \item Alice e Bob não podem se comunicar \emph{durante} o jogo, mas
     podem \emph{antes}
+    
   \item Uma estratégia determinística consiste em 
-    preparem matrizes pré-definidas
+    prepar matrizes pré-definidas
+    
+  \item<only@7-> É impossível vencer com 100\% de chance toda rodada
+    
+  \item<only@9-> A melhor estratégia determinística vence com probabilidade \(\nicefrac{8}{9}\)
   \end{itemize}
 
-  \only<+->{
+  \only<3-6>{
     \renewcommand{\arraystretch}{2}
     \vfill{}
     \begin{minipage}{0.45\textwidth}
@@ -197,11 +228,11 @@
         Alice
         \[\begin{array}{|>{\quad\columncolor{gray!50}}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
             \hhline{---}
-            -1 & \onslide<+->{\only<.(1)->{\cellcolor{gray!50}}-1} & \onslide<.->{\only<.(2)->{\cellcolor{red!80!black!55}}+1}
+            -1 & \onslide<4->{\only<5->{\cellcolor{gray!50}}-1} & \onslide<4->{\only<6->{\cellcolor{red!80!black!55}}+1}
             \\ \hhline{---}
-            -1 & \onslide<.->{\only<.(1)->{\cellcolor{gray!50}}-1} & \onslide<.->{\only<.(2)->{\cellcolor{gray!50}}+1}
+            -1 & \onslide<4->{\only<5->{\cellcolor{gray!50}}-1} & \onslide<4->{\only<6->{\cellcolor{gray!50}}+1}
             \\ \hhline{---}
-            -1 & \onslide<.->{\only<.(1)->{\cellcolor{gray!50}}-1} & \onslide<.->{\only<.(2)->{\cellcolor{gray!50}}+1}
+            -1 & \onslide<4->{\only<5->{\cellcolor{gray!50}}-1} & \onslide<4->{\only<6->{\cellcolor{gray!50}}+1}
             \\ \hhline{---}
           \end{array}\]
       \end{center}
@@ -212,16 +243,216 @@
         Bob
         \[\begin{array}{|>{\quad\columncolor{gray!50}}c<{\quad}|*{2}{>{\quad}c<{\quad}|}}
             \hhline{---}
-            -1 & \onslide<+->{\only<.->{\cellcolor{gray!50}}-1} & \onslide<.(1)->{\only<.(1)->{\cellcolor{red!80!black!55}}-1}
+            -1 & \onslide<5->{\only<5->{\cellcolor{gray!50}}-1} & \onslide<6->{\only<6->{\cellcolor{red!80!black!55}}-1}
             \\ \hhline{---}
-            -1 & \only<.->{\cellcolor{gray!50}-1} & \only<.(1)->{\cellcolor{gray!50}+1}
+            -1 & \only<5->{\cellcolor{gray!50}-1} & \only<6->{\cellcolor{gray!50}+1}
             \\ \hhline{---}
-            -1 & \only<.->{\cellcolor{gray!50}-1} & \only<.(1)->{\cellcolor{gray!50}+1}
+            -1 & \only<5->{\cellcolor{gray!50}-1} & \only<6->{\cellcolor{gray!50}+1}
             \\ \hhline{---}
           \end{array}\]
       \end{center}
     \end{minipage}  
     \vfill{}
   }
+
+  \only<8>{
+    \[\begin{aligned}
+        m_{0,0}\, m_{0,1}\, m_{0,2} &= +1 \\
+        m_{1,0}\, m_{1,1}\, m_{1,2} &= +1 \\
+        m_{2,0}\, m_{2,1}\, m_{2,2} &= +1 \\
+        m_{0,0}\, m_{1,0}\, m_{2,0} &= -1 \\
+        m_{0,1}\, m_{1,1}\, m_{2,1} &= -1 \\
+        m_{0,2}\, m_{1,2}\, m_{2,2} &= -1 \\
+        \midrule
+        +1 &= -1
+      \end{aligned}\]
+  }
 \end{frame}
+
+\begin{frame}{Estratégia Clássica (Probabilística)}
+  \begin{itemize}[<+->]
+  \item Alice e Bob jogam uma moeda para decidir o valor de cada célula
+    
+  \item Isto é equivalente a cada um deles sortear uma
+    dentre todas as possíveis matrizes
+    
+  \item A combinação das duas matrizes sorteadas é uma estratégia determinística
+    
+  \item Ou seja, qualquer estratégia probabilística é limitada pela
+    melhor estratégia determinística. Logo, a chance de sucesso
+    clássico é no máximo \(\nicefrac{8}{9}\)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Estratégia Quântica}
+  \begin{itemize}[<only@+-5>]
+  \item E se Alice e Bob puderem carregar qubits?
+    
+  \item Existe uma estratégia quântica que os permite vencer qualquer
+    rodada
+
+  \item Alice e Bob compartilham qubits emaranhados (um par para cada rodada):
+    \[
+      \ket{\psi} = \frac{1}{2}\left(
+        \ket{00}_{A} \otimes \ket{00}_{B} + \ket{01}_{A} \otimes \ket{01}_{B} +
+        \ket{10}_{A} \otimes \ket{10}_{B} + \ket{11}_{A} \otimes \ket{11}_{B}
+      \right)
+    \]
+    
+  \item Ao receber uma linha/coluna, eles medem seus qubits
+    
+  \item  O resultado de cada medição é o valor de cada célula
+  \end{itemize}
+
+  \only<+->{
+    \renewcommand{\arraystretch}{2}
+    \centering
+    \[\begin{array}{|*{3}{>{\quad}c<{\quad}|}c}
+        \hhline{---~}
+        +I \otimes Z & +Z \otimes I & +Z \otimes Z & \onslide<.(1)->{\color{green!50!black}+I}
+        \\ \hhline{---~}
+        +X \otimes I & +I \otimes X & +X \otimes X & \onslide<.(1)->{\color{green!50!black}+I}
+        \\ \hhline{---~}
+        -X \otimes Z & -Z \otimes X & +Y \otimes Y & \onslide<.(1)->{\color{green!50!black}+I}
+        \\ \hhline{---~}
+        \multicolumn{1}{c}{\onslide<.(1)->{\color{red!50!black}-I}} &
+        \multicolumn{1}{c}{\onslide<.(1)->{\color{red!50!black}-I}} &
+        \multicolumn{1}{c}{\onslide<.(1)->{\color{red!50!black}-I}} &
+      \end{array}\]
+  }
+\end{frame}
+
+\begin{frame}{Exemplo 4}
+  \begin{enumerate}[<only@+->]
+  \item Alice recebe a linha 0 e mede seu segundo qubit com
+    \(Z\). Suponha que ela tenha observado \(+1\). Ela atribui \(+1\)
+    à primeira celula e o estado inicial \(\ket{\psi}\) colapsa para
+    \[
+      \ket{\psi_{A1}} = \frac{1}{\sqrt{2}} (\ket{0000} + \ket{1010})
+    \]
+  \item Em seguida, Alice mede seu primeiro qubit com \(Z\). Suponha que
+    ela tenha observado \(-1\). Ela atribui \(-1\) à segunda célula e o estado
+    colapsa para
+    \[
+      \ket{\psi_{A2}} = \ket{1010}
+    \]
+  \item Para a terceira célula, ela mede seus dois qubits com \(Z \otimes Z\).
+    O único resultado possível é \(-1\) e o estado não se altera:
+    \(
+      \ket{\psi_{A3}} = \ket{\psi_{A2}}.
+    \)
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Exemplo 4}
+  \begin{enumerate}[<only@+->]
+  \item Suponha que Bob tenha recebido a coluna 1. Para a primeira
+    célula, ele mede seu primeiro qubit com \(Z\). Ele observa \(-1\) com
+    (igual Alice) com probabilidade 1, e
+    \[
+      \ket{\psi_{B1}} = \ket{\psi_{A3}} = \ket{1010}
+    \]
+    
+  \item Em seguida, Bob mede seu segundo qubit com \(X\).
+    Suponha que ele observe \(+1\). Então, o estado colapsa para
+    \[
+      \ket{\psi_{B2}} = \frac{1}{\sqrt{2}} (\ket{1010} + \ket{1011})
+    \]
+
+  \item Para a terceira célula, ele mede ambos os qubits com
+    \(-Z \otimes X\).  O único resultado possível é \(+1\), o que
+    satisfaz a restrição sobre o produto da coluna.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Lema 1: Produto das Linhas e Colunas}
+  \begin{tcblemma}{}{msquare-quantum-prod}
+    Seja \(M_{i, j}\) o observável na célula \((i, j)\) da estratégia
+    quântica, segue que, para toda linha \(i\),
+    \(\prod_{j} \operatorname{Out}(M_{i, j}) = +1\), e, para toda
+    coluna \(j\), \(\prod_{i} \operatorname{Out}(M_{i, j}) = -1\).
+  \end{tcblemma}
+
+  \begin{itemize}[<+(1)->]
+  \item Note que, em qualquer linha e coluna, os três
+    observáveis comutam entre si.
+    
+  \item Ou seja, é possível encontrar uma base de autovetores em comum, que
+    diagonaliza os três. Para toda linha \(i\) (equiv. coluna \(j\)),
+    \begin{align*}
+      M_{i,0} M_{i,1} M_{i,2} &= (P_{i} \Lambda_{i, 0}P^{-1}) (P_{i} \Lambda_{i, 1}P^{-1}) (P_{i} \Lambda_{i, 2}P_{i}^{-1}) \\
+      &= P_{i} (\Lambda_{i, 0} \Lambda_{i, 1} \Lambda_{i, 2})P_{i}^{-1} \\
+      &= P_{i} \Lambda_{i} P_{i}^{-1}
+    \end{align*}
+    
+  \item Cada entrada de \(\Lambda_{i}\) é o produto dos autovalores p/ mesmo autovetor
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Lema 1: Produto das Linhas e Colunas}
+  \begin{itemize}[<+->]
+  \item Os autovalores são sempre \(+1\) e \(-1\)
+    
+  \item Tem sempre dois autovetores em comum para cada autoespaço
+    
+  \item O que isso significa é que a primeira medição de qualquer
+    linha/coluna resulta em um autovalor \(\lambda\) colapsa para uma
+    combinação de dois autovetores \(\ket{\lambda}_{0}\) e
+    \(\ket{\lambda}_{1}\)
+    
+  \item A segunda medição, então, colapsa para \(\ket{\lambda}_{0}\)
+    ou \(\ket{\lambda_{1}}\), e fixa o estado.
+
+  \item Logo, as medições irão resultar nos autovalores correspondentes
+    a \(\ket{\lambda}_{0}\)  ou \(\ket{\lambda}_{1}\)
+
+  \item O produto das três medições é uma das entradas de \(\Lambda_{i}\)
+    
+  \item Mas, para toda linha \(i\), temos
+    \(P_{i} \Lambda_{i} P_{i}^{-1} = I\). Logo, \(\Lambda_{i} = I\) e o
+    produto das três medições é \(+1\) sempre. Para toda coluna \(j\),
+    \(P_{j} \Lambda_{j} P_{j}^{-1} = -I\) e \(\Lambda_{j} = -I\)
+  \end{itemize}
+\end{frame}
+% \begin{center}
+    %   \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+    %     \node (phantom) [
+    %     vertex, label=above right:{\phantom{\(-X \otimes Z\)}},
+    %     label=below right:{\phantom{\(-X \otimes Z\)}}
+    %     ] at (2, -4) {};
+        
+    %     \node (00) [vertex, label=above left:{\(I \otimes Z\)},] at (-2, 0) {};
+    %     \node (01) [vertex, label=above left:{\(Z \otimes I\)}] at (0,  0) {};
+    %     \node (02) [vertex, label=above left:{\(Z \otimes X\)}] at (2,  0) {};
+
+    %     \node (10) [vertex, label=above left:{\(X \otimes I\)}] at (-2, -2) {};
+    %     \node (11) [vertex, label=above left:{\(I \otimes X\)}] at (0,  -2) {};
+    %     \node (12) [vertex, label=above left:{\(X \otimes X\)}] at (2,  -2) {};
+
+    %     \node (20) [vertex, label=above left:{\(-X \otimes Z\)}] at (-2, -4) {};
+    %     \node (21) [vertex, label=above left:{\(-Z \otimes X\)}] at (0,  -4) {};
+    %     \node (22) [vertex, label=above left:{\(Y \otimes Y\)}] at (2,  -4) {};
+        
+    %     \only<.(1)->{\node (r0) [text=green!50!black!80] at (2.5, 0) {\(+I\)};}
+    %     \only<.(1)->{\node (r1) [text=green!50!black!80] at (2.5, -2) {\(+I\)};}
+    %     \only<.(1)->{\node (r2) [text=green!50!black!80] at (2.5, -4) {\(+I\)};}
+        
+    %     \only<.(1)->{\node (c0) [text=red!50!black!80] at (-2, -4.5) {\(-I\)};}
+    %     \only<.(1)->{\node (c1) [text=red!50!black!80] at (0, -4.5) {\(-I\)};}
+    %     \only<.(1)->{\node (c2) [text=red!50!black!80] at (2, -4.5) {\(-I\)};}
+
+    %     \path[]
+    %     (00) edge (01) edge (10)
+    %     (01) edge (02) edge (11)
+    %     (02) edge (12)
+        
+    %     (10) edge (11) edge (20)
+    %     (11) edge (12) edge (21)
+    %     (12) edge (22)
+
+    %     (20) edge (21)
+    %     (21) edge (22)
+    %     ;
+    %   \end{tikzpicture}
+    % \end{center}
 \end{document}
