@@ -375,7 +375,7 @@
 
   \begin{itemize}[<+(1)->]
   \item Note que, em qualquer linha e coluna, os três
-    observáveis comutam entre si.
+    observáveis comutam entre si
     
   \item Ou seja, é possível encontrar uma base de autovetores em comum, que
     diagonaliza os três. Para toda linha \(i\) (equiv. coluna \(j\)),
@@ -396,12 +396,12 @@
   \item Tem sempre dois autovetores em comum para cada autoespaço
     
   \item O que isso significa é que a primeira medição de qualquer
-    linha/coluna resulta em um autovalor \(\lambda\) colapsa para uma
+    linha/coluna resulta em um autovalor \(\lambda\) e colapsa para uma
     combinação de dois autovetores \(\ket{\lambda}_{0}\) e
     \(\ket{\lambda}_{1}\)
     
   \item A segunda medição, então, colapsa para \(\ket{\lambda}_{0}\)
-    ou \(\ket{\lambda_{1}}\), e fixa o estado.
+    ou \(\ket{\lambda_{1}}\), e fixa o estado
 
   \item Logo, as medições irão resultar nos autovalores correspondentes
     a \(\ket{\lambda}_{0}\)  ou \(\ket{\lambda}_{1}\)
@@ -411,9 +411,39 @@
   \item Mas, para toda linha \(i\), temos
     \(P_{i} \Lambda_{i} P_{i}^{-1} = I\). Logo, \(\Lambda_{i} = I\) e o
     produto das três medições é \(+1\) sempre. Para toda coluna \(j\),
-    \(P_{j} \Lambda_{j} P_{j}^{-1} = -I\) e \(\Lambda_{j} = -I\)
+    \(P_{j} \Lambda_{j} P_{j}^{-1} = -I\) e \(\Lambda_{j} = -I\) 
   \end{itemize}
+
+  \only<.->{\qed}
 \end{frame}
+
+\begin{frame}{Lema 1: Produto das Linhas e Colunas}
+  \begin{itemize}[<+->]
+  \item Para a primeira linha, os autovetores em comum são
+    \(\ket{00}, \ket{01}, \ket{10}\) e \(\ket{11}\)
+
+  \item Para a primeira célula \(I \otimes Z\), temos \(\ket{00}\) e
+    \(\ket{10}\) no autoespaço do \(+1\)
+    
+  \item Ao observar \(+1\), o estado colapsa para uma combinação dos dois, vide Exemplo 4:
+    \[
+      \frac{1}{2} (\ket{0000} + \ket{0101} + \ket{1010} + \ket{1111})
+      \mapsto
+      \frac{1}{\sqrt{2}} (\ket{0000} + \ket{1010})
+    \]
+
+  \item Para a segunda célula \(Z \otimes I\), o autovalor de \(\ket{00}\) é
+    \(+1\) e o de \(\ket{10}\) é \(-1\)
+
+  \item Ao observar \(-1\), o estado colapsa para o autovetor \(\ket{10}\),
+    vide Exemplo 4:
+    \[
+      \frac{1}{\sqrt{2}} (\ket{0000} + \ket{1010})
+      \mapsto
+      \ket{1010}
+    \]  \end{itemize}
+\end{frame}
+
 % \begin{center}
     %   \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
     %     \node (phantom) [
