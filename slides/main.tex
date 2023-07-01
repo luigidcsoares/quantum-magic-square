@@ -13,7 +13,7 @@
 \usepackage{tcolorbox}
 \tcbuselibrary{theorems}
 
-\newtcbtheorem{tcblemma}{Lema}{
+\newtcbtheorem{cbox}{}{
   boxrule=0.15mm,
   colback=gray!15,
   % colbacktitle=gray!15,
@@ -24,7 +24,7 @@
   % before upper={\tcbtitle},
   % separator sign none,
   % description delimiters={(}{). }
-}{lem}
+}{cbox}
 
 \newcommand{\ketbra}[2]{\ensuremath{| #1 \rangle \langle #2 |}}
 \newcommand{\ci}{\mathrm{i}}
@@ -291,7 +291,7 @@
   \item Existe uma estratégia quântica que os permite vencer qualquer
     rodada
 
-  \item Alice e Bob compartilham qubits emaranhados (um par para cada rodada):
+  \item Alice e Bob compartilham qubits emaranhados
     \[
       \ket{\psi} = \frac{1}{2}\left(
         \ket{00}_{A} \otimes \ket{00}_{B} + \ket{01}_{A} \otimes \ket{01}_{B} +
@@ -366,12 +366,12 @@
 \end{frame}
 
 \begin{frame}{Lema 1: Produto das Linhas e Colunas}
-  \begin{tcblemma}{}{msquare-quantum-prod}
+  \begin{cbox}{}{msquare-quantum-prod}
     Seja \(M_{i, j}\) o observável na célula \((i, j)\) da estratégia
     quântica, segue que, para toda linha \(i\),
     \(\prod_{j} \operatorname{Out}(M_{i, j}) = +1\), e, para toda
     coluna \(j\), \(\prod_{i} \operatorname{Out}(M_{i, j}) = -1\).
-  \end{tcblemma}
+  \end{cbox}
 
   \begin{itemize}[<+(1)->]
   \item Note que, em qualquer linha e coluna, os três
@@ -445,11 +445,11 @@
 \end{frame}
 
 \begin{frame}{Lema 2: Interseção}
-  \begin{tcblemma}{}{msquare-quantum-inters}
+  \begin{cbox}{}{msquare-quantum-inters}
     Para qualquer linha \(i\) atribuída a Alice e
     coluna \(j\) atribuída ao Bob, o valor assinalado
     por ambos à célula \((i, j)\) é sempre o mesmo.
-  \end{tcblemma}
+  \end{cbox}
 
   \begin{itemize}[<+(1)->]
   \item Independente da linha atribuída a Alice, o estado final dos qubits dela
@@ -531,45 +531,197 @@
   \end{itemize}
 \end{frame}
 
-% \begin{center}
-    %   \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
-    %     \node (phantom) [
-    %     vertex, label=above right:{\phantom{\(-X \otimes Z\)}},
-    %     label=below right:{\phantom{\(-X \otimes Z\)}}
-    %     ] at (2, -4) {};
-        
-    %     \node (00) [vertex, label=above left:{\(I \otimes Z\)},] at (-2, 0) {};
-    %     \node (01) [vertex, label=above left:{\(Z \otimes I\)}] at (0,  0) {};
-    %     \node (02) [vertex, label=above left:{\(Z \otimes X\)}] at (2,  0) {};
+\section{Caracterizando Jogos Mágicos}
 
-    %     \node (10) [vertex, label=above left:{\(X \otimes I\)}] at (-2, -2) {};
-    %     \node (11) [vertex, label=above left:{\(I \otimes X\)}] at (0,  -2) {};
-    %     \node (12) [vertex, label=above left:{\(X \otimes X\)}] at (2,  -2) {};
+\begin{frame}{Modificando o Formato}
+  \begin{itemize} [<+->]
+  \item O que será que acontece se mudarmos o formato do jogo?
+  \item E se, ao invés de um quadrado, fosse um pentagrama?
+  \item<only@3-> Note que a representação foi em formato de grafo
+  \item<only@4-> Podemos redesenhar o quadrado mágico como um grafo também
+  \item<only@6-> Será que existe alguma caracterização deste tipo de jogo?
+  \end{itemize}
 
-    %     \node (20) [vertex, label=above left:{\(-X \otimes Z\)}] at (-2, -4) {};
-    %     \node (21) [vertex, label=above left:{\(-Z \otimes X\)}] at (0,  -4) {};
-    %     \node (22) [vertex, label=above left:{\(Y \otimes Y\)}] at (2,  -4) {};
+  \only<2>{
+    \vfill{}
+    \begin{center}
+      \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+        % Triângulo de cima
+        \node (0) [vertex] at (0, +1) {};
+        \node (1) [vertex] at (-0.9, -1) {};
+        \node (2) [vertex] at (+0.9, -1) {};
+        \node (label0) [text=red!50!black!80] at (0, -1.25) {\(-I\)};
         
-    %     \only<.(1)->{\node (r0) [text=green!50!black!80] at (2.5, 0) {\(+I\)};}
-    %     \only<.(1)->{\node (r1) [text=green!50!black!80] at (2.5, -2) {\(+I\)};}
-    %     \only<.(1)->{\node (r2) [text=green!50!black!80] at (2.5, -4) {\(+I\)};}
-        
-    %     \only<.(1)->{\node (c0) [text=red!50!black!80] at (-2, -4.5) {\(-I\)};}
-    %     \only<.(1)->{\node (c1) [text=red!50!black!80] at (0, -4.5) {\(-I\)};}
-    %     \only<.(1)->{\node (c2) [text=red!50!black!80] at (2, -4.5) {\(-I\)};}
+        % Triângulo da esquerda
+        \node (3) [vertex] at (-2.75, -1) {};
+        \node (4) [vertex] at (-1.3, -2) {};
+        \node (label1) [text=green!50!black!80] at (-0.8, -1.5) {\(+I\)};
 
-    %     \path[]
-    %     (00) edge (01) edge (10)
-    %     (01) edge (02) edge (11)
-    %     (02) edge (12)
-        
-    %     (10) edge (11) edge (20)
-    %     (11) edge (12) edge (21)
-    %     (12) edge (22)
+        % Triângulo da direita
+        \node (5) [vertex] at (+2.75, -1) {};
+        \node (6) [vertex] at (+1.3, -2) {};
+        \node (label1) [text=green!50!black!80] at (+0.8, -1.5) {\(+I\)};
 
-    %     (20) edge (21)
-    %     (21) edge (22)
-    %     ;
-    %   \end{tikzpicture}
-    % \end{center}
+        % Fechar pentágono
+        \node (7) [vertex] at (0, -2.75) {};
+        \node (label2) [text=green!50!black!80] at (+0.5, -2.1) {\(+I\)};
+        \node (label3) [text=green!50!black!80] at (-0.5, -2.1) {\(+I\)};
+
+        % Triângulo baixo esquerda
+        \node (8) [vertex] at (-1.9, -3.5) {};
+        
+        % Triângulo baixo direita
+        \node (9) [vertex] at (+1.9, -3.5) {};
+        
+        \path[]
+        (0) edge (1) edge (2)
+        (1) edge (2) edge (3) edge (4)
+        (2) edge (5) edge (6)
+        (3) edge (4)
+        (4) edge (7) edge (8)
+        (5) edge (6)
+        (6) edge (7) edge (9)
+        (7) edge (8) edge (9)
+        ;
+      \end{tikzpicture}
+    \end{center}
+    \vfill{}
+  }
+
+  \only<5>{
+    \vfill{}
+    \begin{center}
+      \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+        % \node (phantom) [
+        % label=above right:{\phantom{\(-X \otimes Z\)}},
+        % label=below right:{\phantom{\(-X \otimes Z\)}}
+        % ] at (1.5, -3) {};
+        
+        \node (00) [vertex,
+        % label=above left:{\(I \otimes Z\)}
+        ] at (-1.25, 0) {};
+        \node (01) [vertex,
+        % label=above left:{\(Z \otimes I\)}
+        ] at (0,  0) {};
+        \node (02) [vertex,
+        % label=above left:{\(Z \otimes X\)}
+        ] at (1.25,  0) {};
+
+        \node (10) [vertex,
+        % label=above left:{\(X \otimes I\)}
+        ] at (-1.25, -1.25) {};
+        \node (11) [vertex,
+        % label=above left:{\(I \otimes X\)}
+        ] at (0,  -1.25) {};
+        \node (12) [vertex,
+        % label=above left:{\(X \otimes X\)}
+        ] at (1.25,  -1.25) {};
+
+        \node (20) [vertex,
+        % label=above left:{\(-X \otimes Z\)}
+        ] at (-1.25, -2.5) {};
+        \node (21) [vertex,
+        % label=above left:{\(-Z \otimes X\)}
+        ] at (0,  -2.5) {};
+        \node (22) [vertex,
+        % label=above left:{\(Y \otimes Y\)}
+        ] at (1.25, -2.5) {};
+        
+        \only<.(1)->{\node (r0) [text=green!50!black!80] at (1.65, -0.05) {\(+I\)};}
+        \only<.(1)->{\node (r1) [text=green!50!black!80] at (1.65, -1.20) {\(+I\)};}
+        \only<.(1)->{\node (r2) [text=green!50!black!80] at (1.65, -2.45) {\(+I\)};}
+        
+        \only<.(1)->{\node (c0) [text=red!50!black!80] at (-1.2, -2.8) {\(-I\)};}
+        \only<.(1)->{\node (c1) [text=red!50!black!80] at (-0.05, -2.8) {\(-I\)};}
+        \only<.(1)->{\node (c2) [text=red!50!black!80] at (1.2, -2.8) {\(-I\)};}
+
+        \path[]
+        (00) edge (01) edge (10)
+        (01) edge (02) edge (11)
+        (02) edge (12)
+        
+        (10) edge (11) edge (20)
+        (11) edge (12) edge (21)
+        (12) edge (22)
+
+        (20) edge (21)
+        (21) edge (22)
+        ;
+      \end{tikzpicture}
+    \end{center}
+    \vfill{}
+  }
+\end{frame}
+
+\begin{frame}{Definição 1 (Arranjo)}
+  \begin{cbox}{}{arranjo}
+    Um arranjo \(A = (V, E, \ell)\) é um hipergrafo conexo tal que
+    cada vértice do conjunto \(V\) está exatamente em duas
+    hiperarestas do conjunto \(E\) (\emph{conexo} significa que o
+    hipergrafo não pode ser dividido em dois sub-hipergrafos
+    disjuntos). O arranjo também inclui uma rotulação
+    \(\ell\colon E \mapsto \{+1, -1\}\). 
+  \end{cbox}
+
+  \stepcounter{beamerpauses}
+  \begin{itemize}[<+->]
+  \item O quadrado mágico e o pentagrama são exemplos de arranjos
+  \item Cada linha que passa por 3 vértices do quadrado é uma hiperaresta
+  \item Cada linha que passa por 4 vértices do pentragrama é uma hiperaresta
+  \end{itemize}
+\end{frame}
+\begin{frame}{Definição 2 (Realização Clássica)}
+  \begin{cbox}{}{real-class}
+    Uma realização clássica de um arranjo \(A = (V, E, \ell)\) é
+    uma rotulação dos vértices \(c\colon V \mapsto \{+1, -1\}\)
+    tal que, para cada \(e \in E\),
+    % o produto dos rótulos de cada vértice em uma hiperaresta
+    % é igual ao rótulo daquela hiperaresta:
+    \(
+      \prod_{v \in e} c(v) = \ell(e).
+      % , \text{ para cada } e \in E.
+    \)
+  \end{cbox}
+
+  \stepcounter{beamerpauses}
+  \begin{itemize}[<+->]
+  \item Por exemplo, considere uma versão \(2 \times 2\) do quadrado mágico, com
+    \begin{align*}
+      \ell(e_{t}) = \ell(e_{r}) &= +1 \text{ e } \\
+      \ell(e_{b}) = \ell(e_{l}) &= -1 
+    \end{align*}
+    
+  \item Uma realização clássica válida é
+    \begin{align*}
+      c(v_{00}) &= c(v_{01}) = c(v_{11}) = +1 \text{ e} \\
+      c(v_{10}) &= -1
+    \end{align*}
+  \end{itemize}
+  
+  \onslide<2->{
+    \begin{center}
+      \begin{tikzpicture}[
+        overlay, xshift=5.5cm, yshift=3.5cm,
+        vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}
+        ]
+        \node (00) [vertex] at (0, 0) {};
+        \node (01) [vertex] at (1, 0) {};
+        \node (10) [vertex] at (0, -1) {};
+        \node (11) [vertex] at (1, -1) {};
+
+        \node (et) [text=green!50!black!80] at (1.35, 0) {\(+1\)};
+        \node (et) [text=green!50!black!80] at (0.9, -1.35) {\(+1\)};
+        \node (et) [text=red!50!black!80] at (1.35, -0.9) {\(-1\)};
+        \node (et) [text=red!50!black!80] at (-0.1, -1.35) {\(-1\)};
+
+        \path[]
+        (00) edge (01) edge (10)
+        (01) edge (11)
+        (10) edge (11)
+        ;
+      \end{tikzpicture}
+    \end{center}
+  }
+\end{frame}
+
 \end{document}
