@@ -213,7 +213,7 @@
     podem \emph{antes}
     
   \item Uma estratégia determinística consiste em 
-    prepar matrizes pré-definidas
+    preparar matrizes pré-definidas
     
   \item<only@7-> É impossível vencer com 100\% de chance toda rodada
     
@@ -347,7 +347,7 @@
 \begin{frame}{Exemplo 4}
   \begin{enumerate}[<only@+->]
   \item Suponha que Bob tenha recebido a coluna 1. Para a primeira
-    célula, ele mede seu primeiro qubit com \(Z\). Ele observa \(-1\) com
+    célula, ele mede seu primeiro qubit com \(Z\). Ele observa \(-1\)
     (igual Alice) com probabilidade 1, e
     \[
       \ket{\psi_{B1}} = \ket{\psi_{A3}} = \ket{1010}
@@ -401,7 +401,7 @@
     \(\ket{\lambda}_{1}\)
     
   \item A segunda medição, então, colapsa para \(\ket{\lambda}_{0}\)
-    ou \(\ket{\lambda_{1}}\), e fixa o estado
+    ou \(\ket{\lambda}_{1}\), e fixa o estado
 
   \item Logo, as medições irão resultar nos autovalores correspondentes
     a \(\ket{\lambda}_{0}\)  ou \(\ket{\lambda}_{1}\)
@@ -455,12 +455,82 @@
   \item Independente da linha atribuída a Alice, o estado final dos qubits dela
     é sempre um dos autovetores em comum para aquela linha
     
-  \item Este estado é uma combinação de um dos autoespaços de
+  \item Se Alice repetir qualquer medição, o resultado é o mesmo que o anterior
+    
+  \item Mas, este estado é uma combinação de um dos autoespaços de
     Bob na interseção
 
-  \item O estado inicial é simétrico e, a cada medição, a simetria se mantém
+  \item Além disso, o estado inicial é simétrico e, a cada medição, a simetria se mantém
+    
+  \item Logo, se Bob mede os qubits dele com os mesmos observáveis que Alice, ele
+    observa o mesmo resultado
+  \end{itemize}
+  
+  \only<.(1)->{\qed}
+\end{frame}
+
+\begin{frame}{Lema 2: Interseção}
+  \begin{itemize}[<+->]
+  \item Para a segunda linha, o estado de Alice colapsa para
+    \((\nicefrac{1}{2}) (\ket{00} + \ket{01} + \ket{10} + \ket{11})\),
+    \((\nicefrac{1}{2}) (\ket{00} - \ket{01} + \ket{10} - \ket{11})\),
+    \((\nicefrac{1}{2}) (\ket{00} - \ket{01} - \ket{10} + \ket{11})\) ou
+    \((\nicefrac{1}{2}) (\ket{00} + \ket{01} - \ket{10} - \ket{11})\)
+
+  \item Suponha que tenha sido \((\nicefrac{1}{2}) (\ket{00} - \ket{01} - \ket{10} + \ket{11})\)
+
+  \item Então, Alice recebeu \(-1\), \(-1\) e \(+1\)
+
+  \item Após a primeira medição, o estado colapsa para
+    {
+      \small
+      \begin{align*}
+        &\frac{1}{2\sqrt{2}} \Bigl(
+          (\ket{00} - \ket{10}) \ket{00} +
+          (\ket{01} - \ket{11}) \ket{01} +
+          (\ket{10} - \ket{00}) \ket{10} +
+          (\ket{11} - \ket{01}) \ket{11}
+          \Bigr) \\
+        \equiv\;
+        & \frac{1}{2\sqrt{2}} \Bigl(
+          \ket{00} (\ket{00} - \ket{10}) +
+          \ket{01} (\ket{01} - \ket{11}) +
+          \ket{10} (\ket{10} - \ket{00}) +
+          \ket{11} (\ket{11} - \ket{01})
+          \Bigr)
+      \end{align*}
+    }
   \end{itemize}
 \end{frame}
+
+\begin{frame}{Lema 2: Interseção}
+  \begin{itemize}[<+->]
+  \item Após a segunda medição, o estado colapsa (e fixa) para
+    {
+      \small
+      \begin{alignat*}{2}
+        &\frac{1}{4} \Bigl(
+        &&(\ket{00} - \ket{01} - \ket{10} + \ket{11}) \ket{00} -
+           (\ket{00} - \ket{01} - \ket{10} + \ket{11}) \ket{01} - \nonumber \\
+        & &&(\ket{00} - \ket{01} - \ket{10} + \ket{11}) \ket{10} +
+             (\ket{00} - \ket{01} - \ket{10} + \ket{11}) \ket{11}
+             \Bigr) \nonumber \\
+        \equiv\;
+        & \frac{1}{4} \Bigl(
+        &&\ket{00} (\ket{00} - \ket{01} - \ket{10} + \ket{11}) -
+           \ket{01} (\ket{00} - \ket{01} - \ket{10} + \ket{11}) - \nonumber \\
+        & &&\ket{10} (\ket{00} - \ket{01} - \ket{10} + \ket{11}) +
+             \ket{11} (\ket{00} - \ket{01} - \ket{10} + \ket{11})
+             \Bigr)
+      \end{alignat*}
+    }
+    
+  \item Logo, para qualquer coluna que Bob receba, ao fazer uma
+    medição igual a que Alice fez na interseção, ele obterá a mesma
+    resposta que Alice
+  \end{itemize}
+\end{frame}
+
 % \begin{center}
     %   \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
     %     \node (phantom) [
