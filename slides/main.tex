@@ -670,6 +670,7 @@
   \item Cada linha que passa por 4 vértices do pentragrama é uma hiperaresta
   \end{itemize}
 \end{frame}
+
 \begin{frame}{Definição 2 (Realização Clássica)}
   \begin{cbox}{}{real-class}
     Uma realização clássica de um arranjo \(A = (V, E, \ell)\) é
@@ -701,7 +702,7 @@
   \onslide<2->{
     \begin{center}
       \begin{tikzpicture}[
-        overlay, xshift=5.5cm, yshift=3.5cm,
+        overlay, xshift=5cm, yshift=3.5cm,
         vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}
         ]
         \node (00) [vertex] at (0, 0) {};
@@ -722,6 +723,57 @@
       \end{tikzpicture}
     \end{center}
   }
+\end{frame}
+
+\begin{frame}{Definição 3 (Realização Quântica)}
+  \begin{cbox}{}{real-quant}
+    Uma realização quântica de um arranjo \(A = (V, E, \ell)\) é
+    uma rotulação de vértices
+    \(c\colon V \mapsto \operatorname{GL}(\mathcal{H})\), que
+    mapeia cada vértice para um observável \(M\), tal que
+
+    \begin{itemize}[<+(1)->]
+    \color{red!40!black}
+    \item \(M = M^{*}\) e \(M^{2} = I\), ou equivalentemente,
+      \(M\) possui autovalores \(+1\) e \(-1\)
+
+    \item Observáveis assinalados aos vértices de uma hiperaresta
+      comutam entre si
+
+    \item Para cada hiperaresta \(e \in E\), \(\prod_{v \in e} c(v) = \ell(e) I\)
+    \end{itemize}
+  \end{cbox}
+
+  \begin{itemize}[<+(1)->]
+  \item Uma realização clássica é simplesmente uma realização quântica com \(\mathcal{H} = \mathbb{R}\)
+    
+  \item A solução que vimos para o jogo do quadrado mágico é uma realização quântica
+
+  \item Se existe uma realização quântica em que todos os observáveis
+    comutam, então existe uma realização clássica
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Definição 3 (Paridade)}
+  \begin{cbox}{}{parity}
+    A paridade \(p(\ell)\) de uma rotulação \(\ell\) de um arranjo \(A = (V, E, \ell)\) é
+    \[
+      p(\ell) = \prod_{e \in E} \ell(E).
+    \]
+  \end{cbox}
+
+  \begin{itemize}[<+->]
+  \item A paridade é \(-1\) se o número de rótulos \(-1\) é ímpar ou \(-1\) caso contrário
+    
+  \item A realização de um arranjo \(A = (V, E, \ell)\) depende apenas
+    de \(p(\ell)\).  Isto é, para um outro arranjo
+    \(A' = (V, E, \ell')\), se \(p(\ell) = p(\ell')\), é possível
+    construir uma realização para \(A'\) a partir da realização de
+    \(A\)
+
+  \item Um arranjo \(A = (V, E, \ell)\) é realizável classicamente se, e somente se,
+    \(p(\ell) = +1\)
+  \end{itemize}
 \end{frame}
 
 \end{document}
