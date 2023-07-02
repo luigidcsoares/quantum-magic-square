@@ -57,7 +57,7 @@
   Roberto Rosmaninho (\email{TODO})}
 \institute[DCC/UFMG]{}
 \date{03/07/2023}
-\title[Pseudotelepatia Quântica]{Pseudotelepatia Quântica (TODO)}
+\title[Pseudotelepatia Quântica]{Jogos Mágicos}
 
 \usetheme{ufmg}
 
@@ -531,6 +531,14 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Teorema 1: O Jogo do Quadrado Mágico É Vencível}
+  \begin{cbox}{}{thm:msquare}
+    Existe uma estratégia quântica para o jogo do quadrado mágico de Mermin-Peres,
+    que consiste em Alice e Bob compartilharem qubits emaranhados \emph{antes} do
+    início do jogo, que vence sistematicamente todos as rodadas.
+  \end{cbox}
+\end{frame}
+
 \section{Caracterizando Jogos Mágicos}
 
 \begin{frame}{Modificando o Formato}
@@ -762,7 +770,7 @@
     \]
   \end{cbox}
 
-  \begin{itemize}[<+->]
+  \begin{itemize}[<+(1)->]
   \item A paridade é \(-1\) se o número de rótulos \(-1\) é ímpar ou \(-1\) caso contrário
     
   \item A realização de um arranjo \(A = (V, E, \ell)\) depende apenas
@@ -773,6 +781,82 @@
 
   \item Um arranjo \(A = (V, E, \ell)\) é realizável classicamente se, e somente se,
     \(p(\ell) = +1\)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Definição 4 (Arranjo Mágico)}
+  \begin{cbox}{}{magic-arrang}
+    Um arranjo \(A = (V, E, \ell)\) é mágico se 
+    \(p(\ell) = -1\) e é realizável quanticamente.
+  \end{cbox}
+
+  \begin{itemize}[<+(1)->]
+  \item Arranjos mágicos não são realizáveis classicamente
+  \item O quadrado \(3 \times 3\) e o pentagrama são arranjos mágicos
+  \item O quadrado \(2 \times 2\), com \(p(\ell) = -1\),
+    não é realizável de nenhuma forma
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Definição 5 (Jogos de Paridade Pseudotelepáticos)}
+  \begin{cbox}{}{parity}
+    Um jogo de paridade pseudotelepático em um arranjo
+    \(A = (V, E, \ell)\) é um jogo cooperativo de dois jogadores
+    (Alice e Bob) e um árbitro (Charlie). Alice e Bob podem se
+    comunicar antes do jogo, mas não após o início. A cada rodada,
+
+    \begin{enumerate}[<+(1)->]
+    \color{red!40!black}
+    \item Charlie seleciona \(u \in V\) e uma das duas
+      hiperarestas \(e\) que contém \(u\)
+      
+    \item Charlie envia \(u\) para Alice e \(e\) para Bob
+
+    \item Alice rotula \(a(u) = \pm{}1\) e envia para Charlie
+      
+    \item Bob rotula cada vértice \(v \in e\) com \(b(v) = \pm{}1\) e envia para Charlie
+      
+    \item Alice e Bob vencem se \(a(u) = b(u)\) e \(\prod_{v \in e} b(v) = \ell(e)\)
+    \end{enumerate}
+  \end{cbox}
+\end{frame}
+
+\begin{frame}{Teorema 2 (Existência de Estratégia Vencedora)}
+  \begin{cbox}{}{parity}
+    Em qualquer arranjo que possui uma realização quântica em que
+    todos os observáveis possuem autovalores reais, se Alice e Bob
+    podem compartilhar emaranhamento, então existe uma estratégia
+    vencedora.
+  \end{cbox}
+
+  \begin{itemize}[<+(1)->]
+  \item Seja \(c\) a realização quântica em um espaço \(\mathcal{H}\) de
+    dimensão \(n\)
+    
+  \item Para uma base \ket{1}, \ldots, \ket{n}, Alice e Bob compartilham o estado
+    \[
+      \ket{\psi}_{AB} = \sum_{i = 1}^{n} \ket{i} \ket{i}
+    \]
+    
+  \item A prova segue pela diagonalização simultânea dos observáveis e simetria
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Definição 6 (Grafo de Interseção)}
+  \begin{cbox}{}{intersection-graph}
+    O grafo de interseção de um arranjo \(A = (V, E, \ell)\) é o grafo
+    não-direcionado \(G = (V', E', \ell')\) tal que \(V' = E\) e
+    existe uma aresta entre \(e_{0}, e_{1} \in V'\) para cada vértice
+    na interseção \(e_{0} \cap e_{1}\) das hiperarestas. A rotulação
+    \(\ell'\colon V' \mapsto \{+1, -1\}\) é a mesma do arranjo \(A\),
+    isto é, \(\ell(e) = \ell'(e)\).
+  \end{cbox}
+
+  \begin{itemize}[<+(1)->]
+  \item O grafo de interseção do quadrado \(3 \times 3\) é o \(K_{3, 3}\)
+    
+  \item O grafo de interseção do pentagrama é o \(K_{5}\)
   \end{itemize}
 \end{frame}
 
