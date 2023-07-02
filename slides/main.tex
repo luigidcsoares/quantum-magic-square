@@ -9,6 +9,8 @@
 \usepackage{booktabs}
 \usepackage{nicefrac}
 \usepackage{tikz}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc}
 \usetikzlibrary{quantikz2}
 \usepackage{tcolorbox}
 \tcbuselibrary{theorems}
@@ -54,10 +56,10 @@
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
 \author[Luigi Soares \& Roberto Rosmaninho]{%
   Luigi Soares (\email{luigi.domenico@dcc.ufmg.br}) \\
-  Roberto Rosmaninho (\email{TODO})}
+  Roberto Rosmaninho (\email{robertogomes@dcc.ufmg.br})}
 \institute[DCC/UFMG]{}
 \date{03/07/2023}
-\title[Pseudotelepatia Quântica]{Jogos Mágicos}
+\title[Jogos Mágicos]{Jogos Mágicos}
 
 \usetheme{ufmg}
 
@@ -323,43 +325,39 @@
 \end{frame}
 
 \begin{frame}{Exemplo 4}
-  \begin{enumerate}[<only@+->]
-  \item Alice recebe a linha 0 e mede seu segundo qubit com
+  \begin{enumerate}
+  \item<only@1-3> Alice recebe a linha 0 e mede seu segundo qubit com
     \(Z\). Suponha que ela tenha observado \(+1\). Ela atribui \(+1\)
     à primeira celula e o estado inicial \(\ket{\psi}\) colapsa para
     \[
       \ket{\psi_{A1}} = \frac{1}{\sqrt{2}} (\ket{0000} + \ket{1010})
     \]
-  \item Em seguida, Alice mede seu primeiro qubit com \(Z\). Suponha que
+  \item<only@2-3> Em seguida, Alice mede seu primeiro qubit com \(Z\). Suponha que
     ela tenha observado \(-1\). Ela atribui \(-1\) à segunda célula e o estado
     colapsa para
     \[
       \ket{\psi_{A2}} = \ket{1010}
     \]
-  \item Para a terceira célula, ela mede seus dois qubits com \(Z \otimes Z\).
+  \item<only@3> Para a terceira célula, ela mede seus dois qubits com \(Z \otimes Z\).
     O único resultado possível é \(-1\) e o estado não se altera:
     \(
       \ket{\psi_{A3}} = \ket{\psi_{A2}}.
     \)
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}{Exemplo 4}
-  \begin{enumerate}[<only@+->]
-  \item Suponha que Bob tenha recebido a coluna 1. Para a primeira
+    
+  \item<only@4-> Suponha que Bob tenha recebido a coluna 1. Para a primeira
     célula, ele mede seu primeiro qubit com \(Z\). Ele observa \(-1\)
     (igual Alice) com probabilidade 1, e
     \[
       \ket{\psi_{B1}} = \ket{\psi_{A3}} = \ket{1010}
     \]
     
-  \item Em seguida, Bob mede seu segundo qubit com \(X\).
+  \item<only@5-> Em seguida, Bob mede seu segundo qubit com \(X\).
     Suponha que ele observe \(+1\). Então, o estado colapsa para
     \[
       \ket{\psi_{B2}} = \frac{1}{\sqrt{2}} (\ket{1010} + \ket{1011})
     \]
 
-  \item Para a terceira célula, ele mede ambos os qubits com
+  \item<only@6-> Para a terceira célula, ele mede ambos os qubits com
     \(-Z \otimes X\).  O único resultado possível é \(+1\), o que
     satisfaz a restrição sobre o produto da coluna.
   \end{enumerate}
@@ -554,43 +552,71 @@
     \vfill{}
     \begin{center}
       \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
-        % Triângulo de cima
-        \node (0) [vertex] at (0, +1) {};
-        \node (1) [vertex] at (-0.9, -1) {};
-        \node (2) [vertex] at (+0.9, -1) {};
-        \node (label0) [text=red!50!black!80] at (0, -1.25) {\(-I\)};
-        
-        % Triângulo da esquerda
-        \node (3) [vertex] at (-2.75, -1) {};
-        \node (4) [vertex] at (-1.3, -2) {};
-        \node (label1) [text=green!50!black!80] at (-0.8, -1.5) {\(+I\)};
+        \foreach \c [evaluate=\c as \ang using {18 + 72*\c}] in {0, 1, 2, 3, 4} {
+          \node [vertex] (\c) at (\ang:25mm) {};
+        }
 
-        % Triângulo da direita
-        \node (5) [vertex] at (+2.75, -1) {};
-        \node (6) [vertex] at (+1.3, -2) {};
-        \node (label1) [text=green!50!black!80] at (+0.8, -1.5) {\(+I\)};
+        \draw [name path=0--2] (0) -- (2);
+        \draw [name path=0--3] (0) -- (3);
+        \draw [name path=1--3] (1) -- (3);
+        \draw [name path=1--4] (1) -- (4);
+        \draw [name path=2--4] (2) -- (4);
 
-        % Fechar pentágono
-        \node (7) [vertex] at (0, -2.75) {};
-        \node (label2) [text=green!50!black!80] at (+0.5, -2.1) {\(+I\)};
-        \node (label3) [text=green!50!black!80] at (-0.5, -2.1) {\(+I\)};
+        \node [vertex] (01) at (intersection of 0--2 and 1--4) {};
+        \node [vertex] (04) at (intersection of 0--3 and 1--4) {};
+        \node [vertex] (12) at (intersection of 1--3 and 0--2) {};
+        \node [vertex] (23) at (intersection of 1--3 and 2--4) {};
+        \node [vertex] (34) at (intersection of 0--3 and 2--4) {};
+        
+        \node [text=red!50!black!80] (label0--2) at ($(01)!0.5!(12) - (0, 0.25)$) {\(-I\)};
+        \node [text=green!50!black!80] (label1--4) at ($(01)!0.5!(04) + (-0.3, -0.1)$) {\(+I\)};
+        \node [text=green!50!black!80] (label0--3) at ($(04)!0.5!(34) + (-0.1, 0.25)$) {\(+I\)};
+        \node [text=green!50!black!80] (label2--4) at ($(23)!0.5!(34) + (+0.1, 0.25)$) {\(+I\)};
+        \node [text=green!50!black!80] (label1--3) at ($(12)!0.5!(23) + (+0.3, -0.1)$) {\(+I\)};
+        
+        % (intersection cs:first line={(0) -- (2)}, second line={(1) -- (4)})
+        % \node [vertex] (01) {}
+        % (0) edge (2) edge (3)
+        % (1) edge (3) edge (4)
+        % (2) edge (4)
+        % ;
+        % % Triângulo de cima
+        % \node (0) [vertex] at (0, +1) {};
+        % \node (1) [vertex] at (-0.9, -1) {};
+        % \node (2) [vertex] at (+0.9, -1) {};
+        % \node (label0) [text=red!50!black!80] at (0, -1.25) {\(-I\)};
+        
+        % % Triângulo da esquerda
+        % \node (3) [vertex] at (-2.75, -1) {};
+        % \node (4) [vertex] at (-1.3, -2) {};
+        % \node (label1) [text=green!50!black!80] at (-0.8, -1.5) {\(+I\)};
 
-        % Triângulo baixo esquerda
-        \node (8) [vertex] at (-1.9, -3.5) {};
+        % % Triângulo da direita
+        % \node (5) [vertex] at (+2.75, -1) {};
+        % \node (6) [vertex] at (+1.3, -2) {};
+        % \node (label1) [text=green!50!black!80] at (+0.8, -1.5) {\(+I\)};
+
+        % % Fechar pentágono
+        % \node (7) [vertex] at (0, -2.75) {};
+        % \node (label2) [text=green!50!black!80] at (+0.5, -2.1) {\(+I\)};
+        % \node (label3) [text=green!50!black!80] at (-0.5, -2.1) {\(+I\)};
+
+        % % Triângulo baixo esquerda
+        % \node (8) [vertex] at (-1.9, -3.5) {};
         
-        % Triângulo baixo direita
-        \node (9) [vertex] at (+1.9, -3.5) {};
+        % % Triângulo baixo direita
+        % \node (9) [vertex] at (+1.9, -3.5) {};
         
-        \path[]
-        (0) edge (1) edge (2)
-        (1) edge (2) edge (3) edge (4)
-        (2) edge (5) edge (6)
-        (3) edge (4)
-        (4) edge (7) edge (8)
-        (5) edge (6)
-        (6) edge (7) edge (9)
-        (7) edge (8) edge (9)
-        ;
+        % \path[]
+        % (0) edge (1) edge (2)
+        % (1) edge (2) edge (3) edge (4)
+        % (2) edge (5) edge (6)
+        % (3) edge (4)
+        % (4) edge (7) edge (8)
+        % (5) edge (6)
+        % (6) edge (7) edge (9)
+        % (7) edge (8) edge (9)
+        % ;
       \end{tikzpicture}
     \end{center}
     \vfill{}
@@ -771,7 +797,7 @@
   \end{cbox}
 
   \begin{itemize}[<+(1)->]
-  \item A paridade é \(-1\) se o número de rótulos \(-1\) é ímpar ou \(-1\) caso contrário
+  \item A paridade é \(-1\) se o número de rótulos \(-1\) é ímpar ou \(+1\) caso contrário
     
   \item A realização de um arranjo \(A = (V, E, \ell)\) depende apenas
     de \(p(\ell)\).  Isto é, para um outro arranjo
@@ -846,11 +872,12 @@
 \begin{frame}{Definição 6 (Grafo de Interseção)}
   \begin{cbox}{}{intersection-graph}
     O grafo de interseção de um arranjo \(A = (V, E, \ell)\) é o grafo
-    não-direcionado \(G = (V', E', \ell')\) tal que \(V' = E\) e
+    não-direcionado \(G = (V', E')\) tal que \(V' = E\) e
     existe uma aresta entre \(e_{0}, e_{1} \in V'\) para cada vértice
-    na interseção \(e_{0} \cap e_{1}\) das hiperarestas. A rotulação
-    \(\ell'\colon V' \mapsto \{+1, -1\}\) é a mesma do arranjo \(A\),
-    isto é, \(\ell(e) = \ell'(e)\).
+    na interseção \(e_{0} \cap e_{1}\) das hiperarestas.
+    % A rotulação
+    % \(\ell'\colon V' \mapsto \{+1, -1\}\) é a mesma do arranjo \(A\),
+    % isto é, \(\ell(e) = \ell'(e)\).
   \end{cbox}
 
   \begin{itemize}[<+(1)->]
@@ -858,6 +885,136 @@
     
   \item O grafo de interseção do pentagrama é o \(K_{5}\)
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Teorema 3 (Caracterização por Grafo Planar)}
+  \begin{cbox}{}{main-result}
+    Um arranjo é magico se, e somente se, o seu grafo de interseção
+    não é planar.
+  \end{cbox}
+
+  \begin{itemize}[<+(1)->]
+  \item Grafo de interseção planar \(\implies\) arranjo não mágico:
+    \begin{itemize}
+    \item O objetivo é mostrar que, se o grafo de interseção é planar, a paridade é \(+1\)
+       
+    \item A estratégia é contrair arestas do grafo de interseção e mostrar propriedades
+
+    \item Contrair uma aresta é unir os dois vértices \(v\) e \(w\) em cada ponta
+      
+    \item As arestas que apontavam para \(v\) e \(w\), apontam para o novo vértice \(u\)
+
+    \item A aresta \emph{entre} \(v\) e \(w\) se torna dois laços
+
+    \item Propriedade 1: o grafo, após a contração da aresta, continua planar
+    
+    \item Propriedade 2: a paridade (produto dos rótulos dos vértices) continua a mesma
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Teorema 3 (Caracterização por Grafo Planar)}
+  \begin{itemize}[<+->]
+  \item Propriedade 3: o produto dos observáveis nas arestas ao redor
+    do vértice, em sentido anti-horário, é igual a identidade
+    multiplicada pelo signal do vértice
+
+    \begin{itemize}
+    \item Se \(M_{1} \ldots M_{n} = I\), com \(M^{2} = I\)
+      (similar para \(-I\)), então, para qualquer ponto de início \(k\),
+      \(M_{k}M_{k + 1} \ldots M_{n} M_{1} \ldots M_{k-1} = I\), pois
+      \begin{align*}
+        M_{k} M_{k + 1} \ldots M_{n} M_{1} M_{k - 1}
+        &= (M_{k - 1} \ldots M_{1})(M_{1} \ldots M_{n}) (M_{1} \ldots M_{k - 1}) \\
+        &= (M_{k - 1} \ldots M_{1}) I (M_{1} \ldots M_{k - 1}) = I
+      \end{align*}
+
+    \item Seja \(X\) o observável na aresta a ser contraída, \(M_{1}, \ldots, M_{m} X\)  os observáveis ao
+      redor de \(v\) e \(X N_{1}, \ldots, N_{n}\) os observáveis ao redor de \(w\). Temos
+      \[
+        M_{1} \ldots M_{m} X = \ell(v) I \text{ e } X N_{1} \ldots N_{n} = \ell(w) I
+      \]
+
+    \item Multiplicando, temos \(M_{1}\ldots M_{m} N_{1} \ldots N_{n} = \ell(v)\ell(w) I = \ell(u) I\)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Teorema 3 (Caracterização por Grafo Planar)}
+  \begin{itemize}[<+->]
+  \item Eventualmente, o grafo vai ser reduzido a um único vértice, com vários laços
+
+  \item O rótulo deste vértice é o produto dos rótulos dos vértices originais, i.e.\
+    a paridade
+    
+  \item Cada laço contribui com \(+I\). Logo, o rótulo do vértice final é \(+1\)
+
+  \item Consequentemente, a paridade do arranjo é \(+1\) e ele não é mágico
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Teorema 3 (Caracterização por Grafo Planar)}
+  \begin{itemize}[<+->]
+  \item Grafo de interseção não-planar \(\implies\) arranjo mágico
+    \begin{itemize}
+    \item A estratégia é mostrar que se o grafo de interseção \(G\)
+      contém um grafo de interseção mágico \(H\) como um
+      menor topológico, então \(G\) é mágico
+
+    \item Qualquer grafo não-planar contém o grafo \(K_{3, 3}\) ou
+      o \(K_{5}\) como um menor topológico (Pontyagin e Kuratowski)
+
+    \item Tanto o \(K_{3, 3}\) (quadrado \(3 \times 3\))
+      quanto o \(K_{5}\) (pentagrama) são mágicos
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Definição 7 (Menor Topológico)}
+  \begin{cbox}{}{top-minor}
+    Um grafo \(H\) é um menor topológico de \(G\) se \(G\) contém um
+    subgrafo isomórfico a uma subdivisão de \(H\). Equivalentemente,
+    existe um mapeamento \(\phi\) injetivo de cada vértice \(v \in H\)
+    para um vértice \(\phi(v) \in G\), e de cada aresta
+    \((u, v) \in H\) para um caminho simples entre
+    \(\phi(u) e \phi(v)\) em \(G\), tal que os caminhos são disjuntos
+    (com exceção das extremidades \(u\) e \(v\)).
+  \end{cbox}
+\end{frame}
+
+\begin{frame}{Teorema 3 (Caracterização por Grafo Planar)}
+  \begin{itemize}[<+->]
+  \item Vamos construir uma realização quântica de \(G\) a partir da
+    realização de \(H\)
+
+    \begin{enumerate}
+    \item Para cada \(v \in H\), assuma
+      \(\ell_{G}(\phi(v)) = \ell_{H}(v)\)
+
+    \item Assuma que os vértices restantes de \(G\) são rotulados com \(+1\)
+
+    \item Para cada aresta \(e \in H\) tal que \(c_{H}(e) = M\), rotule
+      cada aresta \(e_{i}\) no caminho correspondente em \(G\) com o mesmo
+      observável \(M\); i.e.\ \(c_{G}(e_{i}) = c_{H}(e)\)
+      
+    \item Rotule as demais arestas de \(G\) com \(+I\)
+    \end{enumerate}
+
+  \item Cada medição \(M\) em \(G\) ou está em \(H\) ou \(M = I\)
+    \(\implies M = M^{*}\) e \(M^{2} = M\)
+
+  \item Cada vértice de \(\phi(v) \in G\) toca os mesmo observáveis tocados
+    por \(v \in H\), mais \(I\)'s \(\implies\) os observáveis
+    comutam e multiplicam para \(\ell_{H}(v) I = \ell_{G}(\phi(v)) I\)
+
+  \item Cada vértice de \(G\) em um caminho entre \(\phi(u)\) e \(\phi(v)\)
+    toca dois vértices rotulados com o mesmo observável, e cópias de \(I\)
+    \(\implies\) comutam e multiplicam para \(+I\)
+
+  \item Os vértices restantes tocam apenas \(I\)'s \(\implies\)
+    comutam e multiplicam para \(+I\)
+ \end{itemize}
+  \qed
 \end{frame}
 
 \end{document}
