@@ -568,11 +568,11 @@
         \node [vertex] (23) at (intersection of 1--3 and 2--4) {};
         \node [vertex] (34) at (intersection of 0--3 and 2--4) {};
         
-        \node [text=red!50!black!80] (label0--2) at ($(01)!0.5!(12) - (0, 0.25)$) {\(-I\)};
-        \node [text=green!50!black!80] (label1--4) at ($(01)!0.5!(04) + (-0.3, -0.1)$) {\(+I\)};
-        \node [text=green!50!black!80] (label0--3) at ($(04)!0.5!(34) + (-0.1, 0.25)$) {\(+I\)};
-        \node [text=green!50!black!80] (label2--4) at ($(23)!0.5!(34) + (+0.1, 0.25)$) {\(+I\)};
-        \node [text=green!50!black!80] (label1--3) at ($(12)!0.5!(23) + (+0.3, -0.1)$) {\(+I\)};
+        \node [text=red!50!black!80] (label0--2) at ($(01)!0.5!(12) - (0, 0.25)$) {\(-1\)};
+        \node [text=green!50!black!80] (label1--4) at ($(01)!0.5!(04) + (-0.3, -0.1)$) {\(+1\)};
+        \node [text=green!50!black!80] (label0--3) at ($(04)!0.5!(34) + (-0.1, 0.25)$) {\(+1\)};
+        \node [text=green!50!black!80] (label2--4) at ($(23)!0.5!(34) + (+0.1, 0.25)$) {\(+1\)};
+        \node [text=green!50!black!80] (label1--3) at ($(12)!0.5!(23) + (+0.3, -0.1)$) {\(+1\)};
         
         % (intersection cs:first line={(0) -- (2)}, second line={(1) -- (4)})
         % \node [vertex] (01) {}
@@ -661,13 +661,13 @@
         % label=above left:{\(Y \otimes Y\)}
         ] at (1.25, -2.5) {};
         
-        \only<.(1)->{\node (r0) [text=green!50!black!80] at (1.65, -0.05) {\(+I\)};}
-        \only<.(1)->{\node (r1) [text=green!50!black!80] at (1.65, -1.20) {\(+I\)};}
-        \only<.(1)->{\node (r2) [text=green!50!black!80] at (1.65, -2.45) {\(+I\)};}
+        \only<.(1)->{\node (r0) [text=green!50!black!80] at (1.65, -0.05) {\(+1\)};}
+        \only<.(1)->{\node (r1) [text=green!50!black!80] at (1.65, -1.20) {\(+1\)};}
+        \only<.(1)->{\node (r2) [text=green!50!black!80] at (1.65, -2.45) {\(+1\)};}
         
-        \only<.(1)->{\node (c0) [text=red!50!black!80] at (-1.2, -2.8) {\(-I\)};}
-        \only<.(1)->{\node (c1) [text=red!50!black!80] at (-0.05, -2.8) {\(-I\)};}
-        \only<.(1)->{\node (c2) [text=red!50!black!80] at (1.2, -2.8) {\(-I\)};}
+        \only<.(1)->{\node (c0) [text=red!50!black!80] at (-1.2, -2.8) {\(-1\)};}
+        \only<.(1)->{\node (c1) [text=red!50!black!80] at (-0.05, -2.8) {\(-1\)};}
+        \only<.(1)->{\node (c2) [text=red!50!black!80] at (1.2, -2.8) {\(-1\)};}
 
         \path[]
         (00) edge (01) edge (10)
