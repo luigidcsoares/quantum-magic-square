@@ -59,7 +59,7 @@
   Roberto Rosmaninho (\email{robertogomes@dcc.ufmg.br})}
 \institute[DCC/UFMG]{}
 \date{03/07/2023}
-\title[Jogos Mágicos]{Jogos Mágicos}
+\title[Jogos Mágicos Quânticos]{Jogos Mágicos Quânticos}
 
 \usetheme{ufmg}
 
@@ -836,7 +836,7 @@
     \item Charlie seleciona \(u \in V\) e uma das duas
       hiperarestas \(e\) que contém \(u\)
       
-    \item Charlie envia \(u\) para Alice e \(e\) para Bob
+    \item Charlie envia o vértice \(u\) para Alice e a aresta \(e\) para Bob
 
     \item Alice rotula \(a(u) = \pm{}1\) e envia para Charlie
       
@@ -906,6 +906,8 @@
 
     \item A aresta \emph{entre} \(v\) e \(w\) se torna dois laços
 
+    \item O rótulo de \(u\) é o produto dos rótulos de \(v\) e \(w\) 
+
     \item Propriedade 1: o grafo, após a contração da aresta, continua planar
     
     \item Propriedade 2: a paridade (produto dos rótulos dos vértices) continua a mesma
@@ -917,14 +919,14 @@
   \begin{itemize}[<+->]
   \item Propriedade 3: o produto dos observáveis nas arestas ao redor
     do vértice, em sentido anti-horário, é igual a identidade
-    multiplicada pelo signal do vértice
+    multiplicada pelo sinal do vértice
 
     \begin{itemize}
     \item Se \(M_{1} \ldots M_{n} = I\), com \(M^{2} = I\)
       (similar para \(-I\)), então, para qualquer ponto de início \(k\),
       \(M_{k}M_{k + 1} \ldots M_{n} M_{1} \ldots M_{k-1} = I\), pois
       \begin{align*}
-        M_{k} M_{k + 1} \ldots M_{n} M_{1} M_{k - 1}
+        M_{k} M_{k + 1} \ldots M_{n} M_{1} \ldots M_{k - 1}
         &= (M_{k - 1} \ldots M_{1})(M_{1} \ldots M_{n}) (M_{1} \ldots M_{k - 1}) \\
         &= (M_{k - 1} \ldots M_{1}) I (M_{1} \ldots M_{k - 1}) = I
       \end{align*}
@@ -977,7 +979,7 @@
     existe um mapeamento \(\phi\) injetivo de cada vértice \(v \in H\)
     para um vértice \(\phi(v) \in G\), e de cada aresta
     \((u, v) \in H\) para um caminho simples entre
-    \(\phi(u) e \phi(v)\) em \(G\), tal que os caminhos são disjuntos
+    \(\phi(u)\) e \(\phi(v)\) em \(G\), tal que os caminhos são disjuntos
     (com exceção das extremidades \(u\) e \(v\)).
   \end{cbox}
 \end{frame}
