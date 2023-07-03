@@ -16,6 +16,7 @@
   vratio=2:3,      % not vertically centered
 }
 
+\usepackage[parfill]{parskip} % noindent + space between paragraph (I really prefer...)
 \usepackage[table]{xcolor}
 \usepackage{subcaption}
 \usepackage{amsmath}
@@ -1168,5 +1169,186 @@ The magic square and the pentagram are examples of magic arrangements.
 Equipped with all these tools, we now define a generalization of \emph{parity}
 pseudo-telepathy games (Mermin-style games):
 
+\begin{definition}[Parity Telepathy Game~\cite{arkhipov2012}]\label{def:parity-game}
+  The parity telepathy game on an arrangement \(A = (V, E, \ell)\) is
+  a two-players cooperative game (say, played by Alice and Bob). The
+  game is conducted by a referee charlie. Alice and Bob may agree on a
+  prior strategy, but cannot communicate once the game starts. At each
+  round,
+  \begin{enumerate}
+  \item Charlie randomly picks a vertex \(u \in V\) and one of the hyperedges
+    \(e \in E\) that contains \(u\);
+    
+  \item Charlie sends the vertex \(u\) to Alice and the hyperedge \(e\) to Bob;
+    
+  \item Alice labels the vertex \(u\) with \(a(u) = \pm{}1\) and sends
+    \(a(u)\) to Charlie;
+
+  \item Bob labels each vertex \(v \in e\) with \(b(v) = \pm{}1\) and sends
+    each \(b(v)\) to Charlie;
+    
+  \item Alice and Bob win if \(a(u) = b(u)\) and \(\prod_{v} b(v) = \ell(e)\).
+  \end{enumerate}
+\end{definition}
+
+Notice that the generalization above differs a bit from the magic
+square game seen in Section~\ref{sec:magic-square}, where Alice
+receives a hyperedge from Charlie. This modification generalizes to
+arrangements that do not share the property exhibited by the magic
+square that its lines can be split into two disjoint sets (rows and
+columns). In this sense, one can simply understand the magic square
+game as a combination of two rounds. In the first ``half'' of the
+round, Charlie sends the vertex \(u\) to Alice and the line \(e\) to
+Bob. In the second half, Charlie sends \(u\) to Bob, but
+\emph{another} line \(e' \neq e\) to Alice.
+
+There exists a strategy that wins with certainty a parity telepathy
+game played on a magic arrangement that has a quantum realization in
+which all the operators have all real eigenvalues, provided that Alice
+and Bob can share entanglement in advance~\cite[Theorem
+17]{arkhipov2012}. It suffices for them to share a maximally entangled
+state
+\[
+  \rho_{AB} = \sum_{i = 0}^{n-1} \ket{i}\ket{i},
+\]
+where \(\{\ket{i}\}\) is a basis for the finite-dimensional
+Hilbert-space \(\mathcal{H}\) of dimension \(n\). In the case of the
+magic square, \(n = 4\) and
+\(\{\ket{i}\} = \{\ket{0}, \ket{1}, \ket{2}, \ket{3}\}\), which,
+rewritten as binary strings, is
+\(\{\ket{00}, \ket{01}, \ket{10}, \ket{11}\}\). The proof is similar
+to our proof for Theorem~\ref{theo:quantum-wins}, using the
+simultaneous diagonalization of operators in the same hyperedge and
+the symmetry of the state.
+
+\subsection{Main Result: Characterization of Magic Arrangements by Planar Graphs}
+
+We now move on to the main result of~\cite{arkhipov2012}. We shall
+derive a characterization of magic arrangements by the planarity of
+its corresponding intersection graph.
+
+\begin{definition}[Intersection Graph]\label{def:intersec}
+  The intersection graph of an arrangement \(A = (V, E)\) is the
+  undirected graph \(G = (V', E')\), where \(V' = E\), and there is an
+  edge between two vertices \(e_{0}, e_{1} \in V'\) for each vertex in
+  the insection of \(e_{0}\) and \(e_{1}\).
+\end{definition}
+
+The intersection graph of an arrangement is a dual representation in
+which the roles of vertices and hyperedges are switched. The vertices
+of the intersection graph are labelled with the same values of the
+corresponding hyperedges in the arrangement. Similarly, a quantum
+realization of the intersection graph assigns to its edges the same
+measurements ascribed to the corresponding vertices in the
+arrangement. The properties observed in the arrangement are also
+carried to the intersection graph. In particular, the observables
+assigned to the edges around a vertex in the intersection graph (by
+around, we mean the edges that touch that vertex) mutually commute and
+its product equals the identity times the label of the vertex. To
+illustrate, the intersection graph of the magic square is the complete
+bipartite graph on six vertices \(K_{3, 3}\) and the intersection
+graph of the magic pentagram is the complete graph on five vertices
+\(K_{5}\).
+
+We are also going to need the definition of a topological minor:
+
+\begin{definition}[Topological Minor]\label{def:topo}
+  A graph \(H\) is a topological minor of \(G\) if there is an
+  embedding of \(H\) in \(G\) that consists of an injective map
+  \(\phi\) from every vertex \(v \in H\) to a vertex
+  \(\phi(v) \in G\), and a map from each edge \((u, v) \in H\) to a
+  simple path from \(\phi(u)\) to \(\phi(v)\) in G, such that these
+  paths are disjoint (except on their endpoints).
+\end{definition}
+
+We now restate the main result of~\cite{arkhipov2012} and its proof,
+further illustrating it with examples.
+
+\begin{theorem}\label{theo:main}
+  An arrangement is magic if and only if its intersection graph is not
+  planar.
+\end{theorem}
+
+We start by considering the direction that says that ``nonplanar
+implies magic'', or equivalently, if the intersection graph is planar,
+then its arrangement is not magic.
+
+\begin{proof}
+  First of all, assume that there exists a quantum realization of the
+  arrangement (if there is none, then the arrangement is not magic).
+  The goal is to show that, if there exists a quantum realization and
+  the intersection graph is planar, then the parity of the arrangement
+  is \(+1\) and, consequently, it is not magic. The strategy consists
+  of repeatedly contracting edges of the intersection, and show that
+  contraction preserves a few properties. To contract an edge is to
+  merge the two endpoints \(v\) and \(w\) into a new vertex
+  \(u\). Every edge that used to touch \(v\), now touches \(u\), and
+  every edge that used to touch \(w\), now touches
+  \(u\). Consequently, the edge that was contracted becomes two
+  self-loops. Moreover, we define the label of the new vertex \(w\) as
+  the product of the labels of \(u\) and \(v\). We observe that
+  contraction preserves the following properties:
+
+  \begin{enumerate}
+  \item The resulting graph remains planar.
+
+  \item The parity (product of all the vertex labels) remains the
+    same. This follows directly from the definition of the label of
+    thenew vertex.
+
+  \item The product of the labels of edges around any vertex, in
+    cyclic order (say, without loss of generality, counterclockwise),
+    equals the identity times the label of the vertex. To see this,
+    first notice that this property holds for the initial graph, since
+    all observables around a vertex pairwise commute (recall that
+    these observables correspond to the observables assigned by the
+    quantum realization to vertices that lie in the hyperedge in the
+    arrangement). However, the commutative property does not
+    necessarily hold after contraction. Nevertheless, if we follow a
+    cyclic order, we can still see that this property is
+    preserved. Let \(M_{0}, \ldots, M_{n-1}\) be the observables
+    around a vertex \(v\), going counterclockwise. If
+    \(M_{0} \ldots M_{n - 1} = \ell(v) I\), then for any starting
+    point \(k\),
+    \(M_{k} M_{k+1}\ldots M_{n-1}M_{0}\ldots M_{k-1} = \ell(v) I\),
+    since
+    \begin{align}
+      M_{k}M_{k+1} \ldots M_{n-1}M_{0}\ldots M_{k-1}
+      &= (M_{k-1}\ldots M_{0})(M_{0} \ldots M_{n-1})(M_{0}\ldots M_{k-1})  \label{eq:cyclic1} \\
+      &= (M_{k-1}\ldots M_{0})\ell(v) I(M_{0}\ldots M_{k-1}) = \ell(v) I,  \label{eq:cyclic2}
+    \end{align}
+    where (\ref{eq:cyclic1}) follows from the fact that
+    \(M_{i} M_{i} = \ell(v) I\). Now, let \(X\) be the measurement assigned to
+    the edge that is being contracted and let the labels around its
+    endpoints \(v\) and \(w\) be \(M_{0}\ldots M_{m-1}X\) and
+    \(X N_{0}\ldots N_{n-1}\) going counterclockwise. Then,
+    \(M_{0} \ldots M_{m-1} X = \ell(v)I\) and
+    \(X N_{0} \ldots N_{n-1} = \ell(w)I\). Multiplying these gives
+    \[
+      M_{0}\ldots M_{m-1} X^{2} N_{0} \ldots N_{n-1} =
+      M_{0}\ldots M_{m-1} N_{0} \ldots N_{n-1} =
+      \ell(v) \ell(w) I = \ell(u) I,
+    \]
+    so the product of the observables around the new vertex \(w\)
+    still is the identity times its label. Notice that key to this
+    strategy is the fact that the graph is planar, and thus we can
+    draw the edges around the new vertex without mixing the edges that
+    used to touch \(v\) and \(w\).
+  \end{enumerate}
+
+  By repeatedly contracting edges, eventually we reach a graph with a
+  single vertex.  Due to how we defined the label of each new vertex
+  (i.e.\ as the product of the labels of the vertices being merged),
+  it follows that the label of the last vertex equals the product of
+  the labels of all the original vertices, and therefore equals the
+  parity of the arrangement. The remaining vertex has multiple
+  self-loops, two for each measurement \(M\) ascribed to the original
+  edges.  Since \(M^{2} = I\), going counterclockwise we get a
+  sequence \(M_{0}^{2} \ldots M_{\vert E'\vert -1}^{2} = I\). But, we
+  saw that contraction preserves the third property, which says that
+  the observables around a vertex multiply to the identity times the
+  vertex label. Thus, the label of the final vertex is \(1\) and,
+  consequently, the parity of the arrangement is \(+1\). \qed
+\end{proof}
 \printbibliography{}
 \end{document}
