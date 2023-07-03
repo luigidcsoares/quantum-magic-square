@@ -41,6 +41,8 @@
 }{ex}
 
 \usepackage{tikz}
+\usetikzlibrary{intersections}
+\usetikzlibrary{calc}
 \usetikzlibrary{quantikz2}
 
 \newcommand{\ketbra}[2]{\ensuremath{| #1 \rangle \langle #2 |}}
@@ -56,8 +58,7 @@
 \newcommand{\todo}[1]{{\color{red}\bfseries{}TODO: #1}}
   
 \begin{document}
-\title{Quantum Pseudo-Telepathy}
-\subtitle{The Magic Square Game}
+\title{Quantum Magic Games}
 
 \author{Luigi Soares \and Roberto Rosmaninho}
 \institute{%
@@ -220,16 +221,29 @@ what is the best strategy that they can come up with?
 
 Example~\ref{ex:classic-sol} illustrates one of the many deterministic
 strategies that Alice and Bob can adopt. It is not difficult to
-convince yourself that, no matter how they decide to fill in
-their entries, it is impossible for them to come up with predefined
-answers that always win. Any deterministic strategy is a pair of
-matrices, one for Alice and another for Bob. The only way that they could
-design a strategy that wins with certainty every round is to prepare two
-identical matrices satisfying the requirements for each row and for each
-column. That is, a single matrix for which the product of every row is
-\(+1\) and the product of every column is \(-1\). Such a matrix cannot
-possibly exist! It turns out that the best that they can do is to win
-with probability \(\nicefrac{8}{9}\).
+convince yourself that, no matter how they decide to fill in their
+entries, it is impossible for them to come up with predefined answers
+that always win. Any deterministic strategy is a pair of matrices, one
+for Alice and another for Bob. The only way that they could design a
+strategy that wins with certainty every round is to prepare two
+identical matrices satisfying the requirements for each row and for
+each column. That is, a single matrix for which the product of every
+row is \(+1\) and the product of every column is \(-1\). Such a matrix
+cannot possibly exist!  To see that, consider the constraints over
+each row and column:
+\[\begin{aligned}
+    m_{0,0}\, m_{0,1}\, m_{0,2} &= +1 \\
+    m_{1,0}\, m_{1,1}\, m_{1,2} &= +1 \\
+    m_{2,0}\, m_{2,1}\, m_{2,2} &= +1 \\
+    m_{0,0}\, m_{1,0}\, m_{2,0} &= -1 \\
+    m_{0,1}\, m_{1,1}\, m_{2,1} &= -1 \\
+    m_{0,2}\, m_{1,2}\, m_{2,2} &= -1 \\
+    \midrule
+    +1 &\neq -1
+  \end{aligned}\]
+
+It turns out that the best that they can do is to win
+with probability \(\nicefrac{8}{9}\)
 
 What if Alice and Bob decide for a probabilistic strategy? That is, Alice and
 Bob each carry a coin. When assigned a row/column, they flip their
@@ -243,8 +257,9 @@ Square game is one in which Alice and Bob randomly select a
 deterministic strategy. Hence, no matter how lucky Alice and Bob are,
 the probability of success of any strategy that they come up with is
 bounded by the winning probability of the best deterministic strategy,
-which is \(\nicefrac{8}{9}\). Theorem~\ref{thm:classical-success}
-formalizes this argument.
+which is \(\nicefrac{8}{9}\). A formal proof is given in~\ref{xxx}
+for any pseudo-telepathy game (i.e.\ games whose quantum strategies
+exhibit this notion of pseudo-telapathy).
 
 \subsection{Quantum Solution}
 \label{sec:quantum-sol}
@@ -873,7 +888,7 @@ We now show the quantum circuits for each row and each column:
   \end{figure}
 
 \item[Column 2:] When assigned the third column, Bob performs the measurements
-  \(Z \otimes Z, X \otimes X\) and \(Y \otimes Y\), which the circuit
+  \(Z \otimes Z, X \otimes X\) and \(Y \otimes X\), which the circuit
   in Figure~\ref{fig:circ-col2} implements.
 
   \begin{figure}[htbp]
@@ -922,8 +937,92 @@ We now show the quantum circuits for each row and each column:
 \section{Contextuality}
 \label{sec:context}
 
-\section{Quantum Unitaries (? research)}
-\label{sec:quantum-unitaries}
+\section{Characterizing Quantum Magic Games}
+\label{sec:extending}
+What if we change the format of the Mermin-Peres magic square game?
+Maybe increase the number of rows and columns, or even change the
+shape entirely? Figure~\ref{fig:as-graph} (a) gives an example of the
+magic pentagram game, in which the product of the labels (\(+1\) or
+\(-1\)) assigned to each of four vertices in a line must equal the
+labels of that line (the product of the four vertices in the topmost
+horizontal line, for example, must be \(-1\)). Notice that we are now
+changing the visualization format to
+hypergraphs. Figure~\ref{fig:as-graph} (b) shows the magic square as a
+hypergraph. In this section, we explore a characterization of games that
+follow the same style as the magic square and pentagram, given
+by~\ref{arkhipov2012}.
 
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \begin{center}
+      \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+        \node (00) [vertex] at (-1.25, 0) {};
+        \node (01) [vertex] at (0,  0) {};
+        \node (02) [vertex] at (1.25,  0) {};
+
+        \node (10) [vertex] at (-1.25, -1.25) {};
+        \node (11) [vertex] at (0,  -1.25) {};
+        \node (12) [vertex] at (1.25,  -1.25) {};
+
+        \node (20) [vertex] at (-1.25, -2.5) {};
+        \node (21) [vertex] at (0,  -2.5) {};
+        \node (22) [vertex] at (1.25, -2.5) {};
+        
+        \node (r0) [text=green!50!black!80] at (1.65, -0.05) {\(+1\)};
+        \node (r1) [text=green!50!black!80] at (1.65, -1.20) {\(+1\)};
+        \node (r2) [text=green!50!black!80] at (1.65, -2.45) {\(+1\)};
+        
+        \node (c0) [text=red!50!black!80] at (-1.2, -2.8) {\(-1\)};
+        \node (c1) [text=red!50!black!80] at (-0.05, -2.8) {\(-1\)};
+        \node (c2) [text=red!50!black!80] at (1.2, -2.8) {\(-1\)};
+
+        \path[]
+        (00) edge (01) edge (10)
+        (01) edge (02) edge (11)
+        (02) edge (12)
+        
+        (10) edge (11) edge (20)
+        (11) edge (12) edge (21)
+        (12) edge (22)
+
+        (20) edge (21)
+        (21) edge (22)
+        ;
+      \end{tikzpicture}
+    \end{center}
+    \caption{The magic square game as a hypergraph.}
+  \end{subfigure}
+  \hfill{}
+   \begin{subfigure}[t]{0.49\textwidth}
+    \begin{center}
+      \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+        \foreach \c [evaluate=\c as \ang using {18 + 72*\c}] in {0, 1, 2, 3, 4} {
+          \node [vertex] (\c) at (\ang:25mm) {};
+        }
+
+        \draw [name path=0--2] (0) -- (2);
+        \draw [name path=0--3] (0) -- (3);
+        \draw [name path=1--3] (1) -- (3);
+        \draw [name path=1--4] (1) -- (4);
+        \draw [name path=2--4] (2) -- (4);
+
+        \node [vertex] (01) at (intersection of 0--2 and 1--4) {};
+        \node [vertex] (04) at (intersection of 0--3 and 1--4) {};
+        \node [vertex] (12) at (intersection of 1--3 and 0--2) {};
+        \node [vertex] (23) at (intersection of 1--3 and 2--4) {};
+        \node [vertex] (34) at (intersection of 0--3 and 2--4) {};
+        
+        \node [text=red!50!black!80] (label0--2) at ($(01)!0.5!(12) - (0, 0.25)$) {\(-1\)};
+        \node [text=green!50!black!80] (label1--4) at ($(01)!0.5!(04) + (-0.3, -0.1)$) {\(+1\)};
+        \node [text=green!50!black!80] (label0--3) at ($(04)!0.5!(34) + (-0.1, 0.25)$) {\(+1\)};
+        \node [text=green!50!black!80] (label2--4) at ($(23)!0.5!(34) + (+0.1, 0.25)$) {\(+1\)};
+        \node [text=green!50!black!80] (label1--3) at ($(12)!0.5!(23) + (+0.3, -0.1)$) {\(+1\)};
+      \end{tikzpicture}
+    \end{center}
+    \caption{The pentagram game as a hypergraph.}
+  \end{subfigure}
+  \caption{Examples of hypergraphs representing quantum magic games~\ref{arkhipov2012}.}
+\end{figure}
 \printbibliography{}
 \end{document}
