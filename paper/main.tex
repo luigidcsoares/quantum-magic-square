@@ -19,6 +19,7 @@
 \usepackage[table]{xcolor}
 \usepackage{subcaption}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{nicefrac}
 \usepackage{hhline}
 \usepackage{bigdelim}
@@ -940,20 +941,49 @@ We now show the quantum circuits for each row and each column:
 \section{Characterizing Quantum Magic Games}
 \label{sec:extending}
 What if we change the format of the Mermin-Peres magic square game?
-Maybe increase the number of rows and columns, or even change the
-shape entirely? Figure~\ref{fig:as-graph} (a) gives an example of the
-magic pentagram game, in which the product of the labels (\(+1\) or
-\(-1\)) assigned to each of four vertices in a line must equal the
-labels of that line (the product of the four vertices in the topmost
-horizontal line, for example, must be \(-1\)). Notice that we are now
-changing the visualization format to
-hypergraphs. Figure~\ref{fig:as-graph} (b) shows the magic square as a
-hypergraph. In this section, we explore a characterization of games that
-follow the same style as the magic square and pentagram, given
-by~\ref{arkhipov2012}.
+Maybe increase the dimensions, or even change the shape entirely?
+Figure~\ref{fig:as-graph} (a) gives an example of the magic pentagram
+game, in which the product of the labels (\(\pm{}1\)) assigned to each
+of four vertices in a line must equal the labels of that line (the
+product of the four vertices in the topmost horizontal line, for
+example, must be \(-1\)). Notice that we are now changing the
+visualization format to hypergraphs.  Figure~\ref{fig:as-graph} (b)
+shows the magic square as a hypergraph.  As the magic square, the
+pentagram is also due to Mermin~\ref{xxx}.  In this section, we
+explore a characterization of Mermin-style games, given
+by~\cite{arkhipov2012}.
 
 \begin{figure}[htbp]
   \centering
+   \begin{subfigure}[t]{0.49\textwidth}
+    \begin{center}
+      \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+        \foreach \c [evaluate=\c as \ang using {18 + 72*\c}] in {0, 1, 2, 3, 4} {
+          \node [vertex] (\c) at (\ang:25mm) {};
+        }
+
+        \draw [name path=0--2] (0) -- (2);
+        \draw [name path=0--3] (0) -- (3);
+        \draw [name path=1--3] (1) -- (3);
+        \draw [name path=1--4] (1) -- (4);
+        \draw [name path=2--4] (2) -- (4);
+
+        \node [vertex] (01) at (intersection of 0--2 and 1--4) {};
+        \node [vertex] (04) at (intersection of 0--3 and 1--4) {};
+        \node [vertex] (12) at (intersection of 1--3 and 0--2) {};
+        \node [vertex] (23) at (intersection of 1--3 and 2--4) {};
+        \node [vertex] (34) at (intersection of 0--3 and 2--4) {};
+        
+        \node [text=red!50!black!80] (label0--2) at ($(01)!0.5!(12) - (0, 0.25)$) {\(-1\)};
+        \node [text=green!50!black!80] (label1--4) at ($(01)!0.5!(04) + (-0.3, -0.1)$) {\(+1\)};
+        \node [text=green!50!black!80] (label0--3) at ($(04)!0.5!(34) + (-0.1, 0.25)$) {\(+1\)};
+        \node [text=green!50!black!80] (label2--4) at ($(23)!0.5!(34) + (+0.1, 0.25)$) {\(+1\)};
+        \node [text=green!50!black!80] (label1--3) at ($(12)!0.5!(23) + (+0.3, -0.1)$) {\(+1\)};
+      \end{tikzpicture}
+    \end{center}
+    \caption{The pentagram game as a hypergraph.}
+  \end{subfigure}
+  \hfill{}
   \begin{subfigure}[t]{0.49\textwidth}
     \begin{center}
       \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
@@ -993,36 +1023,150 @@ by~\ref{arkhipov2012}.
     \end{center}
     \caption{The magic square game as a hypergraph.}
   \end{subfigure}
-  \hfill{}
-   \begin{subfigure}[t]{0.49\textwidth}
+  \caption{Examples of hypergraphs representing quantum magic games~\cite{arkhipov2012}.\label{fig:as-graph}}
+\end{figure}
+
+We start by defining the notion of \emph{arrangements}, which are
+configurations on which Mermin-style games may be
+played. \cite{arkhipov2012} defines both unsigned and signed
+arrangements. Instead, we shall focus  on \emph{signed}
+arrangements, and thus anytime we say ``arrangement'' we mean the
+signed version.
+
+\begin{definition}[Arrangement~\cite{arkhipov2012}]\label{def:arrangement}
+  An arrangement \(A = (V, E, \ell)\) is a finite connected hypergraph
+  with vertex set \(V\) and hyperedge set \(E\), where a hyperedge is
+  a nonempty subset of \(V\), such that every vertex \(v \in V\) lies
+  in exactly two hyperedges \(e_{0}, e_{1} \in E\) (\emph{connected}
+  means that the hypegraph cannot be split into two smaller disjoint
+  hypergraphs). The labelling function \(\ell\colon E \to \{+1, -1\}\)
+  maps each hyperedge to a sign \(+1\) or \(-1\).
+\end{definition}
+
+We will oftenly refer to a hyperedge as a \emph{line}. In
+Figure~\ref{fig:as-graph} (a), the lines going through sequences of
+four vertices are the hyperedges. Similarly, in
+Figure~\ref{fig:as-graph} (b), the horizontal and vertical lines
+touching the sequences of three vertices are the hyperedges.  As
+already mentioned, arrangements define the configurations on which
+games may be played.
+
+\begin{definition}[Classical Realization~\cite{arkhipov2012}]\label{def:classical-re}
+  A classical realization of an arrangement \(A = (V, E, \ell)\) is a
+  labelling \(c\colon V \to \{+1, -1\}\) that, for every hyperedge
+  \(e \in E\), satisfies the property 
+  \[
+    \prod_{v \in e} c(v) = \ell(e).
+  \]
+\end{definition}
+
+
+\begin{tcbexample}{Classical Realization}{class-re}
+  Figure~\ref{fig:class-re} depicts an example of a classically
+  realizable arrangement. That is, an arrangement for which there exists
+  a classical realization.
+
+  \begin{figure}[H]
     \begin{center}
       \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
-        \foreach \c [evaluate=\c as \ang using {18 + 72*\c}] in {0, 1, 2, 3, 4} {
-          \node [vertex] (\c) at (\ang:25mm) {};
-        }
+        \node (00) [vertex] at (-1.25, 0) {};
+        \node (01) [vertex] at (0,  0) {};
+        \node (02) [vertex] at (1.25,  0) {};
 
-        \draw [name path=0--2] (0) -- (2);
-        \draw [name path=0--3] (0) -- (3);
-        \draw [name path=1--3] (1) -- (3);
-        \draw [name path=1--4] (1) -- (4);
-        \draw [name path=2--4] (2) -- (4);
+        \node (10) [vertex] at (-1.25, -1.25) {};
+        \node (11) [vertex] at (0,  -1.25) {};
+        \node (12) [vertex] at (1.25,  -1.25) {};
 
-        \node [vertex] (01) at (intersection of 0--2 and 1--4) {};
-        \node [vertex] (04) at (intersection of 0--3 and 1--4) {};
-        \node [vertex] (12) at (intersection of 1--3 and 0--2) {};
-        \node [vertex] (23) at (intersection of 1--3 and 2--4) {};
-        \node [vertex] (34) at (intersection of 0--3 and 2--4) {};
+        \node (r0) [text=red!50!black!80] at (1.65, -0.05) {\(-1\)};
+        \node (r1) [text=red!50!black!80] at (1.65, -1.20) {\(-1\)};
         
-        \node [text=red!50!black!80] (label0--2) at ($(01)!0.5!(12) - (0, 0.25)$) {\(-1\)};
-        \node [text=green!50!black!80] (label1--4) at ($(01)!0.5!(04) + (-0.3, -0.1)$) {\(+1\)};
-        \node [text=green!50!black!80] (label0--3) at ($(04)!0.5!(34) + (-0.1, 0.25)$) {\(+1\)};
-        \node [text=green!50!black!80] (label2--4) at ($(23)!0.5!(34) + (+0.1, 0.25)$) {\(+1\)};
-        \node [text=green!50!black!80] (label1--3) at ($(12)!0.5!(23) + (+0.3, -0.1)$) {\(+1\)};
+        \node (c0) [text=green!50!black!80] at (-1.2, -1.65) {\(+1\)};
+        \node (c1) [text=green!50!black!80] at (-0.05, -1.65) {\(+1\)};
+        \node (c2) [text=green!50!black!80] at (1.2, -1.65) {\(+1\)};
+
+        \path[]
+        (00) edge (01) edge (10)
+        (01) edge (02) edge (11)
+        (02) edge (12)
+        
+        (10) edge (11)
+        (11) edge (12)
+        ;
       \end{tikzpicture}
     \end{center}
-    \caption{The pentagram game as a hypergraph.}
-  \end{subfigure}
-  \caption{Examples of hypergraphs representing quantum magic games~\ref{arkhipov2012}.}
-\end{figure}
+    \caption{Example of a classically realizable arrangement.\label{fig:class-re}}
+  \end{figure}
+
+    A classical realization \(c\) for this arrangement is
+  \begin{align*}
+    c(v_{00}) = c(v_{01}) = c(v_{10}) = c(v_{11}) &= +1 \\
+    c(v_{02}) = c(v_{12}) &= -1.
+  \end{align*}
+\end{tcbexample}
+
+
+\begin{definition}[Quantum Realization~\cite{arkhipov2012}]\label{def:quantum-re}
+  A quantum realization of an arrangement \(A = (V, E, \ell)\) is a
+  labelling \(q\colon V \to \operatorname{GL}(\mathcal{H})\) is a
+  mapping from each vertex to an observable \(M\) on a fixed
+  finite-dimensional Hilbert-space \(\mathcal{H}\), such that
+  \begin{itemize}
+  \item \(M\) is Hermitian and squares to the identity, or
+    equivalently, has eigenvalues \(\pm{}1\);
+    
+  \item For each hyperedge, the observable assigned to its vertices
+    pairwise commute and
+    
+  \item For each hyperedge \(e \in E\), the labelling of its vertices
+    satisfies the property
+    \[
+      \prod_{v \in e} q(v) = \ell(e) I.
+    \]
+  \end{itemize}
+\end{definition}
+
+A classical realization is simply a quantum realization in which
+\(\mathcal{H} = \mathbb{R}\). As such, every classically realizable
+arrangement is quantumly realizable. An example of quantum realization
+was given in Section~\ref{sec:quantum-sol} for the magic square game.
+Any arrangement that is quantumly realizable with observables that all
+mutually commute, then it is also classically
+realizable~\cite[Proposition 8]{arkhipov2012}. The proof follows by
+the simultaneous diagonalization of the observables, similar to our
+proof for Lemma~\ref{lem:product}.
+
+It turns out that the existence of a classical or quantum realization
+of an arrangement depends only on whether the number of \(-1\) labels
+is odd or even. This is called the \emph{parity} of the arrangement.
+
+\begin{definition}[Parity~\cite{arkhipov2012}]\label{def:parity}
+  The parity \(p(\ell)\) of an arrangement \(A = (V, E, \ell)\) is
+  \[
+    p(\ell) = \prod_{e \in E} \ell(E),
+  \]
+  which is \(-1\) if there is an odd number of \(-1\) labels, or \(+1\) otherwise.
+\end{definition}
+
+If there exists a realization (either classical or quantum) of an
+arrangement \(A = (V, E, \ell)\), then it is possible to construct a
+realization for \(A' = (V, E, \ell')\) from the realization of
+\(A\)~\cite[Propositions 10 and 12]{arkhipov2012}. Furthermore, an
+arrangement is classically realizable if, and only if, its parity is
+\(+1\)~\cite[Proposition 11]{arkhipov2012}. Despite this fundamental result,
+Classically realizable arrangements are not as much interesting as the
+quantumly ones. Therefore, the goal is to characterize the gap between
+these two worlds. The arrangements that are quantumly realizable, but
+are not classically realizable, are called \emph{magic} and are
+defined as follows:
+
+\begin{definition}[Magic Arrangement~\cite{arkhipov}]\label{def:magic-arr}
+  An arrangement is said magic its parity is \(-1\) and it is
+  quantumly realizable.
+\end{definition}
+
+The magic square and the pentagram are examples of magic arrangements.
+Equipped with all these tools, we now define a generalization of \emph{parity}
+pseudo-telepathy games (Mermin-style games):
+
 \printbibliography{}
 \end{document}
