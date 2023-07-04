@@ -28,9 +28,11 @@
 
 \usepackage{float}
 \usepackage{tcolorbox}
-\tcbuselibrary{theorems}
+\tcbuselibrary{breakable, skins, theorems}
 
 \newtcbtheorem{tcbexample}{Example}{
+  breakable,
+  enhanced,
   boxrule=0.15mm,
   colback=gray!15,
   colbacktitle=gray!15,
@@ -324,7 +326,7 @@ each cell of his cells with the outcomes of each
 measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
 
 {\renewcommand{\arraystretch}{2}
-\begin{figure}
+\begin{figure}[htbp] 
   \centering
   \[\begin{array}{|*{3}{>{\quad}c<{\quad}|}>{\quad}l<{\quad}}
       \hhline{---~}
@@ -392,7 +394,8 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
   \(-1\), and the state does not change, i.e.
   \(\ket{\psi}_{A3} = \ket{\psi}_{A2}\).  Alice, then, fills the first
   row with the values \(\{+1, -1, -1\}\), whose product is, as
-  required, \(+1\). Upon receiving Alice's answer, Charlie goes to
+  required
+  , \(+1\). Upon receiving Alice's answer, Charlie goes to
   meet Bob. Suppose he assigns the second column to Bob. To fill in
   the value of the first cell (which is the intersection of the first
   row and second column), Bob measures the observable \(Z \otimes
@@ -1447,6 +1450,69 @@ then its arrangement is not magic.
   identity times the label of the last vertex. Hence, the parity of
   this arrangement is \(+1\) (as we already knew).
 \end{tcbexample}
+
+It remains to show the other direction of the result. That is, the
+intersection graph of an arrangement is nonplanar, than the
+arrangement is magic.
+
+\begin{proof}
+  By the Pontyagin and Kuratowski theorem, everry nonplanar graph contains either
+  the \(K_{5}\) or the \(K_{3,3}\) graph as a topological minor. We have already seen
+  that the \(K_{3, 3}\) is the intersection graph that corresponds to the magic square
+  and that the \(K_{5}\) corresponds to the magic pentagram, and both are magic
+  arrangements. Hence, it suffices to demonstrate that, if the intersection graph
+  \(G\) of an arrangement has a magic intersection graph \(H\) as a topological minor,
+  than \(G\) is magic. For that, we are going to construct a quantum realization
+  of \(G\) from the realization of \(H\), as follows:
+
+  \begin{enumerate}
+  \item For every vertex in \(H\), assume that the corresponding vertex in
+    \(G\) is labelled in the same way.
+    
+  \item Assume that the label of every other vertex is \(+1\).
+    
+  \item For every edge of \(H\), label each edge of the corresponding  path in \(G\) with
+    the same observable.
+
+  \item Label the remaining edges of \(G\) as the identity.
+  \end{enumerate}
+
+  To see why items (1) and (2) are safe to assume, recall that an
+  arrangement depends only on its parity (meaning that it is possible
+  to construct a realization for another arrangement on the same
+  vertices and hyperedges, and of same parity), and thus it does not
+  matter how you label the vertices of \(G\), as long as its parity
+  is \(-1\). It remains to show that the strategy above gives a
+  quantum realization of \(G\). For that, we check each of the
+  properties of a quantum realization:
+
+  \begin{enumerate}
+  \item Every observable \(M\) assigned to a vertex of \(G\) is either one in \(H\) or
+    the identity. Hence, \(M\) is Hermitian and squares to the identity.
+
+  \item Every vertex of \(G\) corresponding to a vertex of \(H\) is
+    surrounded by the same observables on its edges, plus (possibly)
+    copies of the identity. Therefore, these operators mutually
+    commute. Furthermore, they multiply to the identity times the
+    label of the vertex, which is labelled in the same way as its
+    corresponding vertex in \(H\).
+
+  \item Every vertex of \(G\) that lies on a simple path corresponing
+    to an edge in \(H\) touches two edges (in and out) labelled with
+    the same operator \(M\), which is the operator of the edge in
+    \(H\), plus (possibly) copies of the identity. Since
+    \(M^{2} = I\), these operators all commute and multiply to
+    \(+I\). Recall that we labelled these vertices as \(+1\), as they
+    do not have a correspondence in \(H\). Hence, the product of the
+    operators multiply to the identity times the vertex's label, as
+    desired.
+
+  \item Any other vertex of \(G\) is labelled as \(+1\) and is only
+    surrounded by edges labelled as \(+I\), which clearly commute
+    and multiply to \(+I\), i.e.\ the identity times the label of the vertex.
+  \end{enumerate}
+  \qed
+\end{proof}
 
 \printbibliography{}
 \end{document}
