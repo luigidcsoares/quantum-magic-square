@@ -936,7 +936,7 @@ We now show the quantum circuits for each row and each column:
   \end{figure}
 \end{description}
 
-\section{Contextuality}
+\subsection{Contextuality}
 \label{sec:context}
 
 \section{Characterizing Quantum Magic Games}
@@ -1070,13 +1070,13 @@ games may be played.
   \begin{figure}[H]
     \begin{center}
       \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
-        \node (00) [vertex] at (-1.25, 0) {};
-        \node (01) [vertex] at (0,  0) {};
-        \node (02) [vertex] at (1.25,  0) {};
+        \node (00) [vertex, label=above left:{\(v_{0}\)}] at (-1.25, 0) {};
+        \node (01) [vertex, label=above left:{\(v_{1}\)}] at (0,  0) {};
+        \node (02) [vertex, label=above left:{\(v_{2}\)}] at (1.25,  0) {};
 
-        \node (10) [vertex] at (-1.25, -1.25) {};
-        \node (11) [vertex] at (0,  -1.25) {};
-        \node (12) [vertex] at (1.25,  -1.25) {};
+        \node (10) [vertex, label=above left:{\(v_{3}\)}] at (-1.25, -1.25) {};
+        \node (11) [vertex, label=above left:{\(v_{4}\)}] at (0,  -1.25) {};
+        \node (12) [vertex, label=above left:{\(v_{5}\)}] at (1.25,  -1.25) {};
 
         \node (r0) [text=red!50!black!80] at (1.65, -0.05) {\(-1\)};
         \node (r1) [text=red!50!black!80] at (1.65, -1.20) {\(-1\)};
@@ -1100,8 +1100,8 @@ games may be played.
 
     A classical realization \(c\) for this arrangement is
   \begin{align*}
-    c(v_{00}) = c(v_{01}) = c(v_{10}) = c(v_{11}) &= +1 \\
-    c(v_{02}) = c(v_{12}) &= -1.
+    c(v_{0}) = c(v_{1}) = c(v_{3}) = c(v_{4}) &= +1 \\
+    c(v_{2}) = c(v_{5}) &= -1.
   \end{align*}
 \end{tcbexample}
 
@@ -1350,5 +1350,103 @@ then its arrangement is not magic.
   vertex label. Thus, the label of the final vertex is \(1\) and,
   consequently, the parity of the arrangement is \(+1\). \qed
 \end{proof}
+
+\begin{tcbexample}{Planar Graph \(\implies\) Not Magic}{planar-nmagic}
+  Consider the arrangement depicted in Figure~\ref{fig:class-re} and
+  assume there exists a quantum realization that assigns the
+  observables \(M_{i}\) to each vertex \(v_{i}\). Suppose that we do
+  not know that the parity of this arrangement is \(+1\). We are going
+  to follow the strategy described above, to show that its parity must
+  be \(+1\). Figure~\ref{fig:class-re-inters} shows the intersection graph
+  that corresponds to that arrangement.
+
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+        \node (line0) [vertex, label=above:{\(e_{0}\)}] at (0, 0) {};
+        \node (line1) [vertex, label=below:{\(e_{1}\)}] at (0, -3) {};
+        \node (col0) [vertex, label=left:{\(e_{2}\)}] at (-1.5, -1.5) {};
+        \node (col1) [vertex, label=right:{\(e_{3}\)}] at (0, -1.5) {};
+        \node (col2) [vertex, label=right:{\(e_{4}\)}] at (1.5, -1.5) {};
+        \path[]
+        (line0) edge node[sloped, above] {\(M_{0}\)} (col0)
+        (line0) edge node[midway, fill=gray!15] {\(M_{1}\)} (col1)
+        (line0) edge node[sloped, above] {\(M_{2}\)} (col2)
+        (line1) edge node[sloped, below] {\(M_{3}\)} (col0)
+        (line1) edge node[midway, fill=gray!15] {\(M_{4}\)} (col1)
+        (line1) edge node[sloped, below] {\(M_{5}\)} (col2)
+        ;
+      \end{tikzpicture}
+    \end{center}
+    \caption{Intersection graph corresponding to the arrangement seen
+      in Figure~\ref{fig:class-re}.\label{fig:class-re-inters}}
+  \end{figure}
+
+  Let us contract the edge labelled by \(M_{0}\) (recall that it
+  corresponds to the vertex \(v_{0}\) in the arrangement). The
+  resulting graph is depicted in Figure~\ref{fig:contract0}.  Notice
+  that \(M_{1}M_{2}M_{0} = \ell(e_{0}) I\) and
+  \(M_{0}M_{3} = \ell(e_{2}) I\). After contraction, we have
+  a new vertex \(e'_{0}\), with \(\ell(e'_{0}) = \ell(e_{0})\ell(e_{2})\)
+  and \(M_{1}M_{2}M_{0}^{2}M_{3} = \ell(e_{0})\ell(e_{2}) I = \ell(e'_{0}) I\).
+
+    \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[
+        vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt},
+        every loop/.style={}
+        ]
+        \node (line1) [vertex, label=below:{\(e_{1}\)}] at (0, -3) {};
+        \node (e'0) [vertex, label=left:{\(e'_{0}\)}] at (-1.5, -1.5) {};
+        \node (col1) [vertex, label=right:{\(e_{3}\)}] at (0, -1.5) {};
+        \node (col2) [vertex, label=right:{\(e_{4}\)}] at (1.5, -1.5) {};
+        \path[]
+        (e'0) edge[loop above, in=120, out=60, min distance=5mm] node {\(M_{0}^{2}\)} (e'0)
+        (e'0) edge node[midway, fill=gray!15] {\(M_{1}\)} (col1)
+        (e'0) edge[bend left=45] node[sloped, above] {\(M_{2}\)} (col2)
+        (line1) edge node[sloped, below] {\(M_{3}\)} (e'0)
+        (line1) edge node[midway, fill=gray!15] {\(M_{4}\)} (col1)
+        (line1) edge node[sloped, below] {\(M_{5}\)} (col2)
+        ;
+      \end{tikzpicture}
+    \end{center}
+    \caption{Graph that results from the contraction of the edge from
+      \(e_{0}\) to \(e_{2}\) in Figure~\ref{fig:class-re-inters}.\label{fig:contract0}}
+  \end{figure}
+
+  Let us now contract the edge labelled by \(M_{5}\). The resulting graph
+  is shown in Figure~\ref{fig:contract5}.
+
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[
+        vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt},
+        every loop/.style={}
+        ]
+        \node (e'0) [vertex, label=left:{\(e'_{0}\)}] at (-1.5, -1.5) {};
+        \node (col1) [vertex, label=below:{\(e_{3}\)}] at (0, -1.5) {};
+        \node (e'1) [vertex, label=right:{\(e'_{1}\)}] at (1.5, -1.5) {};
+        \path[]
+        (e'0) edge[loop above, in=120, out=60, min distance=5mm] node {\(M_{0}^{2}\)} (e'0)
+        (e'0) edge node[midway, fill=gray!15] {\(M_{1}\)} (col1)
+        (e'0) edge[bend left=45] node[sloped, above] {\(M_{2}\)} (col2)
+        (e'0) edge[bend right=45] node[sloped, below] {\(M_{3}\)} (e'1)
+        (e'1) edge node[midway, fill=gray!15] {\(M_{4}\)} (col1)
+        (e'1) edge[loop above, in=120, out=60, min distance=5mm] node {\(M_{5}^{2}\)} (e'1)
+        ;
+      \end{tikzpicture}
+    \end{center}
+    \caption{Graph that results from the contraction of the edge from
+      \(e_{1}\) to \(e_{4}\) in Figure~\ref{fig:contract0}.\label{fig:contract5}}
+  \end{figure}
+
+  If we keep contracting edges, eventually we reach a graph with a
+  single node, whose observables going counterclockwise are
+  \(\prod_{i = 0}^{5} M_{i}^{2} = I\). And, because contracting edges
+  preserve the cyclic product property, the product of the observables is the
+  identity times the label of the last vertex. Hence, the parity of
+  this arrangement is \(+1\) (as we already knew).
+\end{tcbexample}
+
 \printbibliography{}
 \end{document}
