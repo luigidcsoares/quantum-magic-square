@@ -459,7 +459,7 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
   the row and the column.  Hence, they won this round!
 \end{tcbexample}
 
-\subsection{Formal Proof}
+\subsection{Formal Proof}\label{sec:msquare-proof}
 To prove that the quantum solution indeed works, we must demonstrate
 two fundamental properties. First, the product of the outcomes of the
 three measurements on each row (equivalently, column) is equal to 1
@@ -966,13 +966,55 @@ We now show the quantum circuits for each row and each column:
   \end{figure}
 \end{description}
 
-\subsection{A Note on Simultaneous Measurements}
+\subsection{A Note on Compatible Observables}
 \label{sec:sim-meas}
+
+As seen in the Section~\ref{sec:msquare-proof}, the operators on each
+row and column are compatible. That is, for any row and any column,
+the observables pairwise commute. This means that they can be
+simultaneously diagonalized by the same eigenvectors. It turns out
+that the simultaneous measurement of compatible operators is
+equivalent to the measurement of a single nondegenerate
+operator~\cite{peres:1997}. That is, instead of performing three
+measurements, one for each cell, Alice and Bob could perform a single
+measurement each, whose answers would tell them to which of the four
+common eigenvectors their qubits would have collapsed to, had they
+performed the individual measurements. Based on this, they could fill
+each cell with the eigenvalue that corresponds to that eigenvector. To
+construct these single measurements for each row and column, it
+suffices to take the projectors onto the eigenvectors shared by the
+observables. Example~\ref{ex:sim-meas} further illustrates this idea.
+
+
+\begin{tcbexample}{Simultaneous Measurement}{sim-meas}
+  Consider, for instance, the first row of the quantum solution for
+  the magic square game, depicted in Figure~\ref{fig:quantum}. The
+  observables in this row are \(I \otimes Z\), \(Z \otimes I\), and
+  \(Z \otimes Z\). The eigenvectors common to these operators are
+  \ket{00}, \ket{01}, \ket{10}, and \ket{11}. Alice, then, could
+  simply construct an observable
+  \[M = \ketbra{00}{00} + 2 \ketbra{01}{01} + 3 \ketbra{10}{10} + 4
+    \ketbra{11}{11},\] which corresponds to the diagonal matrix
+  \begin{equation*}
+    M = \begin{pmatrix}
+          1 & 0 & 0 & 0 \\
+          0 & 2 & 0 & 0 \\
+          0 & 0 & 3 & 0 \\
+          0 & 0 & 0 & 4
+    \end{pmatrix}.
+  \end{equation*}
+  By measuring \(M\) on her qubits, she would observe (with
+  probability \(\nicefrac{1}{4}\)) the outcomes \(1\), \(2\), \(3\), or
+  \(4\) , which uniquely identifies one of the four eigenvectors
+  \ket{00}, \ket{01}, \ket{10}, or \ket{11}. Consequently, she would
+  know the eigenvalues associated with the eigenvector ``observed'',
+  and would be able to correctly fill the cells of the first row. For
+  example, outcome \(3\) corresponds to \ket{10}. Hence, if she
+  observes \(3\), she fills the first row with \(\{+1, -1, -1\}\).
+\end{tcbexample}
 
 \subsection{Contextuality}
 \label{sec:context}
-
-\textbf{TODO}
 
 \section{Characterizing Quantum Magic Games}
 \label{sec:extending}
