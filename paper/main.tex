@@ -16,6 +16,7 @@
   vratio=2:3,      % not vertically centered
 }
 
+\usepackage[hidelinks]{hyperref}
 \usepackage[parfill]{parskip} % noindent + space between paragraph (I really prefer...)
 \usepackage[table]{xcolor}
 \usepackage{subcaption}
@@ -70,8 +71,9 @@
   \email{\{luigi.domenico, robertogomes\}@dcc.ufmg.br}}
 
 \maketitle
-% \begin{abstract}
-% \end{abstract}
+\begin{abstract}
+  \textbf{TODO}
+\end{abstract}
 
 \section{Introduction}
 \label{sec:intro}
@@ -81,42 +83,49 @@ person's mind to another's, would certainly come in handy in
 many situations, right? Unfortunately (or not), (to the best
 of our knowledge) telepathy is not a thing. At least, not
 according to classical physics. Certain aspects of the
-quantum realm, however, provide a way of communication that
-for a layman looks as magical as ``true'' telepathy. This
+quantum realm, however, provide a way of communication that,
+for a layman, may look as ``magical'', or as true telepathy. This
 phenomenon is called quantum
 \emph{pseudo-telepathy}~\cite{brassard:2005}.
 
 
-Quantum pseudo-telepathy is observed in many contexts,
-usually described in the format of a game: the ``impossible
-colouring games''~\cite{brassard:2005, Kochen1975}; the
-parity games, in which \(n \geq 3\) players are given
-bit-strings and, without communicating to each other, they
-output one of their bits, winning if their outputs combined
-obey certain parity conditions~\cite{brassard:2005,
-  Mermin1990}; the Deutsch-Jozsa games, where Alice and Bob
-are given bit strings \(x\) and \(y\), and must output bit
-strings \(a\) and \(b\) such that \(a = b\) if and only if
-\(x = y\)~\cite{brassard:2005, Brassard_1999}; and, the
-Magic Square game~\cite{brassard:2005, Mermin1990}. None of
-these games admit a classical winning strategy (i.e.\ is not
-possible to always win), yet they can be won systematically,
-without any communication, provided that the players share
-prior entanglement~\cite{brassard:2005}.
+Quantum pseudo-telepathy is observed in many contexts, usually
+described in the format of a game. Examples of such games are: the
+``impossible colouring games''~\cite{cleve:2004}, based on the
+Kochen-Specker theorem~\cite{kochen:1967};
+%% Avoid confusion with our definition of parity telepathy games
+% the
+% ``parity games'', in which \(n \geq 3\) players are given
+% bit-strings and, without communicating to each other, they
+% output one of their bits, winning if their outputs combined
+% obey certain parity conditions~\cite{brassard:2005,
+%   Mermin1990};
+the ``Deutsch-Jozsa games''~\cite{brassard:1999}, based on the Deutsch-Jozsa problem~\cite{deutsch:1992};
+% where Alice and Bob
+% are given bit strings \(x\) and \(y\), and must output bit
+% strings \(a\) and \(b\) such that \(a = b\) if and only if
+% \(x = y\)~\cite{brassard:2005};
+the ``magic square'' game~\cite{aravind:2002}, based on the Mermin-Peres proof of the
+Kochen-Specker theorem~\cite{mermin:1990, peres:1990, mermin:1993, peres:1997}; and many
+others~\cite{cleve:2004, brassard:2005}. None of these games admit a
+classical winning strategy (i.e.\ is not possible to always win), yet
+they can be won systematically, without any communication, provided
+that the players are allowed to share prior entanglement~\cite{brassard:2005}.
 
-In this project, we shall explore the Mermin-Peres Magic Square game
-(hereinafter referred simply as Magic Square). The origins of this
-game date back to the ninities. It was first described ---~albeit not
-in the format of a game~--- in the works of Mermin~\cite{mermin:1990}
-and of Peres~\cite{peres:1990}. Their results provided (as per the
-title of Mermin's review letter) a simplied proof for the
-Kochen-Specker theorem~\cite{Kocher1975}. Later, in 2002, Aravind
-demonstrated how to transform Mermin-Peres's proof of then
-Kochen-Specker theorem into a proof of Bell's
-theorem~\cite{aravind:xxx}. Bell's theorem shows the incompatibility
-of hidden variables (i.e. determinism) and locality, whereas
-Kochen-Specker's theorem demonstrates the conflicting nature of
-determinism and non-contextuality.  These sort of results may seem
+In this project, we will explore the Mermin-Peres magic square game
+(hereinafter referred simply as magic square). The origins of this
+game date back to the ninities. It was first described in the works of
+Mermin~\cite{mermin:1990, mermin:1993} and of
+Peres~\cite{peres:1990, peres:1997}. Their results provided (as per the title of
+Mermin's review letter) a simplied proof for the Kochen-Specker
+theorem~\cite{kochen:1967}. Later, in 2002, Aravind demonstrated how
+to transform Mermin-Peres's proof of the Kochen-Specker theorem into a
+proof of Bell's theorem~\cite{aravind:2002}. Bell's
+theorem~\cite{bell:1964} shows the incompatibility of hidden variables
+(i.e. determinism) and locality, and Kochen-Specker's theorem
+demonstrates the conflicting nature of determinism and
+noncontextuality (locality can be regarded as a special case of
+contextuality). These sort of results may seem
 challenging, but their descriptions can be greatly simplified by
 modeling them as quantum games.  In particular, it is extremely easy
 to show that there cannot be a classical solution to the the Magic
@@ -124,9 +133,21 @@ Square game, and to convince an observer that something ``magical''
 (classically impossible) is happening in a successful implementation
 of a quantum winnin strategy~\cite{brassard:2005}.
 
-\todo{FIX: they talk about contextuality only (both theorems)}
-
 \paragraph{Outline of this paper.}
+In Section~\ref{sec:magic-square}, we detail the intrinsics of the
+magic square game, classical approaches and why it is impossible to
+systematically win the game classically, how and why the quantum
+strategy works, and how to implement it. We also briefly discuss how
+the game translates to the proof of the incompatibility of a
+noncontextual hidden-variable theory. Then, in
+Section~\ref{sec:extending}, we describe a generalization of games
+that follow the same style of the magic square game, given
+by Arkhipov~\cite{arkhipov:2012}. Finally, section~\ref{sec:conc} concludes the
+presentation.
+
+\paragraph{Code.} The implementation of the classical and quantum
+solutions to the magic square game can be found at
+\url{https://github.com/luigidcsoares/quantum-magic-square}.
 
 \section{The Magic Square Game}
 \label{sec:magic-square}
@@ -1513,6 +1534,8 @@ arrangement is magic.
   \end{enumerate}
   \qed
 \end{proof}
+
+\section{Conclusion}\label{sec:conc}
 
 \printbibliography{}
 \end{document}
