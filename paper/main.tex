@@ -985,7 +985,6 @@ construct these single measurements for each row and column, it
 suffices to take the projectors onto the eigenvectors shared by the
 observables. Example~\ref{ex:sim-meas} further illustrates this idea.
 
-
 \begin{tcbexample}{Simultaneous Measurement}{sim-meas}
   Consider, for instance, the first row of the quantum solution for
   the magic square game, depicted in Figure~\ref{fig:quantum}. The
@@ -1013,8 +1012,32 @@ observables. Example~\ref{ex:sim-meas} further illustrates this idea.
   observes \(3\), she fills the first row with \(\{+1, -1, -1\}\).
 \end{tcbexample}
 
-\subsection{Contextuality}
+\subsection{A Proof of The Kochen-Specker Theorem}
 \label{sec:context}
+
+The Kochen-Specker theorem~\cite{kochen:1967} demonstrates
+the incompatilibty between an interpretation of quantum mechanics
+that is both deterministic ---~in the sense that there exists
+hidden variables that we do not have access to, and thus
+the stochasticity that we observe is merely epistemic~--- and,
+at the same time, noncontextual. Noncontextuality means that
+the outcomes of a measurement do not depend on the context,
+where a context is a set of compatible observables.
+
+Consider the magic square game described above. In a noncontextual
+hidden-variable model, we should be able to ascribe pre-determined
+outcomes to the nine observables in each cell. That is, for each
+observable \(M_{i, j}\) in a cell \((i, j)\), there should be an
+assignment \(v(M_{i, j}) = \pm{}1\). However, as seen in
+Section~\ref{sec:classic-sol}, this is impossible. Hence, either the
+model must be contextual, meaning that the outcomes of the
+measurements are influenced by the context in which they are inserted
+---~for instance, pick any observable in the \(3 \times 3\) grid shown
+in Figure~\ref{fig:quantum} and recall that it commutes with the other
+two observables in the row and also in the column; then, the result of
+measuring this observable is influenced by whether you are measuring
+it in the row or in the column~---, or there cannot exist hidden
+variables governing the values assigned to each observable.
 
 \section{Characterizing Quantum Magic Games}
 \label{sec:extending}
