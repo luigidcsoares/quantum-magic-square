@@ -112,12 +112,14 @@ classical winning strategy (i.e.\ is not possible to always win), yet
 they can be won systematically, without any communication, provided
 that the players are allowed to share prior entanglement~\cite{brassard:2005}.
 
-In this project, we will explore the Mermin-Peres magic square game
-(hereinafter referred simply as magic square). The origins of this
-game date back to the ninities. It was first described in the works of
-Mermin~\cite{mermin:1990, mermin:1993} and of
-Peres~\cite{peres:1990, peres:1997}. Their results provided (as per the title of
-Mermin's review letter) a simplied proof for the Kochen-Specker
+In this project, we will explore the Mermin-Peres magic square game.
+% (hereinafter referred simply as magic square).
+The origins of this
+game date back to the ninities. It was first described by
+Mermin~\cite{mermin:1990, mermin:1993} and 
+Peres~\cite{peres:1990, peres:1997}. Their results provided
+% (as per the title of Mermin's review letter)
+a simplied proof for the Kochen-Specker
 theorem~\cite{kochen:1967}. Later, in 2002, Aravind demonstrated how
 to transform Mermin-Peres's proof of the Kochen-Specker theorem into a
 proof of Bell's theorem~\cite{aravind:2002}. Bell's
@@ -127,22 +129,22 @@ demonstrates the conflicting nature of determinism and
 noncontextuality (locality can be regarded as a special case of
 contextuality). These sort of results may seem
 challenging, but their descriptions can be greatly simplified by
-modeling them as quantum games.  In particular, it is extremely easy
+modeling them as quantum games.  In particular, it is easy
 to show that there cannot be a classical solution to the the magic
 square game, and to convince an observer that something ``magical''
 (classically impossible) is happening in a successful implementation
-of a quantum winnin strategy~\cite{brassard:2005}.
+of a quantum winning strategy~\cite{brassard:2005}.
 
 \paragraph{Outline of this paper.}
-In Section~\ref{sec:magic-square}, we detail the intrinsics of the
-magic square game, classical approaches and why it is impossible to
-systematically win the game classically, how and why the quantum
-strategy works, and how to implement it. We also briefly discuss how
-the game translates to the proof of incompatibility of a
-noncontextual hidden-variable theory. Then, in
-Section~\ref{sec:extending}, we describe a generalization of games
-that follow the same style of the magic square game, given
-by Arkhipov~\cite{arkhipov:2012}. Finally, Section~\ref{sec:conc} concludes this report.
+In Section~\ref{sec:magic-square}, we detail the magic square game,
+classical approaches and why it is impossible to systematically win
+the game classically, how and why the quantum strategy works, and how
+to implement it. We also briefly discuss how the game translates to
+the proof of incompatibility of a noncontextual hidden-variable
+theory. Then, in Section~\ref{sec:extending}, we describe a
+generalization of games of the same style, given by
+Arkhipov~\cite{arkhipov:2012}. Section~\ref{sec:conc} concludes this
+report.
 
 \paragraph{Code.} The implementation of the classical and quantum
 solutions to the magic square game can be found at
