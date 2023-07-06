@@ -380,9 +380,9 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
   Suppose that Alice has observed \(+1\). In this case, the initial
   state \(\ket{\psi}\) collapses to
   \begin{equation}
-    \ket{\psi}_{A1} =  \frac{1}{\sqrt{2}}(\ket{0000} + \ket{1010}),
+    \ket{\psi}_{A0} =  \frac{1}{\sqrt{2}}(\ket{0000} + \ket{1010}),
   \end{equation}
-  where the subscript \(A1\) denotes the state after Alice's first
+  where the subscript \(A0\) denotes the state after Alice's first
   measurement.  For the second cell, Alice measures the observable
   \(Z \otimes I\), whose possible outcomes are
   \begin{equation}
@@ -397,7 +397,7 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
   Suppose, now, that Alice has observed the outcome \(-1\). The state
   collapses to
   \begin{equation}
-    \ket{\psi}_{A2} =  \ket{1010}.
+    \ket{\psi}_{A1} =  \ket{1010}.
   \end{equation}
   Finally, Alice measures the observable \(Z \otimes Z\), whose
   possible outcomes are
@@ -412,7 +412,7 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
   \end{equation}
   Notice that the only possible outcome that Alice can observe is
   \(-1\), and the state does not change, i.e.
-  \(\ket{\psi}_{A3} = \ket{\psi}_{A2}\).  Alice, then, fills the first
+  \(\ket{\psi}_{A2} = \ket{\psi}_{A1}\).  Alice, then, fills the first
   row with the values \(\{+1, -1, -1\}\), whose product is, as
   required
   , \(+1\). Upon receiving Alice's answer, Charlie goes to
@@ -420,9 +420,9 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
   the value of the first cell (which is the intersection of the first
   row and second column), Bob measures the observable \(Z \otimes
   I\). The only possible outcome, considering the state
-  \(\ket{\psi}_{A3}\), is \(-1\) ---~which matches Alice's answer~---
+  \(\ket{\psi}_{A2}\), is \(-1\) ---~which matches Alice's answer~---
   and the state will not change again:
-  \(\ket{\psi}_{B1} = \ket{\psi}_{A3}\). Moving on to the second cell,
+  \(\ket{\psi}_{B0} = \ket{\psi}_{A2}\). Moving on to the second cell,
   Bob measures the observable \(I \otimes X\), whose possible outcomes
   are
   \begin{equation}
@@ -437,7 +437,7 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
   Assume that Bob has observed the outcome \(+1\). Then, the state
   collapses to
   \begin{equation}
-    \ket{\psi}_{B2} =  \frac{1}{\sqrt{2}}(\ket{1010} + \ket{1011}).
+    \ket{\psi}_{B1} =  \frac{1}{\sqrt{2}}(\ket{1010} + \ket{1011}).
   \end{equation}
   Finally, Bob measures \(-Z \otimes X\) on his two qubits.
   The possible outcomes are
@@ -451,7 +451,7 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
     \end{cases}
   \end{equation}
   Bob will for sure observe the outcome \(+1\) and the state does not
- change, i.e.  \(\ket{\psi}_{B3} = \ket{\psi}_{B2}\). Therefore, Bob
+ change, i.e.  \(\ket{\psi}_{B2} = \ket{\psi}_{B1}\). Therefore, Bob
   answers \(\{-1, +1, +1\}\). Alice's answer satisfies the property of
   the rows (that the product of the entries is equal to \(+1\)) and
   Bob's answer satisfies the property of the columns (product is equal
@@ -463,7 +463,7 @@ measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
 To prove that the quantum solution indeed works, we must demonstrate
 two fundamental properties. First, the product of the outcomes of the
 three measurements on each row (equivalently, column) is equal to 1
-(equiv. -1). Second, the outcome of Alice's measurement on the
+(equivalently, -1). Second, the outcome of Alice's measurement on the
 intersection is always equal to the outcome of
 Bob's. Lemma~\ref{lem:product} formalizes the product property.
 
@@ -519,7 +519,7 @@ Bob's. Lemma~\ref{lem:product} formalizes the product property.
   \(\ket{\lambda}_{1}\), which is one of the entries in the diagonal
   of \(\Lambda_{i}\). But, notice that
   \(P_{i}\Lambda_{i}P_{i}^{-1} = I\); thus, \(\Lambda_{i} = I\) and
-  the only possible value for the product is \(1\) (equivalently
+  the only possible value for the product is \(1\) (equivalently,
   \(-1\) for columns). \qed
 \end{proof}
 
@@ -661,13 +661,13 @@ to the intersection of the row and column.
   that the initial state is already symmetric (the first qubit of
   Alice is equal to the first qubit of Bob; the same is true for their
   second qubits) and the symmetry is preserved by any measurement
-  performed by Alice and Bob. For the first row, it is easy to see.
+  performed by Alice and Bob. For the first row, this is easy to see.
   The others are trickier, but it all boils down to doing the
   calculations.  Consider, for instance, the second row, and suppose
   that the outcomes were \(-1\), \(-1\) and \(+1\), so that Alice's
   state collapsed to
   \((\nicefrac{1}{2}) (\ket{00} - \ket{01} - \ket{10} +
-  \ket{11})\). The state after the first measurement is
+  \ket{11})\). The complete state after the first measurement is
   \begin{align}
     &\frac{1}{2\sqrt{2}} \Bigl(
     (\ket{00} - \ket{10}) \ket{00} +
@@ -746,8 +746,8 @@ the nine observables.
                                                                                                 (S \otimes S) (X \otimes X) (S^{*} \otimes S^{*}) 
         \\ \hhline{---}
       \end{array}\]
-    \caption{Unitary transformations required for measuring in the
-      different basis. The actual basis measured is the middle
+    \caption{Unitary transformations required for measuring in
+      different bases. The actual basis measured is the middle
       term of each cell, which, after expanding, is either
       \(Z \otimes I\) or \(I \otimes Z\). For example, in the last
       cell, \(X \otimes X\) evaluates to
@@ -969,7 +969,7 @@ We now show the quantum circuits for each row and each column:
 \subsection{A Note on Compatible Observables}
 \label{sec:sim-meas}
 
-As seen in the Section~\ref{sec:msquare-proof}, the operators on each
+As seen in Section~\ref{sec:msquare-proof}, the operators on each
 row and column are compatible. That is, for any row and any column,
 the observables pairwise commute. This means that they can be
 simultaneously diagonalized by the same eigenvectors. It turns out
@@ -1004,7 +1004,7 @@ observables. Example~\ref{ex:sim-meas} further illustrates this idea.
   \end{equation*}
   By measuring \(M\) on her qubits, she would observe (with
   probability \(\nicefrac{1}{4}\)) the outcomes \(1\), \(2\), \(3\), or
-  \(4\) , which uniquely identifies one of the four eigenvectors
+  \(4\), which uniquely identifies one of the four eigenvectors
   \ket{00}, \ket{01}, \ket{10}, or \ket{11}. Consequently, she would
   know the eigenvalues associated with the eigenvector ``observed'',
   and would be able to correctly fill the cells of the first row. For
@@ -1299,8 +1299,8 @@ square that its lines can be split into two disjoint sets (rows and
 columns). In this sense, one can simply understand the magic square
 game as a combination of two rounds. In the first ``half'' of the
 round, Charlie sends the vertex \(u\) to Alice and the line \(e\) to
-Bob. In the second half, Charlie sends \(u\) to Bob, but
-\emph{another} line \(e' \neq e\) to Alice.
+Bob. In the second half, Charlie sends \(u\) to Bob, but the other
+line \(e'\) containing \(u\) to Alice.
 
 There exists a strategy that wins with certainty a parity pseudo-telepathy
 game played on a magic arrangement that has a quantum realization in
@@ -1744,7 +1744,7 @@ arrangement is magic.
   vertices with a correspondence in the \(K_{3, 3}\) graph are
   labelled in the same way, and the remaining are labelled with
   \(+I\).  To construct a quantum realization of the Petersen graph,
-  we first look for simples paths that correspond to edges in
+  we first look for simple paths that correspond to edges in
   \(K_{3, 3}\). For example, the edge \((e_{0}, e_{1})\) in Petersen
   corresponds exactly to the edge \((e'_{0}, e'_{3})\) in
   \(K_{3, 3}\), so we assign the operator \(I \otimes Z\) to
@@ -1803,6 +1803,39 @@ arrangement is magic.
 \end{tcbexample}
 
 \section{Conclusion}\label{sec:conc}
+In this work, we described the two-players cooperative quantum magic
+game known as the magic square game, that exhibits the so-called
+property of pseudo-telepathy. In other words, it is a game that is
+impossible to systematically win under classical assumptions (i.e.\
+when restricted to a classical solution, if the players are always
+winning, the referee can suspect that they are somehow cheating and
+communicating), but that there exists a quantum strategy that wins
+every round with certainty, which gives the impression that some sort
+of communication is going on (hence ``pseudo-telepathy'').
+We described the classical and quantum strategies, showed why
+the quantum approach works, and how to implement it with
+quantum circuits. We also briefly discussed the connection between the
+magic square game and the Kochen-Specker theorem, which states the
+incompatibility between a quantum mechanics model that is both
+noncontextual and deterministic.
+
+We concluded by describing a generalization of games that follow the same
+style of the magic square, also known as Mermin-style games, given by
+Arkhipov~\cite{arkhipov:2012}. In this generalization, the quantum
+games are represented by hypergraphs whose hyperedges encode the
+constraints of the game and whose vertices must be labelled by the
+players in a way that this labelling respects those constraints. In the
+case of the magic square, the hyperedges are the three rows and three
+columns, and the vertices are each cell of the grid. Arkhipov showed
+in his work that there exists a subset of these games that are
+``magical'' in the sense that they cannot be won classically, but they
+admit a quantum strategy. This quantum solution, as in the magic
+square case, consists of the two players sharing a symmetric,
+entangled state. Furthermore, the arrangement on which these games are
+played can be characterized in terms of the (non)planarity of the
+corresponding intersection graphs: the arrangement is magic if, and
+only if, its intersection graph is nonplanar.
+
 
 \printbibliography{}
 \end{document}
