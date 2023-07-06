@@ -142,8 +142,7 @@ the game translates to the proof of incompatibility of a
 noncontextual hidden-variable theory. Then, in
 Section~\ref{sec:extending}, we describe a generalization of games
 that follow the same style of the magic square game, given
-by Arkhipov~\cite{arkhipov:2012}. Finally, Section~\ref{sec:conc} concludes the
-presentation.
+by Arkhipov~\cite{arkhipov:2012}. Finally, Section~\ref{sec:conc} concludes this report.
 
 \paragraph{Code.} The implementation of the classical and quantum
 solutions to the magic square game can be found at
@@ -342,8 +341,9 @@ quantum strategy works as follows: Alice measures all the observables
 from the \(i\)-th row of the predefined matrix. She fills each cell
 with the result of each measurement. Similarly, Bob measures all the
 observables in the \(j\)-th column that was assigned to him, and fills
-each of his cells with the outcomes of each
-measurement. Example~\ref{ex:quantum-sol} depicts a round of the game.
+each of his cells with the outcomes of each measurement. (It is worth
+to point out that the order of their measurements is not important.)
+Example~\ref{ex:quantum-sol} depicts a round of the game.
 
 {\renewcommand{\arraystretch}{2}
 \begin{figure}[htbp] 
@@ -709,7 +709,7 @@ to the intersection of the row and column.
   \begin{theorem}[The Mermin-Peres Magic Square Game Is Winnable]
     \label{theo:quantum-wins}
     There exists a quantum strategy for the Mermin-Peres magic square
-    game, which consists of allowing Alice and Bob exchanging
+    game, which consists of allowing Alice and Bob to exchange
     entangled qubits \emph{before} the game begins, that wins with
     certainty every round.
   \end{theorem}
