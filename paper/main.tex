@@ -1198,7 +1198,7 @@ games may be played.
     \caption{Example of a classically realizable arrangement.\label{fig:class-re}}
   \end{figure}
 
-    A classical realization \(c\) for this arrangement is
+  A classical realization \(c\) for this arrangement is
   \begin{align*}
     c(v_{0}) = c(v_{1}) = c(v_{3}) = c(v_{4}) &= +1 \\
     c(v_{2}) = c(v_{5}) &= -1.
@@ -1619,6 +1619,188 @@ arrangement is magic.
   \end{enumerate}
   \qed
 \end{proof}
+
+\begin{tcbexample}{Nonplanar Graph \(\implies\) Magic}{nplanar-magic}
+  Recall that the complete bipartite graph \(K_{3, 3}\) is the intersection
+  graph of the magic square. Figure~\ref{fig:k33} shows the
+  \(K_{3, 3}\), labelled accordingly to the magic square game
+  described in Section~\ref{sec:magic-square}.
+
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+        \node (e'0) [vertex, label=above right:{\(e'_{0}\)}, label=above left:{\color{green!50!black!80}\(+I\)}] at (0, 0) {};
+        \node (e'1) [vertex, label=above right:{\(e'_{1}\)}, label=above left:{\color{green!50!black!80}\(+I\)}] at (4, 0) {};
+        \node (e'2) [vertex, label=above right:{\(e'_{2}\)}, label=above left:{\color{green!50!black!80}\(+I\)}] at (8, 0) {};
+        \node (e'3) [vertex, label=below right:{\(e'_{3}\)}, label=below left:{\color{red!50!black!80}\(-I\)}] at (0, -3) {};
+        \node (e'4) [vertex, label=below right:{\(e'_{4}\)}, label=below left:{\color{red!50!black!80}\(-I\)}] at (4, -3) {};
+        \node (e'5) [vertex, label=below right:{\(e'_{5}\)}, label=below left:{\color{red!50!black!80}\(-I\)}] at (8, -3) {};
+
+        \path[]
+        (e'0) edge node[midway, fill=gray!15] {\(I \otimes Z\)} (e'3)
+        edge node[near start, fill=gray!15, xshift=-.3cm] {\(Z \otimes I\)} (e'4)
+        edge node[near start, fill=gray!15] {\(Z \otimes Z\)} (e'5)
+
+        (e'1) edge node[near end, fill=gray!15] {\(X \otimes I\)} (e'3)
+        edge node[near end, fill=gray!15] {\(I \otimes X\)} (e'4)
+        edge node[near end, fill=gray!15, xshift=0.3cm] {\(X \otimes X\)} (e'5)
+        
+        (e'2) edge node[near start, fill=gray!15, xshift=-0.1cm, yshift=.1cm] {\(-X \otimes Z\)} (e'3)
+        edge node[near start, fill=gray!15, xshift=0.3cm] {\(-Z \otimes X\)} (e'4)
+        edge node[midway, fill=gray!15] {\(Y \otimes Y\)} (e'5)
+        ;
+      \end{tikzpicture}
+    \end{center}
+    \caption{\(K_{3, 3}\) corresponding to the magic square arrangement.\label{fig:k33}}
+  \end{figure}
+  Consider the Petersen graph shown in Figure~\ref{fig:petersen} (a).
+  Figure~\ref{fig:petersen} (b) shows the same graph, rewritten in a
+  way that it is easy to see that it has the \(K_{3, 3}\) graph as a
+  topological minor.
+
+  \begin{figure}[H]
+    \begin{subfigure}{0.475\textwidth}
+      \begin{center}
+        \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+          \foreach \l [
+          count=\c,
+          evaluate=\c as \ang using {18 + 72*\c},
+          evaluate=\c as \e using {iseven(\c - 1)?"{\color{green!50!black!80}+I}":"{\color{red!50!black!80}-I}"}
+          ] in {0, 1, 2, 3, 4} {
+            \node [vertex] (e\l) at (\ang:20mm) {};
+            \node at (\ang:24mm) {\(e_{\l}\)};
+            \node at ({\ang + 11}:22mm) {\(\e\)};
+          }
+
+          \foreach \l [
+          count=\c,
+          evaluate=\c as \ang using {18 + 72*\c},
+          evaluate=\c as \e using {\c>1?"{\color{green!50!black!80}+I}":"{\color{red!50!black!80}-I}"}
+          ] in {5, 6, 7, 8, 9} {
+            \node [vertex] (e\l) at (\ang:10mm) {};
+            \node at ({\ang - 18}:12mm) {\(e_{\l}\)};
+            \node at ({\ang + 18}:12mm) {\(\e\)};
+          }
+
+          \path[]
+          (e0) edge (e1) edge (e4) edge (e5)
+          (e1) edge (e2) edge (e6)
+          (e2) edge (e3) edge (e7)
+          (e3) edge (e8) edge (e4)
+          (e4) edge (e9)
+          (e5) edge (e7) edge (e8)
+          (e6) edge (e8) edge (e9)
+          (e7) edge (e9)
+          ;
+        \end{tikzpicture}
+      \end{center}
+      \caption{}
+    \end{subfigure}
+    \hfill{}
+    \begin{subfigure}{0.475\textwidth}
+      \begin{center}
+        \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+          \node (e0) [vertex, label=left:{\(e_{0}\)}] at (0, 0) {};
+          \node (e2) [vertex, label=left:{\(e_{2}\)}] at (2.5, 0) {};
+          \node (e8) [vertex, label=left:{\(e_{8}\)}] at (5, 0) {};
+          \node (e1) [vertex, label=left:{\(e_{1}\)}] at (0, -2) {};
+          \node (e3) [vertex, label=left:{\(e_{3}\)}] at (2.5, -2) {};
+          \node (e5) [vertex, label=below:{\(e_{5}\)}] at (5, -2) {};
+
+          \node (e4) [vertex, label=above:{\(e_{4}\)}] at (1.25, 0) {};
+          \node (e6) [vertex, label=below:{\(e_{6}\)}] at (1.25, -2) {};
+          \node (e7) [vertex, label=left:{\(e_{7}\)}] at (3.75, -2) {};
+          \node (e9) [vertex, label=left:{\(e_{9}\)}] at (3.75, 0) {};
+
+          \path[]
+          (e0) edge (e1) edge (e4) edge (e5)
+          (e1) edge (e2) edge (e6)
+          (e2) edge (e3) edge (e7)
+          (e3) edge (e8) edge (e4)
+          (e4) edge[bend left] (e9)
+          (e5) edge (e7) edge (e8)
+          (e6) edge (e8) edge (e9)
+          (e7) edge (e9)
+          ;
+        \end{tikzpicture}
+      \end{center}
+      \caption{}
+    \end{subfigure}
+    \caption{Petersen graph.\label{fig:petersen}}
+  \end{figure}
+
+  Let \(\phi\) be the function mapping vertices from \(K_{3, 3}\)
+  graph to the Petersen graph. Then,
+  \begin{align*}
+    \phi(e'_{0}) &= e_{0} \\
+    \phi(e'_{1}) &= e_{2} \\
+    \phi(e'_{2}) &= e_{8} \\
+    \phi(e'_{3}) &= e_{1} \\
+    \phi(e'_{4}) &= e_{3} \\
+    \phi(e'_{5}) &= e_{5}.
+  \end{align*}
+
+  Following the proof of Theorem~\ref{theo:main}, we assume that the
+  vertices with a correspondence in the \(K_{3, 3}\) graph are
+  labelled in the same way, and the remaining are labelled with
+  \(+I\).  To construct a quantum realization of the Petersen graph,
+  we first look for simples paths that correspond to edges in
+  \(K_{3, 3}\). For example, the edge \((e_{0}, e_{1})\) in Petersen
+  corresponds exactly to the edge \((e'_{0}, e'_{3})\) in
+  \(K_{3, 3}\), so we assign the operator \(I \otimes Z\) to
+  it. Similarly, the path \((e_{0}, e_{4}, e_{3})\) in Petersen
+  corresponds to the edge \((e'_{0}, e'_{4})\) in \(K_{3, 3}\), so we
+  assign the operator \(Z \otimes I\) to both edges \((e_{0}, e_{4})\)
+  and \((e_{4}, e_{3})\). We keep doing this for every path that has a
+  correspondence in the \(K_{3, 3}\) graph. Then, we label the
+  remaining edges with \(+I\). Figure~\ref{fig:petersen-final} shows
+  the quantum realization constructed for the Petersen graph.
+
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[vertex/.style={circle, thin, fill=blue!30, draw, inner sep=0, minimum size=5pt}]
+        \foreach \l [
+        count=\c,
+        evaluate=\c as \ang using {18 + 72*\c},
+        evaluate=\c as \e using {iseven(\c - 1)?"{\color{green!50!black!80}+I}":"{\color{red!50!black!80}-I}"}
+        ] in {0, 1, 2, 3, 4} {
+          \node [vertex] (e\l) at (\ang:30mm) {};
+          \node at (\ang:34mm) {\(e_{\l}\)};
+          \node at ({\ang + 8}:32mm) {\(\e\)};
+        }
+
+        \foreach \l [
+        count=\c,
+        evaluate=\c as \ang using {18 + 72*\c},
+        evaluate=\c as \e using {\c>1?"{\color{green!50!black!80}+I}":"{\color{red!50!black!80}-I}"}
+        ] in {5, 6, 7, 8, 9} {
+          \node [vertex] (e\l) at (\ang:20mm) {};
+          \node at ({\ang - 10}:20mm) {\(e_{\l}\)};
+          \node at ({\ang + 13}:20mm) {\(\e\)};
+        }
+
+        \path[]
+        (e0) edge node[midway, fill=gray!15] {\(I \otimes Z\)} (e1)
+        edge node[midway, fill=gray!15] {\(Z \otimes I\)} (e4)
+        edge node[midway, fill=gray!15] {\(Z \otimes Z\)} (e5)
+        (e1) edge node[midway, fill=gray!15] {\(X \otimes I\)} (e2)
+        edge node[midway, fill=gray!15, rotate=80] {\(-X \otimes Z\)} (e6)
+        (e2) edge node[midway, fill=gray!15] {\(I \otimes X\)} (e3)
+        edge node[midway, fill=gray!15, rotate=-30] {\(X \otimes X\)} (e7)
+        (e3) edge node[midway, fill=gray!15, rotate=30] {\(-Z \otimes X\)} (e8)
+        edge node[midway, fill=gray!15] {\(Z \otimes I\)} (e4)
+        (e4) edge node[midway, fill=gray!15, rotate=-30] {\(+I\)} (e9)
+        (e5) edge node[midway, fill=gray!15] {\(X \otimes X\)} (e7) edge node[midway, fill=gray!15] {\(Y \otimes Y\)} (e8)
+        (e6) edge node[midway, fill=gray!15, rotate=45] {\(-X \otimes Z\)} (e8)
+        edge node[midway, fill=gray!15] {\(+I\)} (e9)
+        (e7) edge node[midway, fill=gray!15, rotate=-45] {\(+I\)} (e9)
+        ;
+      \end{tikzpicture}
+    \end{center}
+    \caption{Quantum realiation of the Petersen graph, constructed from \(K_{3, 3}\) (magic square)}
+    \label{fig:petersen-final}
+  \end{figure}
+\end{tcbexample}
 
 \section{Conclusion}\label{sec:conc}
 
